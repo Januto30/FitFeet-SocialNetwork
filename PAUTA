@@ -4,7 +4,7 @@ INFORME:
 - Hem de dissenyar un informe de la qual tenim una plantilla per guiar-nos.
 
 STRUCTS:
-- 1 Llista (List)
+- 1 Llista dinàmica (List)  FET
 - 1 Pila (Stack)
 - 1 Cua (Queue)
 
@@ -26,4 +26,5 @@ OPCIONAL:
 LLIURE:
 - Afegir una capa estètica                                                                          (2 punts)
 - Implementar les funcionalitat de lectura i guardat de dades des d'un arxiu extern (.txt o csv)    (1 punt)
+        Una vegada cream un usuari nou, totes les dades proporcionades van a un arxiu extern
 - Realitzar propostes de funcionalitats extres que seran negociades en clase amb el professor       (punts a negociar amb el professor)
