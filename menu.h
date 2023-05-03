@@ -32,8 +32,10 @@ int print_option(int option, user_list *Llista);
 
 void emmagatzema_dades(User *usuari);
 
+void print_users(user_list *llista_usuaris);
+
 void afegir_usuari(user_list* llista, User* usuari);
 
-
+void checkPassword(User *usuari);
 
 #endif //FITFEET_MENU_H

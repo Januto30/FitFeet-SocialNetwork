@@ -99,3 +99,29 @@ void afegir_usuari(user_list* llista, User* usuari) {
     }
     llista -> num_persones++;
 }
+
+void print_users(user_list *Llista) {
+    User *current = Llista -> head;
+    while (current != NULL) {
+        printf("          |    %s    |\n", current -> nom);
+        current = current -> next;
+    }
+    printf("\n");
+}
+
+void checkPassword(User *usuari) {
+    char input[20];
+    int correct = 0;
+
+    while (!correct) {
+        printf("Introdueix la contrasenya: ");
+        scanf("%s", input);
+
+        if (strcmp(input, usuari -> password) == 0) {
+            printf("Benvingut %s!,\n",usuari -> nom);
+            correct = 1;
+        } else {
+            printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
+        }
+    }
+}
