@@ -30,5 +30,10 @@ int select_option();
 
 int print_option(int option, user_list *Llista);
 
+void emmagatzema_dades(User *usuari);
+
+void afegir_usuari(user_list* llista, User* usuari);
+
+
 
 #endif //FITFEET_MENU_H

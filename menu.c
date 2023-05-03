@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAX_USERS 100
+
 void menu() {
     printf("=========================================\n");
     printf("|           Benvingut a Feetfit         |\n");
@@ -59,4 +61,41 @@ int print_option(int option, user_list *Llista){
     } else if (option == 4) {
         return 1;
     }
+}
+
+void emmagatzema_dades(User *usuari) {
+    printf("Introdueix el teu nom: \n");
+    scanf("%s", usuari -> nom);
+    printf("Introdueix la contrasenya: \n");
+    scanf("%s", usuari -> password);
+    printf("Introdueix el teu primer cognom: \n");
+    scanf("%s", usuari -> cognom1);
+    printf("Introdueix el teu segon cognom: \n");
+    scanf("%s", usuari -> cognom2);
+    printf("Introdueix la teva edat: \n");
+    scanf("%d", &usuari -> edat);
+    printf("Introdueix el teu correu electronic: \n");
+    scanf("%s", usuari -> correu);
+    printf("Introdueix la teva ubicacio: \n");
+    scanf("%s", usuari -> ubi);
+    printf("Introdueix els teus 5 gustos preferits (un per linia):\n");
+    scanf("%s", usuari -> gust1);
+    scanf("%s", usuari -> gust2);
+    scanf("%s", usuari -> gust3);
+    scanf("%s", usuari -> gust4);
+    scanf("%s", usuari -> gust5);
+    usuari -> next = NULL;
+}
+
+void afegir_usuari(user_list* llista, User* usuari) {
+    if (llista -> head == NULL) {
+        llista -> head = usuari;
+    } else {
+        User* temp = llista -> head;
+        while (temp -> next != NULL) {
+            temp = temp -> next;
+        }
+        temp -> next = usuari;
+    }
+    llista -> num_persones++;
 }
