@@ -3,4 +3,4 @@ project(FITFEET C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(FITFEET main.c)
+add_executable(FITFEET main.c menu.c menu.h)
