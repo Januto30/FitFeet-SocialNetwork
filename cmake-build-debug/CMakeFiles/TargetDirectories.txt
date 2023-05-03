@@ -1,0 +1,3 @@
+C:/Users/janpr/Documents/Clion/FITFEET/cmake-build-debug/CMakeFiles/FITFEET.dir
+C:/Users/janpr/Documents/Clion/FITFEET/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/janpr/Documents/Clion/FITFEET/cmake-build-debug/CMakeFiles/rebuild_cache.dir
