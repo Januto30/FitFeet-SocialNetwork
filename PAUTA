@@ -1,0 +1,29 @@
+Aquest fitxer le creat per que tinguem en compte quines coses hem d'implementar obligatoriament i anar-les descartant.
+
+INFORME:
+- Hem de dissenyar un informe de la qual tenim una plantilla per guiar-nos.
+
+STRUCTS:
+- 1 Llista (List)
+- 1 Pila (Stack)
+- 1 Cua (Queue)
+
+ALGORITMES DE BÚSQUEDA:
+- 1 LinearSearch o 1 BinarySearch
+- 1 InsertionSort o 1 BubbleSort o 1 QuickSort
+- 1 Diccionari o 1 Taula Hash
+
+REQUISITS APART:
+- Comentar totes les funcions
+- Comentar totes les seccions de codi
+
+OPCIONAL:
+- Tenir un algoritme que llegeixi d'un FILE                                                         (0.5 punt)
+- La red social sigui temàtica amb una capa de personalització a nivell conceptual                  (1 punt)
+- Implementar grafs per consola o arbres que relacioni contactes, missatges, interessos, etc...     (1 punt)
+- Mesurar el temps d'execució per com a mínim tres funcions diferents del codi                      (1 punt)
+
+LLIURE:
+- Afegir una capa estètica                                                                          (2 punts)
+- Implementar les funcionalitat de lectura i guardat de dades des d'un arxiu extern (.txt o csv)    (1 punt)
+- Realitzar propostes de funcionalitats extres que seran negociades en clase amb el professor       (punts a negociar amb el professor)
