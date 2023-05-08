@@ -16,12 +16,12 @@ typedef struct {
     char gust3[MAX_LENGTH];
     char gust4[MAX_LENGTH];
     char gust5[MAX_LENGTH];
-    struct User* next;
+    struct User* next; //Com que volem que la llista tingui més d'un usuari, connectem els nodes entre ells
 }User;
 
-typedef struct user_list {
-    User* head;
-    int num_persones;
+typedef struct user_list { //Linked list
+    User* head; //apunta al primer element de la llista
+    int num_persones; //nombre de persones a la llista
 } user_list;
 
 void menu();
