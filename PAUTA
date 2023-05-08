@@ -27,4 +27,5 @@ LLIURE:
 - Afegir una capa estètica                                                                          (2 punts)
 - Implementar les funcionalitat de lectura i guardat de dades des d'un arxiu extern (.txt o csv)    (1 punt)
         p.e. -> Una vegada cream un usuari nou, totes les dades proporcionades van a un arxiu extern
+             -> Poder modificar les dades personals després d'haver creat l'usuari
 - Realitzar propostes de funcionalitats extres que seran negociades en classe amb el professor      (punts a negociar amb el professor)
