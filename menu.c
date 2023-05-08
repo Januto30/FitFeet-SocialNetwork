@@ -18,7 +18,7 @@ void menu() {
 
 int select_option() {
     int option;     // variable per guardar el valor introduït per l'usuari
-    while (1) {     //entra en un bucle infinit
+    while (1) {     // entra en un bucle infinit
         if (scanf("%d", &option) != 1) {      // intenta llegir un enter i comprova si s'ha llegit correctament
             while (getchar() != '\n');              // si la lectura no ha sigut correcte, esborra el contingut del buffer?
         } else if (option >= 1 && option <= 4) {    // comprova que 1 i 4 són opcions vàlides
@@ -84,7 +84,7 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
     printf("Introdueix la teva edat: \n");
     scanf("%d", &usuari -> edat);      // es fa servir el & perquè és un enter
 
-    printf("Introdueix el teu correu electronic: \n");
+    printf("Introdueix el teu correu electronic: \n");      //// hem de comprovar que el correu s'escriu correctament
     scanf("%s", usuari -> correu);
 
     printf("Introdueix la teva ubicacio: \n");
