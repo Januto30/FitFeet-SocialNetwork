@@ -195,7 +195,7 @@ void opcio3(user_list *Llista) {
     }
 }
 
-void guardar_usuaris_en_arxiu(user_list* lista_usuarios) {
+void guardar_usuaris_en_arxiu(user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "w");
 
     if (arxiu == NULL) {
@@ -203,7 +203,7 @@ void guardar_usuaris_en_arxiu(user_list* lista_usuarios) {
         return;
     }
 
-    User* current = lista_usuarios->head;
+    User* current = Llista->head;
     while (current != NULL) {
         fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
         current = current->next;
