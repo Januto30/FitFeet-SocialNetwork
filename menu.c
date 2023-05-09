@@ -56,10 +56,11 @@ int print_option(int option, user_list *Llista) {
         }
 
         printf("\n");
-        printf("---| 1. Enviar solicituds d'amistat   |---\n");
-        printf("---| 2. Gestionar solicituds pendents |---\n");
-        printf("---| 3. Realitzar una publicacio      |---\n");
-        printf("---| 4. Llistar les publicacions      |---\n");
+        printf("---| 1. Perfil                        |---\n");
+        printf("---| 2. Enviar solicituds d'amistat   |---\n");
+        printf("---| 3. Gestionar solicituds pendents |---\n");
+        printf("---| 4. Realitzar una publicacio      |---\n");
+        printf("---| 5. Llistar les publicacions      |---\n");
         printf("\n");
 
     } else if (option == 4) {
@@ -105,7 +106,7 @@ void afegir_usuari(user_list* llista, User* usuari) {
         llista -> head = usuari;            // el primer element de la llista és el usuari nou
     } else {                                // si la llista no està buida...
         User* temp = llista -> head;        // temp apunta al head
-        while (temp -> next != NULL) {      // mentres no s'hagi arribat al final de la llista...
+        while (temp -> next != NULL) {      // mentre no s'hagi arribat al final de la llista...
             temp = temp -> next;            // temp avança al següent element de la llista (fins que arribi al final)
         }
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
@@ -115,7 +116,7 @@ void afegir_usuari(user_list* llista, User* usuari) {
 
 void print_users(user_list *Llista) {
     User *current = Llista -> head;         // current apunta al primer usuari de la llista
-    while (current != NULL) {               // mentres la llista no estigui buida...
+    while (current != NULL) {               // mentre la llista no estigui buida...
         printf("          |    %s    |\n", current -> nom);         // imprimeix el nom d'usuari
         current = current -> next;          // ara current avança fins al següent element de la llista, i els va imprimint
     }
