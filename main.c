@@ -10,7 +10,11 @@ int main() {
         int option1;
         menu();
         option1 = select_option();
-        print_option(option1, &Llista);
+        if (print_option(option1, &Llista)==1)
+        {
+            guardar_usuaris_en_arxiu(&Llista);
+            break;
+        }
     }
     return 0;
 }

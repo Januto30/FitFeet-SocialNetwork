@@ -39,4 +39,6 @@ void afegir_usuari(user_list* llista, User* usuari);
 
 int checkPassword(User *usuari);
 
+void guardar_usuaris_en_arxiu(user_list* lista_usuarios);
+
 #endif //FITFEET_MENU_H

@@ -67,6 +67,7 @@ int print_option(int option, user_list *Llista) {
     }
 }
 
+
 void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
 
     printf("Introdueix el teu nom: \n");
@@ -140,3 +141,35 @@ int checkPassword(User *usuari) {
         }
     }
 }
+
+void guardar_usuaris_en_arxiu(user_list* lista_usuarios) {
+    FILE* archivo = fopen("PERFIL.txt", "w");
+
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    User* current = lista_usuarios->head;
+    printf("%s",current->nom);
+    while (current != NULL) {
+        fprintf(archivo, "Nom: %s\n", current->nom);
+        fprintf(archivo, "Contrasenya: %s\n", current->password);
+        fprintf(archivo, "Primer cognom: %s\n", current->cognom1);
+        fprintf(archivo, "Segon cognom: %s\n", current->cognom2);
+        fprintf(archivo, "Edat: %d\n", current->edat);
+        fprintf(archivo, "Correu electrònic: %s\n", current->correu);
+        fprintf(archivo, "Ubicació: %s\n", current->ubi);
+        fprintf(archivo, "Gust 1: %s\n", current->gust1);
+        fprintf(archivo, "Gust 2: %s\n", current->gust2);
+        fprintf(archivo, "Gust 3: %s\n", current->gust3);
+        fprintf(archivo, "Gust 4: %s\n", current->gust4);
+        fprintf(archivo, "Gust 5: %s\n", current->gust5);
+        fprintf(archivo, "\n");
+
+        current = current->next;
+    }
+
+    fclose(archivo);
+}
+
