@@ -67,7 +67,6 @@ int print_option(int option, user_list *Llista) {
     }
 }
 
-
 void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
 
     printf("Introdueix el teu nom: \n");
@@ -152,23 +151,48 @@ void guardar_usuaris_en_arxiu(user_list* lista_usuarios) {
 
     User* current = lista_usuarios->head;
     while (current != NULL) {
-        fprintf(arxiu, "Nom: %s\n", current->nom);
-        fprintf(arxiu, "Contrasenya: %s\n", current->password);
-        fprintf(arxiu, "Primer cognom: %s\n", current->cognom1);
-        fprintf(arxiu, "Segon cognom: %s\n", current->cognom2);
-        fprintf(arxiu, "Edat: %d\n", current->edat);
-        fprintf(arxiu, "Correu electrònic: %s\n", current->correu);
-        fprintf(arxiu, "Ubicació: %s\n", current->ubi);
-        fprintf(arxiu, "Gust 1: %s\n", current->gust1);
-        fprintf(arxiu, "Gust 2: %s\n", current->gust2);
-        fprintf(arxiu, "Gust 3: %s\n", current->gust3);
-        fprintf(arxiu, "Gust 4: %s\n", current->gust4);
-        fprintf(arxiu, "Gust 5: %s\n", current->gust5);
-        fprintf(arxiu, "adf");
-
+        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
         current = current->next;
     }
 
     fclose(arxiu);
 }
 
+void llegir_usuaris_desde_arxiu(user_list* Llista) {
+    FILE* arxiu = fopen("../PERFIL.txt", "r");
+
+    if (arxiu == NULL) {
+        printf("No s'ha pogut obrir l'arxiu.\n");
+        return;
+    }
+    char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH];
+    int edat;
+    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5) == 12) {
+        User* user = (User*)malloc(sizeof(User));
+        strcpy(user->nom, nom);
+        strcpy(user->password, password);
+        strcpy(user->cognom1, cognom1);
+        strcpy(user->cognom2, cognom2);
+        user->edat = edat;
+        strcpy(user->correu, correu);
+        strcpy(user->ubi, ubi);
+        strcpy(user->gust1, gust1);
+        strcpy(user->gust2, gust2);
+        strcpy(user->gust3, gust3);
+        strcpy(user->gust4, gust4);
+        strcpy(user->gust5, gust5);
+        user->next = NULL;
+
+        if (Llista->head == NULL) {
+            Llista->head = user;
+        } else {
+            User* current = Llista->head;
+            while (current->next != NULL) {
+                current = current->next;
+            }
+            current->next = user;
+        }
+    }
+
+    fclose(arxiu);
+}

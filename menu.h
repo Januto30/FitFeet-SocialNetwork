@@ -40,4 +40,5 @@ int checkPassword(User *usuari);
 
 void guardar_usuaris_en_arxiu(user_list* lista_usuarios);
 
+void llegir_usuaris_desde_arxiu(user_list* Llista);
 #endif //FITFEET_MENU_H

@@ -1,13 +1,2 @@
-jan
-Contrasenya: abc
-Primer cognom: asdf
-Segon cognom: sadf
-Edat: 243
-Correu electrònic: asdf
-Ubicació: asdf
-Gust 1: asdf
-Gust 2: asdf
-Gust 3: asdf
-Gust 4: asdf
-Gust 5: asdf
-adf
+1 1 1 1 1 1 1 1 1 1 1 1
+asdf asdf asdf asdf 18 asdf asdf sadf asdf asdf asdf asdf

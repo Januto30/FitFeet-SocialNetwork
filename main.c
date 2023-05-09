@@ -6,6 +6,7 @@ int main() {
     user_list Llista;
     Llista.head = NULL;
     Llista.num_persones = 0;
+    llegir_usuaris_desde_arxiu(&Llista);
     while (a != 0) {
         int option1;
         menu();
