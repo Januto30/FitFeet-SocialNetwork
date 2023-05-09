@@ -50,19 +50,18 @@ int print_option(int option, user_list *Llista) {
         User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
         while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
             if (strcmp(usuari, current -> nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
-                checkPassword(current);
+                if (checkPassword(current) == 1){
+                    printf("\n");
+                    printf("---| 1. Perfil                        |---\n");
+                    printf("---| 2. Enviar solicituds d'amistat   |---\n");
+                    printf("---| 3. Gestionar solicituds pendents |---\n");
+                    printf("---| 4. Realitzar una publicacio      |---\n");
+                    printf("---| 5. Llistar les publicacions      |---\n");
+                    printf("\n");
+                }
             }
             current = current -> next;                  // actualitza el valor de current, ara apunta al següent node de la llista
         }
-
-        printf("\n");
-        printf("---| 1. Perfil                        |---\n");
-        printf("---| 2. Enviar solicituds d'amistat   |---\n");
-        printf("---| 3. Gestionar solicituds pendents |---\n");
-        printf("---| 4. Realitzar una publicacio      |---\n");
-        printf("---| 5. Llistar les publicacions      |---\n");
-        printf("\n");
-
     } else if (option == 4) {
         return 1;
     }
@@ -123,7 +122,7 @@ void print_users(user_list *Llista) {
     printf("\n");
 }
 
-void checkPassword(User *usuari) {
+int checkPassword(User *usuari) {
     char input[20];
     int correct = 0;
 
@@ -134,8 +133,10 @@ void checkPassword(User *usuari) {
         if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
             printf("Benvingut %s!,\n", usuari -> nom);
             correct = 1;
+            return 1;
         } else {
             printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
+            return 0;
         }
     }
 }
