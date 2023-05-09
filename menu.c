@@ -42,26 +42,8 @@ int print_option(int option, user_list *Llista) {
         print_users(Llista);
 
     } else if (option == 3) {
-        char usuari[MAX_LENGTH];                        // guarda el nom del usuari
-        printf("\n---Quin usuari ets?---\n");
-        print_users(Llista);
-        scanf("%s", usuari);
+        opcio3(Llista);
 
-        User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
-        while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
-            if (strcmp(usuari, current -> nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
-                if (checkPassword(current) == 1){
-                    printf("\n");
-                    printf("---| 1. Perfil                        |---\n");
-                    printf("---| 2. Enviar solicituds d'amistat   |---\n");
-                    printf("---| 3. Gestionar solicituds pendents |---\n");
-                    printf("---| 4. Realitzar una publicacio      |---\n");
-                    printf("---| 5. Llistar les publicacions      |---\n");
-                    printf("\n");
-                }
-            }
-            current = current -> next;                  // actualitza el valor de current, ara apunta al següent node de la llista
-        }
     } else if (option == 4) {
         return 1;
     }
@@ -137,6 +119,78 @@ int checkPassword(User *usuari) {
         } else {
             printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
             return 0;
+        }
+    }
+}
+
+void enviar_solicituds(User *usuari1) {
+    User usuari2;
+    = scanf("Introdueix el nom del usuari a qui vols enviar la solicitud d'amistat: \n");
+    solicituds solicitud;
+    strcpy(solicitud.sender, usuari1 -> nom);
+    strcpy(solicitud.receptor, &usuari2);
+    solicitud.status = 0;           // sol·licitud en pendent
+
+    usuari2 -> solicituds_amistat = solicitud;
+
+    printf("Has enviat una solicitud d'amistat a %s", usuari2 -> nom);
+}
+
+/*
+void mostrar_solicituds(User *usuari) {
+    int num_solicituds_pendents = 0;
+    solicituds *solicituds_pendents[MAX_SOLICITUDS];
+
+    for (int i = 0; usuari -> num_amics; i++) {
+        if (usuari -> )
+    }
+}
+ */
+
+void opcio3(user_list *Llista) {
+    char usuari[MAX_LENGTH];                        // guarda el nom del usuari
+    printf("\n---Quin usuari ets?---\n");
+    print_users(Llista);
+    scanf("%s", usuari);
+
+    User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
+    while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
+        if (strcmp(usuari, current -> nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
+            if (checkPassword(current) == 1){
+                printf("\n");
+                printf("---| 1. Perfil                        |---\n");
+                printf("---| 2. Enviar solicituds d'amistat   |---\n");
+                // funcio enviar solitituds
+                printf("---| 3. Gestionar solicituds pendents |---\n");
+                // funcio mostrar solicituds
+                printf("---| 4. Realitzar una publicacio      |---\n");
+                printf("---| 5. Llistar les publicacions      |---\n");
+                printf("\n");
+            }
+        }
+        current = current -> next;                  // actualitza el valor de current, ara apunta al següent node de la llista
+
+        char opcio;
+        scanf("%s", opcio);
+
+        if (opcio == 1) {
+            printf("Aqui van el teu perfil i ses dades personals");
+
+        } else if (opcio == 2) {
+            printf("Envia solicitud a: ");
+            receptor
+            enviar_solicituds(usuari, receptor);
+
+
+        } else if (opcio == 3) {
+
+
+        } else if (opcio == 4) {
+
+
+        } else if (opcio == 5) {
+
+
         }
     }
 }

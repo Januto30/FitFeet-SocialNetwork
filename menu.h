@@ -16,6 +16,7 @@ typedef struct {
     char gust3[MAX_LENGTH];
     char gust4[MAX_LENGTH];
     char gust5[MAX_LENGTH];
+
     struct User* next;              // Com que volem que la llista tingui més d'un usuari, connectem els nodes entre ells
 }User;
 
@@ -38,7 +39,4 @@ void afegir_usuari(user_list* llista, User* usuari);
 
 int checkPassword(User *usuari);
 
-void guardar_usuaris_en_arxiu(user_list* lista_usuarios);
-
-void llegir_usuaris_desde_arxiu(user_list* Llista);
 #endif //FITFEET_MENU_H
