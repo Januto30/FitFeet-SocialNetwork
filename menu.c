@@ -174,7 +174,30 @@ void opcio3(user_list *Llista) {
         scanf("%s", opcio);
 
         if (opcio == 1) {
-            printf("Aqui van el teu perfil i ses dades personals");
+            printf("╔════════════════════════╗\n");
+            printf("║     Dades personals    ║\n");
+            printf("╠════════════════════════╣\n");
+            printf("║ Nom:      %s\n", current->nom);
+            printf("║ Cognom:   %s\n", current->cognom1);
+            printf("║ 2n Cognom: %s\n", current->cognom2);
+            printf("║ Edat:     %d\n", current->edat);
+            printf("║ Correu:   %s\n", current->correu);
+            printf("║ Ubicació: %s\n", current->ubi);
+            printf("╠════════════════════════╣\n");
+            printf("║         Gustos         ║\n");
+            printf("╠════════════════════════╣\n");
+            printf("║ Gust 1:   %s\n", current->gust1);
+            printf("║ Gust 2:   %s\n", current->gust2);
+            printf("║ Gust 3:   %s\n", current->gust3);
+            printf("║ Gust 4:   %s\n", current->gust4);
+            printf("║ Gust 5:   %s\n", current->gust5);
+            printf("╚════════════════════════╝\n");
+
+            printf("Vols canviar alguna dada teva?")
+            if(scanf("%s")== "Sí"){
+
+        }
+
 
         } else if (opcio == 2) {
             printf("Envia solicitud a: ");
