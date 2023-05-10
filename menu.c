@@ -217,6 +217,13 @@ void opcio3(user_list *Llista) {
                     } else if (strcmp(option_3_1, "Gust 5") == 0 || strcmp(option_3_1, "gust 5") == 0) {
                         scanf("%s", current->gust5);
                     }
+                    printf("Vols canviar alguna altre dada?");
+                    scanf("%s", option_3);
+                    if (strcmp(option_3, "Sí") == 0 || strcmp(option_3, "Si") == 0) {
+                        opcio3 = 0;
+                    } else {
+                        break;
+                    }
 
 
                 }
