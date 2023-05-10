@@ -158,67 +158,63 @@ void opcio3(user_list *Llista) {
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
         if (strcmp(usuari, current->nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
             if (checkPassword(current) == 1) {
-                printf("\n");
-                printf("---| 1. Perfil                        |---\n");
-                printf("---| 2. Enviar solicituds d'amistat   |---\n");
-                // funcio enviar solitituds
-                printf("---| 3. Gestionar solicituds pendents |---\n");
-                // funcio mostrar solicituds
-                printf("---| 4. Realitzar una publicacio      |---\n");
-                printf("---| 5. Llistar les publicacions      |---\n");
-                printf("Tria l'opció desitjada: ");
+                printf_menu();
                 permis = 0;
             }
+        } else {
+            current = current->next;                  // actualitza el valor de current, ara apunta al següent node de la llista
         }
-        current = current->next;                  // actualitza el valor de current, ara apunta al següent node de la llista
         /// Tot aquest tros del codi no pot anar aquí ja que en la línia 172 (la se a sobre) itera el usuari en qüestió.
         if (permis == 0) {
+            printf("Tria l'opcio desitjada: ");
+            scanf("%d", &opcio3);
             if (opcio3 == 1) {
-                printf("╔════════════════════════╗\n");
-                printf("║     Dades personals    ║\n");
-                printf("╠════════════════════════╣\n");
-                printf("║ Nom:      %s\n", current->nom);
-                printf("║ Cognom:   %s\n", current->cognom1);
-                printf("║ 2n Cognom: %s\n", current->cognom2);
-                printf("║ Edat:     %d\n", current->edat);
-                printf("║ Correu:   %s\n", current->correu);
-                printf("║ Ubicació: %s\n", current->ubi);
-                printf("╠════════════════════════╣\n");
-                printf("║         Gustos         ║\n");
-                printf("╠════════════════════════╣\n");
-                printf("║ Gust 1:   %s\n", current->gust1);
-                printf("║ Gust 2:   %s\n", current->gust2);
-                printf("║ Gust 3:   %s\n", current->gust3);
-                printf("║ Gust 4:   %s\n", current->gust4);
-                printf("║ Gust 5:   %s\n", current->gust5);
-                printf("╚════════════════════════╝\n");
+                char option_3[10];
+                printf("==========================\n");
+                printf("|     Dades personals    |\n");
+                printf("|========================|\n");
+                printf("| Nom:      %s\n", current->nom);
+                printf("| Cognom:   %s\n", current->cognom1);
+                printf("| 2n Cognom: %s\n", current->cognom2);
+                printf("| Edat:     %d\n", current->edat);
+                printf("| Correu:   %s\n", current->correu);
+                printf("| Ubicacio: %s\n", current->ubi);
+                printf("|========================|\n");
+                printf("|         Gustos         |\n");
+                printf("|========================|\n");
+                printf("| Gust 1:   %s\n", current->gust1);
+                printf("| Gust 2:   %s\n", current->gust2);
+                printf("| Gust 3:   %s\n", current->gust3);
+                printf("| Gust 4:   %s\n", current->gust4);
+                printf("| Gust 5:   %s\n", current->gust5);
+                printf("==========================\n");
                 printf("Vols canviar alguna dada ?");
-                char option[MAX_LENGTH];
-                scanf("%s", option);
-                if (option == "Sí" || option == "Si") {
+                scanf("%s", option_3);
+                if (strcmp(option_3, "Sí") == 0 || strcmp(option_3, "Si") == 0) {
+                    char option_3_1[MAX_LENGTH];
                     printf("Quina?");
-                    scanf("%s", option);
-                    if (option == "Nom" || option == "nom") {
+                    scanf("%s", option_3_1);
+                    if (strcmp(option_3_1, "Nom") == 0 || strcmp(option_3_1, "nom") == 0) {
                         scanf("%s", current->nom);
-                    } else if (option == "Cognom" || option == "cognom") {
+                    } else if (strcmp(option_3_1, "Cognom") == 0 || strcmp(option_3_1, "cognom") == 0) {
                         scanf("%s", current->cognom1);
-                    } else if (option == "2n Cognom" || option == "2n cognom") {
+                    } else if (strcmp(option_3_1, "2n Cognom") == 0 || strcmp(option_3_1, "2n cognom") == 0) {
                         scanf("%s", current->cognom2);
-                    } else if (option == "Edat" || option == "edat") {
+                    } else if (strcmp(option_3_1, "Edat") == 0 || strcmp(option_3_1, "edat") == 0) {
                         scanf("%s", current->edat);
-                    } else if (option == "Correu" || option == "correu") {
+                    } else if (strcmp(option_3_1, "Correu") == 0 || strcmp(option_3_1, "correu") == 0) {
                         scanf("%s", current->correu);
-                    } else if (option == "Ubicació" || option == "ubicació") {
+                    } else if (strcmp(option_3_1, "Ubicació") == 0 || strcmp(option_3_1, "ubicació") == 0) {
                         scanf("%s", current->ubi);
-                    } else if (option == "Gust 1" || option == "gust 1") {
+                    } else if (strcmp(option_3_1, "Gust 1") == 0 || strcmp(option_3_1, "gust 1") == 0) {
                         scanf("%s", current->gust1);
-                    } else if (option == "Gust 2" || option == "gust 2") {
+                    } else if (strcmp(option_3_1, "Gust 2") == 0 || strcmp(option_3_1, "gust 2") == 0) {
                         scanf("%s", current->gust2);
-                    } else if (option == "Gust 3" || option == "gust 3") {
+                    } else if (strcmp(option_3_1, "Gust 3") == 0 || strcmp(option_3_1, "gust 3") == 0) {
                         scanf("%s", current->gust3);
-                    } else if (option == "Gust 4" || option == "gust 4") {
+                    } else if (strcmp(option_3_1, "Gust 4") == 0 || strcmp(option_3_1, "gust 4") == 0) {
                         scanf("%s", current->gust4);
-                    } else if (option == "Gust 5" || option == "gust 5") {
+                    } else if (strcmp(option_3_1, "Gust 5") == 0 || strcmp(option_3_1, "gust 5") == 0) {
                         scanf("%s", current->gust5);
                     }
 
@@ -238,6 +234,8 @@ void opcio3(user_list *Llista) {
             } else if (opcio3 == 5) {
 
 
+            } else if (opcio3 == 6){
+                break;
             }
         }
     }
@@ -296,4 +294,16 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
     }
 
     fclose(arxiu);
+}
+
+void printf_menu(){
+    printf("\n");
+    printf("---| 1. Perfil                        |---\n");
+    printf("---| 2. Enviar solicituds d'amistat   |---\n");
+    // funcio enviar solitituds
+    printf("---| 3. Gestionar solicituds pendents |---\n");
+    // funcio mostrar solicituds
+    printf("---| 4. Realitzar una publicacio      |---\n");
+    printf("---| 5. Llistar les publicacions      |---\n");
+    printf("---| 6. Sortir                        |---\n");
 }

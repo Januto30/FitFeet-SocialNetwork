@@ -44,4 +44,6 @@ void llegir_usuaris_desde_arxiu(user_list* Llista);
 void guardar_usuaris_en_arxiu(user_list* Llista);
 
 void opcio3(user_list *Llista);
+
+void printf_menu();
 #endif //FITFEET_MENU_H
