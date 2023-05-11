@@ -33,6 +33,8 @@ int print_option(int option, user_list *Llista);
 
 void emmagatzema_dades(User *usuari);
 
+void comprovar_correu(User *usuari, char *correu);
+
 void print_users(user_list *llista_usuaris);
 
 void afegir_usuari(user_list* llista, User* usuari);
