@@ -66,8 +66,9 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
     printf("Introdueix la teva edat: \n");
     scanf("%d", &usuari -> edat);      // es fa servir el & perquè és un enter
 
-    printf("Introdueix el teu correu electronic: \n");      //// hem de comprovar que el correu s'escriu correctament
+    printf("Introdueix el teu correu electronic: \n");
     scanf("%s", usuari -> correu);
+    comprovar_correu(usuari, usuari -> correu);         // funció per validar que el correu està ben escrit
 
     printf("Introdueix la teva ubicacio: \n");
     scanf("%s", usuari -> ubi);
@@ -80,6 +81,18 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
     scanf("%s", usuari -> gust5);
 
     usuari -> next = NULL;                  // així sabem quan s'ha arribat al final de la llista en recórrer-la
+}
+
+void comprovar_correu(User *usuari, char *correu) {
+    while(1) {
+        if ((strchr(usuari -> correu, '@') == NULL) || strchr(usuari -> correu, '.') == NULL) {
+            printf("El correu es invalid. Torna a introduir el teu correu: \n");
+            scanf("%s", usuari -> correu);
+        } else {
+            printf("El correu es valid.\n\n");
+            break;
+        }
+    }
 }
 
 void afegir_usuari(user_list* llista, User* usuari) {
@@ -190,6 +203,7 @@ void opcio3(user_list *Llista) {
                 printf("==========================\n");
                 printf("Vols canviar alguna dada ?");
                 scanf("%s", option_3);
+
                 if (strcmp(option_3, "Sí") == 0 || strcmp(option_3, "Si") == 0) {
                     char option_3_1[MAX_LENGTH];
                     printf("Quina?");
@@ -247,6 +261,7 @@ void opcio3(user_list *Llista) {
         }
     }
 }
+
 void guardar_usuaris_en_arxiu(user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "w");
 
