@@ -135,6 +135,50 @@ int checkPassword(User *usuari) {
         }
     }
 }
+
+/*int enviar_solicitud(User* emisor, User* receptor) {
+    // Mirem que els paràmetres no estiguin buits
+    if (emisor == NULL || receptor == NULL) {
+        return -1;
+    }
+    //Comprovem que emisor i receptor no siguin els mateixos
+    if (emisor == receptor) {
+        return -1;
+    }
+    //Mirem si el emisor no tingui ja al receptor com a amic
+    for (int i = 0; i < emisor->num_amics; i++) {
+        if (emisor->amics[i] == receptor) {
+            return -1;
+        }
+    }
+    //Mirem si el receptor no tingui ja al emisor com a amic
+    for (int i = 0; i < receptor->num_amics; i++) {
+        if (receptor->amics[i] == emisor) {
+            return -1;
+        }
+    }
+    //Comprovem que el emisor no hagi enviat ja una solicitud d'amistat al receptor
+    for (int i = 0; i < emisor->num_solicituds; i++) {
+        if (emisor->solicituds[i] == receptor) {
+            return -1;
+        }
+    }
+    //Mirem que el receptor no hagi rebut ja una solicitud del emisor
+    for (int i = 0; i < receptor->num_solicituds; i++) {
+        if (receptor->solicituds[i] == emisor) {
+            return -1;
+        }
+    }
+    //si no hi ha errors, afegim la solicitud a la llista del receptor
+    receptor->solicituds[receptor->num_solicituds] = emisor;
+    receptor->num_solicituds++;
+
+    return 0;
+}
+*/
+
+
+
 /*
 void enviar_solicituds(User *usuari1) {
     User usuari2;
@@ -171,7 +215,7 @@ void opcio3(user_list *Llista) {
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
         if (strcmp(usuari, current->nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
             if (checkPassword(current) == 1) {
-                printf_menu();
+                printf_menu(); //¡¡¡Aquí el menu no s'imprimeix quan toca!!!
                 permis = 0;
             }
         } else {
@@ -237,6 +281,7 @@ void opcio3(user_list *Llista) {
 
             } else if (opcio3 == 2) {
                 printf("Envia solicitud a: ");
+                //enviar_solicitud(usuari, usuari);
                 ///receptor
                 ///enviar_solicituds(usuari, receptor);
             } else if (opcio3 == 3) {
