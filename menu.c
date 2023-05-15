@@ -85,6 +85,9 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
     scanf("%s", usuari -> gust4);
     scanf("%s", usuari -> gust5);
 
+    usuari->num_amics = 0;
+    usuari->num_solicituds = 0;
+
     usuari -> next = NULL;                  // així sabem quan s'ha arribat al final de la llista en recórrer-la
 }
 
@@ -141,46 +144,79 @@ int checkPassword(User *usuari) {
     }
 }
 
-/*int enviar_solicitud(User* emisor, User* receptor) {
-    // Mirem que els paràmetres no estiguin buits
-    if (emisor == NULL || receptor == NULL) {
+int enviar_solicitud(user_list* Llista) {
+    User* current = Llista->head;
+    char receptor[MAX_LENGTH];
+    printf("A qui vols enviar-li una sol·licitud?");
+    scanf("%s", receptor);
+
+    // Buscamos al receptor en la lista
+    int index = -1;
+    for (int i = 0; i < Llista->num_persones; i++) {
+        if (strcmp(current->nom, receptor) == 0) {
+            index = i;
+            break;
+        }
+        current++;
+    }
+
+    if (index == -1) {
+        printf("El receptor no existeix a la llista.\n");
         return -1;
     }
-    //Comprovem que emisor i receptor no siguin els mateixos
-    if (emisor == receptor) {
+
+    User* receptor_user = Llista->head + index;
+
+    // Movemos el puntero al usuario receptor
+    for (int i = 0; i < index; i++) {
+        receptor_user = receptor_user->next;
+    }
+
+    // Mirem que los parámetros no estén vacíos
+    if (current == NULL || receptor_user == NULL) {
         return -1;
     }
-    //Mirem si el emisor no tingui ja al receptor com a amic
-    for (int i = 0; i < emisor->num_amics; i++) {
-        if (emisor->amics[i] == receptor) {
+
+    // Comprobamos que emisor y receptor no sean los mismos
+    if (current == receptor_user) {
+        return -1;
+    }
+
+    // Mirem si el emisor ya tiene al receptor como amigo
+    for (int i = 0; i < current->num_amics; i++) {
+        if (current->amics[i] == receptor_user) {
             return -1;
         }
     }
-    //Mirem si el receptor no tingui ja al emisor com a amic
-    for (int i = 0; i < receptor->num_amics; i++) {
-        if (receptor->amics[i] == emisor) {
+
+    // Mirem si el receptor ya tiene al emisor como amigo
+    for (int i = 0; i < receptor_user->num_amics; i++) {
+        if (receptor_user->amics[i] == current) {
             return -1;
         }
     }
-    //Comprovem que el emisor no hagi enviat ja una solicitud d'amistat al receptor
-    for (int i = 0; i < emisor->num_solicituds; i++) {
-        if (emisor->solicituds[i] == receptor) {
+
+    // Comprobamos que el emisor no haya enviado ya una solicitud de amistad al receptor
+    for (int i = 0; i < current->num_solicituds; i++) {
+        if (current->solicituds[i] == receptor_user) {
             return -1;
         }
     }
-    //Mirem que el receptor no hagi rebut ja una solicitud del emisor
-    for (int i = 0; i < receptor->num_solicituds; i++) {
-        if (receptor->solicituds[i] == emisor) {
+
+    // Mirem que el receptor no haya recibido ya una solicitud del emisor
+    for (int i = 0; i < receptor_user->num_solicituds; i++) {
+        if (receptor_user->solicituds[i] == current) {
             return -1;
         }
     }
-    //si no hi ha errors, afegim la solicitud a la llista del receptor
-    receptor->solicituds[receptor->num_solicituds] = emisor;
-    receptor->num_solicituds++;
+
+    // Si no hay errores, añadimos la solicitud a la lista del receptor
+    receptor_user->solicituds[receptor_user->num_solicituds] = current;
+    receptor_user->num_solicituds++;
 
     return 0;
 }
-*/
+
 
 
 
@@ -300,7 +336,7 @@ void opcio3(user_list *Llista) {
 
             } else if (opcio3 == 2) {
                 printf("Envia solicitud a: ");
-                //enviar_solicitud(usuari, usuari);
+                enviar_solicitud(Llista);
                 ///receptor
                 ///enviar_solicituds(usuari, receptor);
             } else if (opcio3 == 3) {
@@ -407,3 +443,4 @@ int resp_bol() {
     }
     return 0;
 }
+

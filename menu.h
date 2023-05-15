@@ -23,9 +23,13 @@ typedef struct {
 
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds
     struct User* amics[MAX_AMICS];
-    struct User* num_solicituds;
+    int num_solicituds;
     char* solicituds[MAX_SOLICITUDS];
 }User;
+typedef struct{
+    char emisor;
+
+};
 
 
 typedef struct user_list {          // Linked list
@@ -49,8 +53,7 @@ void afegir_usuari(user_list* llista, User* usuari);
 
 int checkPassword(User *usuari);
 
-//void enviar_solicitud(User *emisor, User *receptor);
-
+int enviar_solicitud(user_list *Llista);
 
 void llegir_usuaris_desde_arxiu(user_list* Llista);
 
