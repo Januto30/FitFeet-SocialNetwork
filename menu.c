@@ -157,7 +157,7 @@ int enviar_solicitud(user_list* Llista) {
             index = i;
             break;
         }
-        current++;
+        current = current->next;
     }
     //fyffy
 
