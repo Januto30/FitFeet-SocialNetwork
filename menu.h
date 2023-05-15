@@ -18,7 +18,7 @@ typedef struct {
     char gust3[MAX_LENGTH];
     char gust4[MAX_LENGTH];
     char gust5[MAX_LENGTH];
-
+//ghg
     struct User* next;              // Com que volem que la llista tingui més d'un usuari, connectem els nodes entre ells
 
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds

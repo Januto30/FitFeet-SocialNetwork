@@ -159,6 +159,7 @@ int enviar_solicitud(user_list* Llista) {
         }
         current++;
     }
+    //fyffy
 
     if (index == -1) {
         printf("El receptor no existeix a la llista.\n");
