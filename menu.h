@@ -59,4 +59,6 @@ void guardar_usuaris_en_arxiu(user_list* Llista);
 void opcio3(user_list *Llista);
 
 void printf_menu();
+
+int resp_bol();
 #endif //FITFEET_MENU_H

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
 #define MAX_USERS 100
 
 void menu() {
@@ -214,79 +215,87 @@ void opcio3(user_list *Llista) {
     printf("\n---Quin usuari ets?---\n");
     print_users(Llista);
     scanf("%s", usuari);
-
+    int verif = 0;
     User *current = Llista->head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
-        if (strcmp(usuari, current->nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
-            if (checkPassword(current) == 1) {
-                printf_menu(); //¡¡¡Aquí el menu no s'imprimeix quan toca!!!
-                permis = 0;
+        if (verif == 0) {
+            if (strcmp(usuari, current->nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
+                if (checkPassword(current) == 1) {
+                    permis = 0;
+                    verif = 1;
+                }
+            } else {
+                current = current->next;                  // actualitza el valor de current, ara apunta al següent node de la llista
+                verif = 0;
             }
-        } else {
-            current = current->next;                  // actualitza el valor de current, ara apunta al següent node de la llista
         }
         if (permis == 0) {
+            printf_menu();
             printf("Tria l'opcio desitjada: ");
             scanf("%d", &opcio3);
             if (opcio3 == 1) {
-                char option_3[10];
-                printf("==========================\n");
-                printf("|     Dades personals    |\n");
-                printf("|========================|\n");
-                printf("| Nom:      %s\n", current->nom);
-                printf("| Cognom:   %s\n", current->cognom1);
-                printf("| 2n Cognom: %s\n", current->cognom2);
-                printf("| Edat:     %d\n", current->edat);
-                printf("| Correu:   %s\n", current->correu);
-                printf("| Ubicacio: %s\n", current->ubi);
-                printf("|========================|\n");
-                printf("|         Gustos         |\n");
-                printf("|========================|\n");
-                printf("| Gust 1:   %s\n", current->gust1);
-                printf("| Gust 2:   %s\n", current->gust2);
-                printf("| Gust 3:   %s\n", current->gust3);
-                printf("| Gust 4:   %s\n", current->gust4);
-                printf("| Gust 5:   %s\n", current->gust5);
-                printf("==========================\n");
-                printf("Vols canviar alguna dada ?");
-                scanf("%s", option_3);
+                while (opcio3 == 1){
+                    char option_3[10];
+                    printf("==========================\n");
+                    printf("|     Dades personals    |\n");
+                    printf("|========================|\n");
+                    printf("| Nom:      %s\n", current->nom);
+                    printf("| Cognom:   %s\n", current->cognom1);
+                    printf("| 2n Cognom: %s\n", current->cognom2);
+                    printf("| Edat:     %d\n", current->edat);
+                    printf("| Correu:   %s\n", current->correu);
+                    printf("| Ubicacio: %s\n", current->ubi);
+                    printf("|========================|\n");
+                    printf("|         Gustos         |\n");
+                    printf("|========================|\n");
+                    printf("| Gust 1:   %s\n", current->gust1);
+                    printf("| Gust 2:   %s\n", current->gust2);
+                    printf("| Gust 3:   %s\n", current->gust3);
+                    printf("| Gust 4:   %s\n", current->gust4);
+                    printf("| Gust 5:   %s\n", current->gust5);
+                    printf("==========================\n");
 
-                if (strcmp(option_3, "Sí") == 0 || strcmp(option_3, "Si") == 0) {
-                    char option_3_1[MAX_LENGTH];
-                    printf("Quina?");
-                    scanf("%s", option_3_1);
-                    if (strcmp(option_3_1, "Nom") == 0 || strcmp(option_3_1, "nom") == 0) {
-                        scanf("%s", current->nom);
-                    } else if (strcmp(option_3_1, "Cognom") == 0 || strcmp(option_3_1, "cognom") == 0) {
-                        scanf("%s", current->cognom1);
-                    } else if (strcmp(option_3_1, "2n Cognom") == 0 || strcmp(option_3_1, "2n cognom") == 0) {
-                        scanf("%s", current->cognom2);
-                    } else if (strcmp(option_3_1, "Edat") == 0 || strcmp(option_3_1, "edat") == 0) {
-                        scanf("%s", current->edat);
-                    } else if (strcmp(option_3_1, "Correu") == 0 || strcmp(option_3_1, "correu") == 0) {
-                        scanf("%s", current->correu);
-                    } else if (strcmp(option_3_1, "Ubicació") == 0 || strcmp(option_3_1, "ubicació") == 0) {
-                        scanf("%s", current->ubi);
-                    } else if (strcmp(option_3_1, "Gust 1") == 0 || strcmp(option_3_1, "gust 1") == 0) {
-                        scanf("%s", current->gust1);
-                    } else if (strcmp(option_3_1, "Gust 2") == 0 || strcmp(option_3_1, "gust 2") == 0) {
-                        scanf("%s", current->gust2);
-                    } else if (strcmp(option_3_1, "Gust 3") == 0 || strcmp(option_3_1, "gust 3") == 0) {
-                        scanf("%s", current->gust3);
-                    } else if (strcmp(option_3_1, "Gust 4") == 0 || strcmp(option_3_1, "gust 4") == 0) {
-                        scanf("%s", current->gust4);
-                    } else if (strcmp(option_3_1, "Gust 5") == 0 || strcmp(option_3_1, "gust 5") == 0) {
-                        scanf("%s", current->gust5);
-                    }
-                    printf("Vols canviar alguna altre dada?");
-                    scanf("%s", option_3);
-                    if (strcmp(option_3, "Sí") == 0 || strcmp(option_3, "Si") == 0) {
-                        opcio3 = 0;
+                    if (resp_bol() == 1) {
+                        char option_3_1[MAX_LENGTH];
+                        printf("Quina? ");
+                        scanf("%s", option_3_1);
+                        if (strcmp(option_3_1, "Nom") == 0 || strcmp(option_3_1, "nom") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->nom);
+                        } else if (strcmp(option_3_1, "Cognom") == 0 || strcmp(option_3_1, "cognom") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->cognom1);
+                        } else if (strcmp(option_3_1, "2nCognom") == 0 || strcmp(option_3_1, "2ncognom") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->cognom2);
+                        } else if (strcmp(option_3_1, "Edat") == 0 || strcmp(option_3_1, "edat") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%d", &current->edat);
+                        } else if (strcmp(option_3_1, "Correu") == 0 || strcmp(option_3_1, "correu") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->correu);
+                        } else if (strcmp(option_3_1, "Ubicació") == 0 || strcmp(option_3_1, "ubicació") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "Ubicacio") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->ubi);
+                        } else if (strcmp(option_3_1, "Gust1") == 0 || strcmp(option_3_1, "gust1") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->gust1);
+                        } else if (strcmp(option_3_1, "Gust2") == 0 || strcmp(option_3_1, "gust2") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->gust2);
+                        } else if (strcmp(option_3_1, "Gust3") == 0 || strcmp(option_3_1, "gust3") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->gust3);
+                        } else if (strcmp(option_3_1, "Gust4") == 0 || strcmp(option_3_1, "gust4") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->gust4);
+                        } else if (strcmp(option_3_1, "Gust5") == 0 || strcmp(option_3_1, "gust5") == 0) {
+                            printf("Ja pots introduir el canvi: ");
+                            scanf("%s", current->gust5);
+                        }
                     } else {
                         break;
                     }
-
-
                 }
 
             } else if (opcio3 == 2) {
@@ -314,7 +323,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "w");
 
     if (arxiu == NULL) {
-        printf("No se pudo abrir el archivo.\n");
+        printf("No s'ha pogut obrir el fitxer.\n");
         return;
     }
 
@@ -376,4 +385,25 @@ void printf_menu(){
     printf("---| 4. Realitzar una publicacio      |---\n");
     printf("---| 5. Llistar les publicacions      |---\n");
     printf("---| 6. Sortir                        |---\n");
+}
+
+int resp_bol() {
+    char resposta[10];
+    bool respostaValida = false;
+
+    while (!respostaValida) {
+        printf("Vols modificar alguna opcio? (si/no): ");
+        scanf("%s", resposta);
+
+        if (strcmp(resposta, "si") == 0) {
+            respostaValida = true;
+            return 1;
+        } else if (strcmp(resposta, "no") == 0) {
+            respostaValida = true;
+            return 0;
+        } else {
+            printf("Resposta invalida. Si us plau, introdueix 'si' o 'no'.\n");
+        }
+    }
+    return 0;
 }
