@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #define MAX_USERS 100
 
 void menu() {
@@ -36,13 +37,16 @@ int print_option(int option, user_list *Llista) {
         printf("------INSERTAR NOU USUARI------\n");
         emmagatzema_dades(usuari);
         afegir_usuari(Llista, usuari);
-
+        return 0;
     } else if (option == 2) {
         printf("------LLISTAR TOTS ELS USUARIS EXISTENTS------\n");
         print_users(Llista);
+        sleep(1.5);
+        return 0;
 
     } else if (option == 3) {
         opcio3(Llista);
+        return 0;
 
     } else if (option == 4) {
         return 1;
@@ -221,7 +225,6 @@ void opcio3(user_list *Llista) {
         } else {
             current = current->next;                  // actualitza el valor de current, ara apunta al següent node de la llista
         }
-        /// Tot aquest tros del codi no pot anar aquí ja que en la línia 172 (la se a sobre) itera el usuari en qüestió.
         if (permis == 0) {
             printf("Tria l'opcio desitjada: ");
             scanf("%d", &opcio3);

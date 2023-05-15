@@ -11,8 +11,7 @@ int main() {
         int option1;
         menu();
         option1 = select_option();
-        if (print_option(option1, &Llista)==1)
-        {
+        if (print_option(option1, &Llista)==1){
             guardar_usuaris_en_arxiu(&Llista);
             break;
         }
