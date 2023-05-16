@@ -346,10 +346,10 @@ void opcio3(user_list *Llista) {
                 current = Llista->head;
             } else if (opcio3 == 3) {
                 if (current->num_solicituds == 0){
-                    printf("No tens sol·licituds d'amistat pendents.\n");
+                    printf("No tens sol.licituds d'amistat pendents.\n");
                 }
                 else{
-                    printf("\n|--Sol·licituds Pendents--|\n");
+                    printf("\n|--Sol.licituds Pendents--|\n");
                     for(int i = 1; i <= current->num_solicituds; i++){
                         printf("%d", i);
                         printf(". %s", current->solicituds[i]);
