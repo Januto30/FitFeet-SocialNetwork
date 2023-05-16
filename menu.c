@@ -173,7 +173,7 @@ int enviar_solicitud(user_list* Llista) {
     for (int i = 0; i < index; i++) {
         receptor_user = receptor_user->next;
     }
-
+//
     // Mirem que los parámetros no estén vacíos
     if (current == NULL || receptor_user == NULL) {
         return -1;
