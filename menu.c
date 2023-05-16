@@ -146,6 +146,7 @@ int checkPassword(User *usuari) {
 
 int enviar_solicitud(user_list* Llista) {
     User* current = Llista->head;
+    User* iterar_llista = Llista->head;
     char receptor[MAX_LENGTH];
     printf("A qui vols enviar-li una sol·licitud?");
     scanf("%s", receptor);
@@ -153,11 +154,11 @@ int enviar_solicitud(user_list* Llista) {
     // Buscamos al receptor en la lista
     int index = -1;
     for (int i = 0; i < Llista->num_persones; i++) {
-        if (strcmp(current->nom, receptor) == 0) {
+        if (strcmp(iterar_llista->nom, receptor) == 0) {
             index = i;
             break;
         }
-        current = current->next;
+        iterar_llista = iterar_llista->next;
     }
     //fyffy
 
@@ -166,7 +167,7 @@ int enviar_solicitud(user_list* Llista) {
         return -1;
     }
 
-    User* receptor_user = Llista->head + index;
+    User* receptor_user = iterar_llista;
 
     // Movemos el puntero al usuario receptor
     for (int i = 0; i < index; i++) {
@@ -340,8 +341,18 @@ void opcio3(user_list *Llista) {
                 enviar_solicitud(Llista);
                 ///receptor
                 ///enviar_solicituds(usuari, receptor);
+                current = Llista->head;
             } else if (opcio3 == 3) {
-
+                if (current->num_solicituds == 0){
+                    printf("No tens sol·licituds d'amistat pendents.\n");
+                }
+                else{
+                    printf("\n|--Sol·licituds Pendents--|\n");
+                    for(int i = 1; i <= current->num_solicituds; i++){
+                        printf("%d", i);
+                        printf(". %s", current->solicituds[i]);
+                    }
+                }
 
             } else if (opcio3 == 4) {
 
