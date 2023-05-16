@@ -24,7 +24,7 @@ typedef struct {
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds
     struct User* amics[MAX_AMICS];
     int num_solicituds;
-    struct User* solicituds[MAX_SOLICITUDS];
+    char* solicituds[MAX_SOLICITUDS];
 } User;
 
 

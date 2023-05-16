@@ -145,31 +145,33 @@ int checkPassword(User *usuari) {
 }
 
 int enviar_solicitud(user_list* Llista) {
-    User* current = Llista->head;
-    User* iterar_llista = Llista->head;
+    User* current = Llista -> head;
+    User* iterar_llista = Llista -> head;
     char receptor[MAX_LENGTH];
     printf("A qui vols enviar-li una sol·licitud?");
     scanf("%s", receptor);
 
     // Buscamos al receptor en la lista
     int index = -1;
-    for (int i = 0; i <= Llista->num_persones; i++) {
-        if (strcmp(iterar_llista->nom, receptor) == 0) {
+    for (int i = 0; i < Llista -> num_persones; i++) {
+        if (strcmp(iterar_llista -> nom, receptor) == 0) {
             index = i;
             break;
         }
-        iterar_llista = iterar_llista->next;
+        iterar_llista = iterar_llista -> next;
     }
     //fyffy
 
 
     User* receptor_user = iterar_llista;
 
+/*
     // Movemos el puntero al usuario receptor
-    //for (int i = 0; i < index; i++) {
-    //    receptor_user = receptor_user->next;
-    // }
-//
+    for (int i = 0; i < index; i++) {
+        receptor_user = receptor_user->next;
+    }
+*/
+
     // Mirem que los parámetros no estén vacíos
     if (current == NULL || receptor_user == NULL) {
         return -1;
@@ -181,29 +183,29 @@ int enviar_solicitud(user_list* Llista) {
     }
 
     // Mirem si el emisor ya tiene al receptor como amigo
-    for (int i = 0; i < current->num_amics; i++) {
-        if (current->amics[i] == receptor_user) {
+    for (int i = 0; i < current -> num_amics; i++) {
+        if (current -> amics[i] == receptor_user) {
             return -1;
         }
     }
 
     // Mirem si el receptor ya tiene al emisor como amigo
-    for (int i = 0; i < receptor_user->num_amics; i++) {
-        if (receptor_user->amics[i] == current) {
+    for (int i = 0; i < receptor_user -> num_amics; i++) {
+        if (receptor_user -> amics[i] == current) {
             return -1;
         }
     }
 
     // Comprobamos que el emisor no haya enviado ya una solicitud de amistad al receptor
-    for (int i = 0; i < current->num_solicituds; i++) {
-        if (current->solicituds[i] == receptor_user) {
+    for (int i = 0; i < current -> num_solicituds; i++) {
+        if (current -> solicituds[i] == receptor_user) {
             return -1;
         }
     }
 
     // Mirem que el receptor no haya recibido ya una solicitud del emisor
-    for (int i = 0; i < receptor_user->num_solicituds; i++) {
-        if (receptor_user->solicituds[i] == current) {
+    for (int i = 0; i < receptor_user -> num_solicituds; i++) {
+        if (receptor_user -> solicituds[i] == current) {
             return -1;
         }
     }
@@ -214,9 +216,9 @@ int enviar_solicitud(user_list* Llista) {
     }
 
     // Si no hay errores, añadimos la solicitud a la lista del receptor
-    receptor_user->solicituds[receptor_user->num_solicituds] = current;
-    receptor_user->num_solicituds++;
-    printf("Sol·licitud enviada amb exit.");
+    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;
+    receptor_user -> num_solicituds++;
+    printf("Solicitud enviada amb exit.");
 
     return 0;
 }
@@ -256,16 +258,16 @@ void opcio3(user_list *Llista) {
     print_users(Llista);
     scanf("%s", usuari);
     int verif = 0;
-    User *current = Llista->head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
+    User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
         if (verif == 0) {
-            if (strcmp(usuari, current->nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
+            if (strcmp(usuari, current -> nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
                 if (checkPassword(current) == 1) {
                     permis = 0;
                     verif = 1;
                 }
             } else {
-                current = current->next;                  // actualitza el valor de current, ara apunta al següent node de la llista
+                current = current -> next;                  // actualitza el valor de current, ara apunta al següent node de la llista
                 verif = 0;
             }
         }
@@ -279,20 +281,20 @@ void opcio3(user_list *Llista) {
                     printf("==========================\n");
                     printf("|     Dades personals    |\n");
                     printf("|========================|\n");
-                    printf("| Nom:      %s\n", current->nom);
-                    printf("| Cognom:   %s\n", current->cognom1);
-                    printf("| 2n Cognom: %s\n", current->cognom2);
-                    printf("| Edat:     %d\n", current->edat);
-                    printf("| Correu:   %s\n", current->correu);
-                    printf("| Ubicacio: %s\n", current->ubi);
+                    printf("| Nom:      %s\n", current -> nom);
+                    printf("| Cognom:   %s\n", current -> cognom1);
+                    printf("| 2n Cognom: %s\n", current -> cognom2);
+                    printf("| Edat:     %d\n", current -> edat);
+                    printf("| Correu:   %s\n", current -> correu);
+                    printf("| Ubicacio: %s\n", current -> ubi);
                     printf("|========================|\n");
                     printf("|         Gustos         |\n");
                     printf("|========================|\n");
-                    printf("| Gust 1:   %s\n", current->gust1);
-                    printf("| Gust 2:   %s\n", current->gust2);
-                    printf("| Gust 3:   %s\n", current->gust3);
-                    printf("| Gust 4:   %s\n", current->gust4);
-                    printf("| Gust 5:   %s\n", current->gust5);
+                    printf("| Gust 1:   %s\n", current -> gust1);
+                    printf("| Gust 2:   %s\n", current -> gust2);
+                    printf("| Gust 3:   %s\n", current -> gust3);
+                    printf("| Gust 4:   %s\n", current -> gust4);
+                    printf("| Gust 5:   %s\n", current -> gust5);
                     printf("==========================\n");
 
                     if (resp_bol() == 1) {
@@ -301,37 +303,37 @@ void opcio3(user_list *Llista) {
                         scanf("%s", option_3_1);
                         if (strcmp(option_3_1, "Nom") == 0 || strcmp(option_3_1, "nom") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->nom);
+                            scanf("%s", current -> nom);
                         } else if (strcmp(option_3_1, "Cognom") == 0 || strcmp(option_3_1, "cognom") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->cognom1);
+                            scanf("%s", current -> cognom1);
                         } else if (strcmp(option_3_1, "2nCognom") == 0 || strcmp(option_3_1, "2ncognom") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->cognom2);
+                            scanf("%s", current -> cognom2);
                         } else if (strcmp(option_3_1, "Edat") == 0 || strcmp(option_3_1, "edat") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%d", &current->edat);
+                            scanf("%d", &current -> edat);
                         } else if (strcmp(option_3_1, "Correu") == 0 || strcmp(option_3_1, "correu") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->correu);
+                            scanf("%s", current -> correu);
                         } else if (strcmp(option_3_1, "Ubicació") == 0 || strcmp(option_3_1, "ubicació") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "Ubicacio") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->ubi);
+                            scanf("%s", current -> ubi);
                         } else if (strcmp(option_3_1, "Gust1") == 0 || strcmp(option_3_1, "gust1") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->gust1);
+                            scanf("%s", current -> gust1);
                         } else if (strcmp(option_3_1, "Gust2") == 0 || strcmp(option_3_1, "gust2") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->gust2);
+                            scanf("%s", current -> gust2);
                         } else if (strcmp(option_3_1, "Gust3") == 0 || strcmp(option_3_1, "gust3") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->gust3);
+                            scanf("%s", current -> gust3);
                         } else if (strcmp(option_3_1, "Gust4") == 0 || strcmp(option_3_1, "gust4") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->gust4);
+                            scanf("%s", current -> gust4);
                         } else if (strcmp(option_3_1, "Gust5") == 0 || strcmp(option_3_1, "gust5") == 0) {
                             printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current->gust5);
+                            scanf("%s", current -> gust5);
                         }
                     } else {
                         break;
@@ -341,18 +343,16 @@ void opcio3(user_list *Llista) {
             } else if (opcio3 == 2) {
                 printf("Envia solicitud a: ");
                 enviar_solicitud(Llista);
-                ///receptor
-                ///enviar_solicituds(usuari, receptor);
-                current = Llista->head;
+                current = Llista -> head;
             } else if (opcio3 == 3) {
-                if (current->num_solicituds == 0){
+                if (current -> num_solicituds == 0){
                     printf("No tens sol.licituds d'amistat pendents.\n");
                 }
                 else{
                     printf("\n|--Sol.licituds Pendents--|\n");
-                    for(int i = 1; i <= current->num_solicituds; i++){
+                    for(int i = 1; i <= current -> num_solicituds; i++){
                         printf("%d", i);
-                        printf(". %s", current->solicituds[i]);
+                        printf(". %s", current -> solicituds[i]);
                     }
                 }
 
@@ -377,10 +377,10 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
         return;
     }
 
-    User* current = Llista->head;
+    User* current = Llista -> head;
     while (current != NULL) {
         fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
-        current = current->next;
+        current = current -> next;
     }
 
     fclose(arxiu);
@@ -410,10 +410,9 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         strcpy(user->gust4, gust4);
         strcpy(user->gust5, gust5);
         user->next = NULL;
-        Llista->num_persones ++;
-        user->num_solicituds = 0;
-        user->num_amics = 0;
-        //user
+        Llista -> num_persones++;
+        user -> num_solicituds = 0;
+        user -> num_amics = 0;
 
         if (Llista->head == NULL) {
             Llista->head = user;
