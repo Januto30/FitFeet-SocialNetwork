@@ -161,10 +161,6 @@ int enviar_solicitud(user_list* Llista) {
     }
     //fyffy
 
-    if (index == -1) {
-        printf("El receptor no existeix a la llista.\n");
-        return -1;
-    }
 
     User* receptor_user = Llista->head + index;
 
@@ -209,6 +205,11 @@ int enviar_solicitud(user_list* Llista) {
         if (receptor_user->solicituds[i] == current) {
             return -1;
         }
+    }
+
+    if (index == -1) {
+        printf("El receptor no existeix a la llista.\n");
+        return -1;
     }
 
     // Si no hay errores, añadimos la solicitud a la lista del receptor
