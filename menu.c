@@ -113,7 +113,7 @@ void afegir_usuari(user_list* llista, User* usuari) {
         }
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
     }
-    llista -> num_persones++;               // s'actualitza el nombre de elements de la llista
+    //llista -> num_persones++;               // s'actualitza el nombre de elements de la llista
 }
 
 void print_users(user_list *Llista) {
@@ -153,7 +153,7 @@ int enviar_solicitud(user_list* Llista) {
 
     // Buscamos al receptor en la lista
     int index = -1;
-    for (int i = 0; i < Llista->num_persones; i++) {
+    for (int i = 0; i <= Llista->num_persones; i++) {
         if (strcmp(iterar_llista->nom, receptor) == 0) {
             index = i;
             break;
@@ -166,9 +166,9 @@ int enviar_solicitud(user_list* Llista) {
     User* receptor_user = iterar_llista;
 
     // Movemos el puntero al usuario receptor
-    for (int i = 0; i < index; i++) {
-        receptor_user = receptor_user->next;
-    }
+    //for (int i = 0; i < index; i++) {
+    //    receptor_user = receptor_user->next;
+    // }
 //
     // Mirem que los parámetros no estén vacíos
     if (current == NULL || receptor_user == NULL) {
@@ -216,6 +216,7 @@ int enviar_solicitud(user_list* Llista) {
     // Si no hay errores, añadimos la solicitud a la lista del receptor
     receptor_user->solicituds[receptor_user->num_solicituds] = current;
     receptor_user->num_solicituds++;
+    printf("Sol·licitud enviada amb exit.");
 
     return 0;
 }
@@ -409,6 +410,10 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         strcpy(user->gust4, gust4);
         strcpy(user->gust5, gust5);
         user->next = NULL;
+        Llista->num_persones ++;
+        user->num_solicituds = 0;
+        user->num_amics = 0;
+        //user
 
         if (Llista->head == NULL) {
             Llista->head = user;
