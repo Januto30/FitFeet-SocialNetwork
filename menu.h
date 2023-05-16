@@ -25,11 +25,7 @@ typedef struct {
     struct User* amics[MAX_AMICS];
     int num_solicituds;
     char* solicituds[MAX_SOLICITUDS];
-}User;
-typedef struct{
-    char emisor;
-
-};
+} User;
 
 
 typedef struct user_list {          // Linked list
