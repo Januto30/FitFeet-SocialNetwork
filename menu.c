@@ -358,10 +358,10 @@ void opcio3(user_list *Llista) {
                 }
 
             } else if (opcio3 == 4) {
-
+                fer_publicacio(usuari);
 
             } else if (opcio3 == 5) {
-
+                Timeline(usuari);
 
             } else if (opcio3 == 6){
                 break;
@@ -467,3 +467,41 @@ int resp_bol() {
     return 0;
 }
 
+void fer_publicacio(User* usuari) {
+    char text[MAX_CHARACTERS+1];
+    printf("Introdueix el text de la publicacio (maxim %d caràcters): ", MAX_CHARACTERS);
+    scanf(" %[^\n]", text);  // Llegeix una línia de text, eliminant el caràcter de nova línia
+
+    // Crea una nova publicació
+    Publicacio* nova_publicacio = (Publicacio*)malloc(sizeof(Publicacio));
+    strncpy(nova_publicacio->text, text, MAX_CHARACTERS);
+    nova_publicacio->seguent = NULL;
+
+    // Comprova si l'usuari ja té alguna publicació
+    if (usuari->publicacions == NULL) {
+        usuari->publicacions = nova_publicacio;  // Si no té cap publicació, assigna la nova com a primera
+    } else {
+        // Recorre la llista de publicacions fins a l'última
+        Publicacio* publicacio_actual = usuari->publicacions;
+        while (publicacio_actual->seguent != NULL) {
+            publicacio_actual = publicacio_actual->seguent;
+        }
+        // Afegeix la nova publicació al final de la llista
+        publicacio_actual->seguent = nova_publicacio;
+    }
+}
+
+void Timeline(User* usuari) {
+    printf("Timeline de l'usuari %s:\n", usuari->nom);
+
+    if (usuari->publicacions == NULL) {
+        printf("El timeline està buit.\n");
+        return;
+    }
+
+    Publicacio* publicacio_actual = usuari->publicacions;
+    while (publicacio_actual != NULL) {
+        printf("- %s\n", publicacio_actual->text);
+        publicacio_actual = publicacio_actual->seguent;
+    }
+}
