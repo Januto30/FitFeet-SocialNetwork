@@ -86,8 +86,8 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
     scanf("%s", usuari -> gust4);
     scanf("%s", usuari -> gust5);
 
-    usuari->num_amics = 0;
-    usuari->num_solicituds = 0;
+    usuari -> num_amics = 0;
+    usuari -> num_solicituds = 0;
 
     usuari -> next = NULL;                  // així sabem quan s'ha arribat al final de la llista en recórrer-la
 }
@@ -351,7 +351,7 @@ void opcio3(user_list *Llista) {
                 }
                 else{
                     printf("\n|--Sol.licituds Pendents--|\n");
-                    for(int i = 1; i <= current -> num_solicituds; i++){
+                    for(int i = 0; i < current -> num_solicituds; i++) {
                         printf("%d", i);
                         printf(". %s", current -> solicituds[i]);
                     }
