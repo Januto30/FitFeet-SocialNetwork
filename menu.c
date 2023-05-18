@@ -466,7 +466,7 @@ int resp_bol() {
     }
     return 0;
 }
-
+//dsfsd
 void fer_publicacio(User* usuari) {
     char text[MAX_CHARACTERS + 1];
     printf("Introdueix el text de la publicació (màxim %d caràcters): ", MAX_CHARACTERS);

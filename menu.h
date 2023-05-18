@@ -74,6 +74,7 @@ void printf_menu();
 int resp_bol();
 
 void fer_publicacio(User* usuari);
+//dsfsd
 
 void Timeline(User* usuari);
 #endif //FITFEET_MENU_H
