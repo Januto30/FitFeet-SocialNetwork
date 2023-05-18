@@ -259,7 +259,7 @@ void opcio3(user_list *Llista) {
     int verif = 0;
     User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
-        if (verif == 0) {
+        while (verif == 0) {
             if (strcmp(usuari, current -> nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
                 if (checkPassword(current) == 1) {
                     permis = 0;
