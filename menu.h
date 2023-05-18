@@ -8,6 +8,15 @@
 #define MAX_SOLICITUDS 100
 #define MAX_CHARACTERS 100
 
+typedef struct Publicacio {
+    char text[MAX_CHARACTERS + 1];
+    struct Publicacio* seguent;
+} Publicacio;
+
+typedef struct {
+    Publicacio* top;  // Apunta a l'element superior de la pila
+} PilaPublicacions;
+
 typedef struct {
     char nom[MAX_LENGTH];
     char password[MAX_LENGTH];
@@ -28,19 +37,13 @@ typedef struct {
     int num_solicituds;
     char* solicituds[MAX_SOLICITUDS];
     struct Publicacio* publicacions;
+    PilaPublicacions publicacio;  // Pila de publicacions de l'usuari
 } User;
-
 
 typedef struct user_list {          // Linked list
     User* head;                     // apunta al primer element de la llista
     int num_persones;               // nombre de persones a la llista
 } user_list;
-
-typedef struct Publicacio {
-    char text[MAX_CHARACTERS + 1];
-    struct Publicacio* seguent;
-} Publicacio;
-
 
 void menu();
 
