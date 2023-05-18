@@ -218,7 +218,7 @@ int enviar_solicitud(user_list* Llista) {
     // Si no hay errores, añadimos la solicitud a la lista del receptor
     receptor_user -> solicituds[receptor_user -> num_solicituds] = current;
     receptor_user -> num_solicituds++;
-    printf("Solicitud enviada amb exit.");
+    printf("Solicitud enviada amb exit.\n");
 
     return 0;
 }
@@ -353,7 +353,7 @@ void opcio3(user_list *Llista) {
                     printf("\n|--Sol.licituds Pendents--|\n");
                     for(int i = 0; i < current -> num_solicituds; i++) {
                         printf("%d", i);
-                        printf(". %s", current -> solicituds[i]);
+                        printf(". %s\n", current -> solicituds[i]);
                     }
                 }
 
