@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <ctype.h>
 #define MAX_USERS 100
 
 void menu() {
@@ -444,9 +445,14 @@ int resp_bol() {
     char resposta[10];
     bool respostaValida = false;
 
+    printf("Vols modificar alguna opcio? (si/no): ");
+
     while (!respostaValida) {
-        printf("Vols modificar alguna opcio? (si/no): ");
         scanf("%s", resposta);
+
+        for (size_t i = 0; i < strlen(resposta); i++) {
+            resposta[i] = tolower(resposta[i]);
+        }
 
         if (strcmp(resposta, "si") == 0) {
             respostaValida = true;
@@ -455,7 +461,7 @@ int resp_bol() {
             respostaValida = true;
             return 0;
         } else {
-            printf("Resposta invalida. Si us plau, introdueix 'si' o 'no'.\n");
+            printf("Resposta invalida. Introdueix una resposta correcta ('si', 'no').\n");
         }
     }
     return 0;
