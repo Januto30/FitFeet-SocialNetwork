@@ -160,7 +160,6 @@ int enviar_solicitud(user_list* Llista) {
         }
         iterar_llista = iterar_llista -> next;
     }
-    //fyffy
 
 
     User* receptor_user = iterar_llista;
@@ -344,6 +343,7 @@ void opcio3(user_list *Llista) {
                 printf("Envia solicitud a: ");
                 enviar_solicitud(Llista);
                 current = Llista -> head;
+
             } else if (opcio3 == 3) {
                 if (current -> num_solicituds == 0){
                     printf("No tens sol.licituds d'amistat pendents.\n");
