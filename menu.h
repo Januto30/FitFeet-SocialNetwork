@@ -1,6 +1,7 @@
 #ifndef FITFEET_MENU_H
 #define FITFEET_MENU_H
 #include <stdio.h>
+#include <stdbool.h>
 #define MAX_LENGTH 50
 #define MAX_PUBLICACIONES 100
 #define MAX_CARACTERES 120
@@ -53,7 +54,7 @@ int print_option(int option, user_list *Llista);
 
 void emmagatzema_dades(User *usuari);
 
-void comprovar_correu(User *usuari, char *correu);
+bool comprovar_correu(User *usuari, char *correu);
 
 void print_users(user_list *llista_usuaris);
 

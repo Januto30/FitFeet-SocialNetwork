@@ -74,7 +74,16 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
 
     printf("Introdueix el teu correu electronic: \n");
     scanf("%s", usuari -> correu);
-    comprovar_correu(usuari, usuari -> correu);         // funció per validar que el correu està ben escrit
+
+    while (1) {
+        if (comprovar_correu(usuari, usuari -> correu) == true) {       // funció per validar que el correu està ben escrit
+            printf("El correu es valid.\n\n");
+            break;
+        } else {
+            printf("El correu es invalid. Torna a introduir el teu correu: \n");
+            scanf("%s", usuari -> correu);
+        }
+    }
 
     printf("Introdueix la teva ubicacio: \n");
     scanf("%s", usuari -> ubi);
@@ -92,16 +101,43 @@ void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
     usuari -> next = NULL;                  // així sabem quan s'ha arribat al final de la llista en recórrer-la
 }
 
-void comprovar_correu(User *usuari, char *correu) {
-    while(1) {
-        if ((strchr(usuari -> correu, '@') == NULL) || strchr(usuari -> correu, '.') == NULL) {
-            printf("El correu es invalid. Torna a introduir el teu correu: \n");
-            scanf("%s", usuari -> correu);
-        } else {
-            printf("El correu es valid.\n\n");
+bool comprovar_correu(User *usuari, char *correu) {
+    int longitud = strlen(correu);
+    int posArroba = 0;
+    bool teArroba = false;
+    bool tePunt = false;
+
+    if (longitud < 5) {     // Almenys 5 caràcters
+        return false;
+    }
+
+    for (int i = 0; i < longitud; i++) {        // Comprovar que només té un '@'
+        if (correu[i] == '@') {
+            if (teArroba) {
+                return false;
+            } else {
+                teArroba = true;
+                posArroba = i;
+            }
+        }
+    }
+
+    if (!teArroba) {
+        return false;
+    }
+
+    for (int i = posArroba + 1; i < longitud; i++) {       // Comprovar que només té un '.'
+        if (correu[i] == '.') {
+            tePunt = true;
             break;
         }
     }
+
+    if (!tePunt) {
+        return false;
+    }
+
+    return true;
 }
 
 void afegir_usuari(user_list* llista, User* usuari) {
@@ -114,7 +150,6 @@ void afegir_usuari(user_list* llista, User* usuari) {
         }
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
     }
-    //llista -> num_persones++;               // s'actualitza el nombre de elements de la llista
 }
 
 void print_users(user_list *Llista) {
@@ -149,10 +184,10 @@ int enviar_solicitud(user_list* Llista) {
     User* current = Llista -> head;
     User* iterar_llista = Llista -> head;
     char receptor[MAX_LENGTH];
-    printf("A qui vols enviar-li una sol·licitud?");
+    printf("A qui vols enviar una sol.licitud?");
     scanf("%s", receptor);
 
-    // Buscamos al receptor en la lista
+    // Cerquem al receptor en la llista
     int index = -1;
     for (int i = 0; i < Llista -> num_persones; i++) {
         if (strcmp(iterar_llista -> nom, receptor) == 0) {
@@ -162,48 +197,47 @@ int enviar_solicitud(user_list* Llista) {
         iterar_llista = iterar_llista -> next;
     }
 
-
     User* receptor_user = iterar_llista;
 
 /*
-    // Movemos el puntero al usuario receptor
+    // Movem el punter al usuari receptor
     for (int i = 0; i < index; i++) {
         receptor_user = receptor_user->next;
     }
 */
 
-    // Mirem que los parámetros no estén vacíos
+    // Mirem que els paràmetres no estiguin buits
     if (current == NULL || receptor_user == NULL) {
         return -1;
     }
 
-    // Comprobamos que emisor y receptor no sean los mismos
+    // Comprovam que l'emissor i el receptor no siguin els mateixos
     if (current == receptor_user) {
         return -1;
     }
 
-    // Mirem si el emisor ya tiene al receptor como amigo
+    // Mirem si l'emissor ja té al receptor com amic
     for (int i = 0; i < current -> num_amics; i++) {
         if (current -> amics[i] == receptor_user) {
             return -1;
         }
     }
 
-    // Mirem si el receptor ya tiene al emisor como amigo
+    // Mirem si el receptor ja té a l'emissor com amic
     for (int i = 0; i < receptor_user -> num_amics; i++) {
         if (receptor_user -> amics[i] == current) {
             return -1;
         }
     }
 
-    // Comprobamos que el emisor no haya enviado ya una solicitud de amistad al receptor
+    // Comprovam que l'emissor no hagi enviat ja una sol.licitud d'amistat al receptor
     for (int i = 0; i < current -> num_solicituds; i++) {
         if (current -> solicituds[i] == receptor_user) {
             return -1;
         }
     }
 
-    // Mirem que el receptor no haya recibido ya una solicitud del emisor
+    // Mirem que el receptor no hagi rebut ja una sol.licitud de l'emissor
     for (int i = 0; i < receptor_user -> num_solicituds; i++) {
         if (receptor_user -> solicituds[i] == current) {
             return -1;
@@ -215,10 +249,10 @@ int enviar_solicitud(user_list* Llista) {
         return -1;
     }
 
-    // Si no hay errores, añadimos la solicitud a la lista del receptor
+    // Si no hi ha errors, afegim la sol.licitud a la llista del receptor
     receptor_user -> solicituds[receptor_user -> num_solicituds] = current;
     receptor_user -> num_solicituds++;
-    printf("Solicitud enviada amb exit.\n");
+    printf("Sol.licitud enviada amb exit.\n");
 
     return 0;
 }
@@ -256,7 +290,7 @@ void opcio3(user_list *Llista) {
     int opcio3, permis;
     printf("\n---Quin usuari ets?---\n");
     print_users(Llista);
-    scanf("%s", usuari);
+    scanf("%s", usuari);        /// HEM DE MIRAR QUE S'ESCRIU BÉ EL NOM
     int verif = 0;
     User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
@@ -316,7 +350,7 @@ void opcio3(user_list *Llista) {
                         } else if (strcmp(option_3_1, "Correu") == 0 || strcmp(option_3_1, "correu") == 0) {
                             printf("Ja pots introduir el canvi: ");
                             scanf("%s", current -> correu);
-                        } else if (strcmp(option_3_1, "Ubicació") == 0 || strcmp(option_3_1, "ubicació") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "Ubicacio") == 0) {
+                        } else if (strcmp(option_3_1, "Ubicacio") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "Ubicacio") == 0) {
                             printf("Ja pots introduir el canvi: ");
                             scanf("%s", current -> ubi);
                         } else if (strcmp(option_3_1, "Gust1") == 0 || strcmp(option_3_1, "gust1") == 0) {
@@ -341,7 +375,6 @@ void opcio3(user_list *Llista) {
                 }
 
             } else if (opcio3 == 2) {
-                printf("Envia solicitud a: ");
                 enviar_solicitud(Llista);
                 current = Llista -> head;
 
@@ -431,14 +464,12 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
 
 void printf_menu(){
     printf("\n");
-    printf("---| 1. Perfil                        |---\n");
-    printf("---| 2. Enviar solicituds d'amistat   |---\n");
-    // funcio enviar solitituds
-    printf("---| 3. Gestionar solicituds pendents |---\n");
-    // funcio mostrar solicituds
-    printf("---| 4. Realitzar una publicacio      |---\n");
-    printf("---| 5. Llistar les publicacions      |---\n");
-    printf("---| 6. Sortir                        |---\n");
+    printf("---| 1. Perfil                          |---\n");
+    printf("---| 2. Enviar sol.licituds d'amistat   |---\n");
+    printf("---| 3. Gestionar sol.licituds pendents |---\n");
+    printf("---| 4. Realitzar una publicacio        |---\n");
+    printf("---| 5. Llistar les publicacions        |---\n");
+    printf("---| 6. Sortir                          |---\n");
 }
 
 int resp_bol() {
@@ -466,32 +497,32 @@ int resp_bol() {
     }
     return 0;
 }
-//dsfsd
+
 void fer_publicacio(User* usuari) {
     char text[MAX_CHARACTERS + 1];
-    printf("Introdueix el text de la publicació (màxim %d caràcters): ", MAX_CHARACTERS);
-    scanf(" %[^\n]", text);  // Llegeix una línia de text, eliminant el caràcter de nova línia
+    printf("Introdueix el text de la publicacio (maxim %d caracters): ", MAX_CHARACTERS);
+    scanf(" %[^\n]", text);     // Llegeix una línia de text, eliminant el caràcter de nova línia
 
     // Crea una nova publicació
-    Publicacio* nova_publicacio = (Publicacio*)malloc(sizeof(Publicacio));
-    strncpy(nova_publicacio->text, text, MAX_CHARACTERS);
-    nova_publicacio->seguent = NULL;
+    Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
+    strncpy(nova_publicacio -> text, text, MAX_CHARACTERS);
+    nova_publicacio -> seguent = NULL;
 
     // Empila la nova publicació
-    nova_publicacio->seguent = usuari->publicacio.top;
-    usuari->publicacio.top = nova_publicacio;
+    nova_publicacio -> seguent = usuari -> publicacio.top;
+    usuari -> publicacio.top = nova_publicacio;
 }
 
 void Timeline(User* usuari) {
-    printf("Timeline de %s:\n", usuari->nom);
+    printf("Timeline de %s:\n", usuari -> nom);
 
     // Comença des del primer element de la pila
-    Publicacio* publicacio_actual = usuari->publicacio.top;
+    Publicacio* publicacio_actual = usuari -> publicacio.top;
 
     // Recorre la pila de publicacions
     while (publicacio_actual != NULL) {
-        printf("- %s\n", publicacio_actual->text);
-        publicacio_actual = publicacio_actual->seguent;
+        printf("- %s\n", publicacio_actual -> text);
+        publicacio_actual = publicacio_actual -> seguent;
     }
 
     printf("Fi del Timeline.\n");
