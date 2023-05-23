@@ -501,16 +501,14 @@ int resp_bol() {
 void fer_publicacio(User* usuari) {
     char text[MAX_CHARACTERS + 1];
     printf("Introdueix el text de la publicacio (maxim %d caracters): ", MAX_CHARACTERS);
-    scanf(" %[^\n]", text);     // Llegeix una línia de text, eliminant el caràcter de nova línia
+    scanf(" %[^\n]", text);
 
-    // Crea una nova publicació
     Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
-    strncpy(nova_publicacio -> text, text, MAX_CHARACTERS);
-    nova_publicacio -> seguent = NULL;
+    strncpy(nova_publicacio->text, text, MAX_CHARACTERS);
+    nova_publicacio->text[MAX_CHARACTERS] = '\0';
 
-    // Empila la nova publicació
-    nova_publicacio -> seguent = usuari -> publicacio.top;
-    usuari -> publicacio.top = nova_publicacio;
+    nova_publicacio->seguent = usuari->publicacio.top;
+    usuari->publicacio.top = nova_publicacio;
 }
 
 void Timeline(User* usuari) {
