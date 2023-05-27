@@ -52,9 +52,11 @@ int select_option();
 
 int print_option(int option, user_list *Llista);
 
-void emmagatzema_dades(User *usuari);
+void emmagatzema_dades(User *usuari, user_list *Llista);
 
 bool comprovar_correu(User *usuari, char *correu);
+
+bool comprovar_usuari(user_list *llista, char *nom);
 
 void print_users(user_list *llista_usuaris);
 

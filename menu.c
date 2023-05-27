@@ -37,7 +37,7 @@ int print_option(int option, user_list *Llista) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
         printf("------INSERTAR NOU USUARI------\n");
-        emmagatzema_dades(usuari);
+        emmagatzema_dades(usuari, Llista);
         afegir_usuari(Llista, usuari);
         return 0;
     } else if (option == 2) {
@@ -55,10 +55,18 @@ int print_option(int option, user_list *Llista) {
     }
 }
 
-void emmagatzema_dades(User *usuari) {         // canviar ordre de preguntes
+void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ordre de preguntes
 
-    printf("Introdueix el teu nom: \n");
-    scanf("%s", usuari -> nom);
+    while(1) {
+        printf("Introdueix el teu nom: \n");            /// No podem tenir usuaris amb so mateeix nom :/?
+        scanf("%s", usuari -> nom);
+
+        if (comprovar_usuari(Llista, usuari -> nom)) {
+            printf("L'usuari ja existeix. \n");
+        } else {
+            break;
+        }
+    }
 
     printf("Introdueix la contrasenya: \n");
     scanf("%s", usuari -> password);
@@ -140,9 +148,21 @@ bool comprovar_correu(User *usuari, char *correu) {
     return true;
 }
 
+bool comprovar_usuari(user_list* llista, char* nom) {
+    User* temp = llista -> head;
+    while (temp != NULL) {
+        if (strcmp (temp -> nom, nom) == 0) {
+            return true;
+        }
+        temp = temp -> next;
+    }
+    return false;
+}
+
 void afegir_usuari(user_list* llista, User* usuari) {
     if (llista -> head == NULL) {           // si la llista esta buida...
         llista -> head = usuari;            // el primer element de la llista és el usuari nou
+
     } else {                                // si la llista no està buida...
         User* temp = llista -> head;        // temp apunta al head
         while (temp -> next != NULL) {      // mentre no s'hagi arribat al final de la llista...
@@ -288,9 +308,27 @@ void mostrar_solicituds(User *usuari) {
 void opcio3(user_list *Llista) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
+
     printf("\n---Quin usuari ets?---\n");
     print_users(Llista);
-    scanf("%s", usuari);        /// HEM DE MIRAR QUE S'ESCRIU BÉ EL NOM
+
+    while (1) {                                     // bucle infinit per verificar que l'usuari s'introdueix correctament
+        scanf("%s", usuari);
+
+        User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
+        while (current != NULL) {
+            if (strcmp(usuari, current -> nom) == 0) {
+                permis = 0;
+                break;
+            }
+            current = current -> next;
+        }
+        if (current != NULL) {
+            break;
+        }
+        printf("Usuari incorrecta, torna a provar: \n");
+    }
+
     int verif = 0;
     User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
     while (current != NULL) {                       // mentres no s'hagi arribat al final de la llista...
@@ -312,6 +350,7 @@ void opcio3(user_list *Llista) {
             if (opcio3 == 1) {
                 while (opcio3 == 1){
                     char option_3[10];
+                    printf("\n");
                     printf("==========================\n");
                     printf("|     Dades personals    |\n");
                     printf("|========================|\n");
@@ -334,40 +373,73 @@ void opcio3(user_list *Llista) {
                     if (resp_bol() == 1) {
                         char option_3_1[MAX_LENGTH];
                         printf("Quina? ");
-                        scanf("%s", option_3_1);
-                        if (strcmp(option_3_1, "Nom") == 0 || strcmp(option_3_1, "nom") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> nom);
-                        } else if (strcmp(option_3_1, "Cognom") == 0 || strcmp(option_3_1, "cognom") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> cognom1);
-                        } else if (strcmp(option_3_1, "2nCognom") == 0 || strcmp(option_3_1, "2ncognom") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> cognom2);
-                        } else if (strcmp(option_3_1, "Edat") == 0 || strcmp(option_3_1, "edat") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%d", &current -> edat);
-                        } else if (strcmp(option_3_1, "Correu") == 0 || strcmp(option_3_1, "correu") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> correu);
-                        } else if (strcmp(option_3_1, "Ubicacio") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "ubicacio") == 0 || strcmp(option_3_1, "Ubicacio") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> ubi);
-                        } else if (strcmp(option_3_1, "Gust1") == 0 || strcmp(option_3_1, "gust1") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> gust1);
-                        } else if (strcmp(option_3_1, "Gust2") == 0 || strcmp(option_3_1, "gust2") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> gust2);
-                        } else if (strcmp(option_3_1, "Gust3") == 0 || strcmp(option_3_1, "gust3") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> gust3);
-                        } else if (strcmp(option_3_1, "Gust4") == 0 || strcmp(option_3_1, "gust4") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> gust4);
-                        } else if (strcmp(option_3_1, "Gust5") == 0 || strcmp(option_3_1, "gust5") == 0) {
-                            printf("Ja pots introduir el canvi: ");
-                            scanf("%s", current -> gust5);
+
+                        while (1) {
+                            scanf("%s", option_3_1);
+
+                            // Convertim l'opció introduïda a minúscula
+                            for (int i = 0; option_3_1[i]; i++) {
+                                option_3_1[i] = tolower(option_3_1[i]);
+                            }
+
+                            if (strcmp(option_3_1, "nom") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> nom);
+                                break;
+
+                            } else if (strcmp(option_3_1, "cognom") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> cognom1);
+                                break;
+
+                            } else if (strcmp(option_3_1, "2ncognom") == 0 || strcmp(option_3_1, "2cognom") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> cognom2);
+                                break;
+
+                            } else if (strcmp(option_3_1, "edat") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%d", &current -> edat);
+                                break;
+
+                            } else if (strcmp(option_3_1, "correu") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> correu);
+                                break;
+
+                            } else if (strcmp(option_3_1, "ubicacio") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> ubi);
+                                break;
+
+                            } else if (strcmp(option_3_1, "gust1") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> gust1);
+                                break;
+
+                            } else if (strcmp(option_3_1, "gust2") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> gust2);
+                                break;
+
+                            } else if (strcmp(option_3_1, "gust3") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> gust3);
+                                break;
+
+                            } else if (strcmp(option_3_1, "gust4") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> gust4);
+                                break;
+
+                            } else if (strcmp(option_3_1, "gust5") == 0) {
+                                printf("Ja pots introduir el canvi: ");
+                                scanf("%s", current -> gust5);
+                                break;
+
+                            } else {
+                                printf("Opcio incorrecta, introdueix una valida: ");
+                            }
                         }
                     } else {
                         break;
@@ -431,31 +503,31 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
     int edat;
     while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5) == 12) {
         User* user = (User*)malloc(sizeof(User));
-        strcpy(user->nom, nom);
-        strcpy(user->password, password);
-        strcpy(user->cognom1, cognom1);
-        strcpy(user->cognom2, cognom2);
-        user->edat = edat;
-        strcpy(user->correu, correu);
-        strcpy(user->ubi, ubi);
-        strcpy(user->gust1, gust1);
-        strcpy(user->gust2, gust2);
-        strcpy(user->gust3, gust3);
-        strcpy(user->gust4, gust4);
-        strcpy(user->gust5, gust5);
-        user->next = NULL;
+        strcpy(user -> nom, nom);
+        strcpy(user -> password, password);
+        strcpy(user -> cognom1, cognom1);
+        strcpy(user -> cognom2, cognom2);
+        user -> edat = edat;                            /// Això està bé ????
+        strcpy(user -> correu, correu);
+        strcpy(user -> ubi, ubi);
+        strcpy(user -> gust1, gust1);
+        strcpy(user -> gust2, gust2);
+        strcpy(user -> gust3, gust3);
+        strcpy(user -> gust4, gust4);
+        strcpy(user -> gust5, gust5);
+        user -> next = NULL;
         Llista -> num_persones++;
         user -> num_solicituds = 0;
         user -> num_amics = 0;
 
-        if (Llista->head == NULL) {
-            Llista->head = user;
+        if (Llista -> head == NULL) {
+            Llista -> head = user;
         } else {
-            User* current = Llista->head;
-            while (current->next != NULL) {
-                current = current->next;
+            User* current = Llista -> head;
+            while (current -> next != NULL) {
+                current = current -> next;
             }
-            current->next = user;
+            current -> next = user;
         }
     }
 
@@ -504,11 +576,11 @@ void fer_publicacio(User* usuari) {
     scanf(" %[^\n]", text);
 
     Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
-    strncpy(nova_publicacio->text, text, MAX_CHARACTERS);
-    nova_publicacio->text[MAX_CHARACTERS] = '\0';
+    strncpy(nova_publicacio -> text, text, MAX_CHARACTERS);
+    nova_publicacio -> text[MAX_CHARACTERS] = '\0';
 
-    nova_publicacio->seguent = usuari->publicacio.top;
-    usuari->publicacio.top = nova_publicacio;
+    nova_publicacio -> seguent = usuari->publicacio.top;
+    usuari -> publicacio.top = nova_publicacio;
 }
 
 void Timeline(User* usuari) {
