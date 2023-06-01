@@ -4,12 +4,22 @@
 #include <stdbool.h>
 #define MAX_LENGTH 50
 #define MAX_PUBLICACIONES 100
-#define MAX_CARACTERES 120
 #define MAX_AMICS 100
 #define MAX_SOLICITUDS 100
+#define MAX_PARAULES 1000
 #define MAX_CHARACTERS 100
 
-typedef struct Publicacio {
+typedef struct{
+    char paraula[MAX_CHARACTERS];
+    int cont;
+}Paraula;
+
+typedef struct{
+    Paraula* paraules[MAX_PARAULES];
+    int num_paraules;
+}TaulaHash;
+
+typedef struct {
     char text[MAX_CHARACTERS + 1];
     struct Publicacio* seguent;
 } Publicacio;
@@ -41,17 +51,22 @@ typedef struct {
     PilaPublicacions publicacio;  // Pila de publicacions de l'usuari
 } User;
 
-typedef struct user_list {          // Linked list
+typedef struct {                    // Linked list
     User* head;                     // apunta al primer element de la llista
     int num_persones;               // nombre de persones a la llista
 } user_list;
 
-// Definim l'estructura de la taula hash
 struct HashNode{
     int key;
     int value;
     struct HashNode* next;
 };
+
+void swap(Paraula* a, Paraula* b);
+
+int particio (Paraula* a[], int bot, int top);
+
+void quicksort (Paraula** a, int bot, int top);
 
 void menu();
 

@@ -597,3 +597,31 @@ void Timeline(User* usuari) {
 
     printf("Fi del Timeline.\n");
 }
+
+void swap(Paraula* a, Paraula* b){
+    Paraula x = *a;
+    *a = *b;
+    *b = x;
+}
+
+int particio (Paraula* a[], int bot, int top){
+    int i = bot - 1;
+    int pivot = a[top]->cont;
+
+    for(int j=bot; j<top; j++){
+        if (a[j]->cont>pivot){
+            i++;
+            swap(&a[i], &a[j]);
+        }
+    }
+    swap(&a[i+1], &a[top]);
+    return i+1;
+}
+
+void quicksort (Paraula* a[], int bot, int top){
+    if (bot<top){
+        int pivot = particio(a, bot, top);
+        quicksort(a, bot, pivot-1);
+        quicksort(a, pivot+1, top);
+    }
+}
