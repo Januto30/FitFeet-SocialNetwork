@@ -46,6 +46,13 @@ typedef struct user_list {          // Linked list
     int num_persones;               // nombre de persones a la llista
 } user_list;
 
+// Definim l'estructura de la taula hash
+struct HashNode{
+    int key;
+    int value;
+    struct HashNode* next;
+};
+
 void menu();
 
 int select_option();

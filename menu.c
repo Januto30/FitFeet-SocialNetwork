@@ -576,12 +576,12 @@ void fer_publicacio(User* usuari) {
     scanf(" %[^\n]", text);
 
     Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
-    strncpy(nova_publicacio -> text, text, MAX_CHARACTERS);
-    nova_publicacio -> text[MAX_CHARACTERS] = '\0';
+    strcpy(nova_publicacio->text, text);
 
-    nova_publicacio -> seguent = usuari->publicacio.top;
-    usuari -> publicacio.top = nova_publicacio;
+    nova_publicacio->seguent = usuari->publicacio.top;
+    usuari->publicacio.top = nova_publicacio;
 }
+
 
 void Timeline(User* usuari) {
     printf("Timeline de %s:\n", usuari -> nom);
