@@ -33,7 +33,7 @@ int select_option() {
     }
 }
 
-int print_option(int option, user_list *Llista, TaulaHash* TaulaHash) {
+int print_option(int option, user_list *Llista, Diccionari* TaulaHash) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
         printf("------INSERTAR NOU USUARI------\n");
@@ -357,7 +357,7 @@ void listar_amigos_aceptados(User* usuario) {
 
 
 
-void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
+void opcio3(user_list *Llista, Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
 
@@ -648,11 +648,6 @@ void fer_publicacio(User* usuari, TaulaHash* Taula) {
             if (Taula->num_paraules < MAX_PARAULES) {
                 afegir_paraula_nova(Taula, token);
             }
-        } if (existent != NULL){
-            if (Taula->num_paraules < MAX_PARAULES) {
-                existent->cont++;
-                Taula->num_paraules++;
-            }
         }
         token = strtok(NULL, " ");
     }
@@ -681,10 +676,10 @@ void swap(Paraula** a, Paraula** b){
 
 int particio (Paraula** a, int bot, int top){
     int i = bot - 1;
-    int pivot = a[top]->cont;
+    Paraula* pivot = a[top];
 
     for(int j=bot; j<top; j++){
-        if (a[j]->cont>pivot){
+        if (a[j]->cont>pivot->cont){
             i++;
             swap(&a[i], &a[j]);
         }
@@ -701,11 +696,12 @@ void quicksort (Paraula** a, int bot, int top){
     }
 }
 
-void trending (TaulaHash* diccionari){
+void trending (Diccionari* diccionari){
     if (diccionari->num_paraules==0){
         printf("Encara no s'ha realitzat ninguna publicacio");
         return;
     }
+    quicksort(diccionari->paraules,0,diccionari->num_paraules-1);
 
     printf("Top paraules:\n");
     for(int i=0; i<diccionari->num_paraules && i<10; i++){
@@ -714,22 +710,22 @@ void trending (TaulaHash* diccionari){
     }
 }
 
-Paraula* buscar_paraula(TaulaHash* Taula, char* word) {
+Paraula* buscar_paraula(Diccionari* Taula, char* word) {
     for (int i = 0; i < Taula->num_paraules; i++) {
         if (strcmp(Taula->paraules[i]->paraula, word) == 0) {
+            Taula->paraules[i]->cont++;
             return Taula->paraules[i];
         }
     }
     return NULL;
 }
 
-void afegir_paraula_nova(TaulaHash* Taula, char* word) {
+void afegir_paraula_nova(Diccionari* Taula, char* word) {
     Paraula* new_paraula = (Paraula*) malloc(sizeof(Paraula));
     strcpy(new_paraula->paraula, word);
     new_paraula->cont = 1;
     Taula->paraules[Taula->num_paraules] = new_paraula;
     strcpy(Taula->paraules[Taula->num_paraules]->paraula, word);
     Taula->num_paraules++;
-
 }
 

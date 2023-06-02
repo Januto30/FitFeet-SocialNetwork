@@ -11,7 +11,6 @@ int main() {
     TaulaHash* Diccionari = (TaulaHash*) malloc(sizeof(TaulaHash));
     Diccionari->num_paraules = 0;
 
-//Asd
     while (a != 0) {
         int option1;
         menu();
@@ -23,4 +22,3 @@ int main() {
     }
     return 0;
 }
-//dsfsd

@@ -21,28 +21,28 @@ INFORME:
 - Hem de dissenyar un informe de la qual tenim una plantilla per guiar-nos.
 
 STRUCTS:
-- 1 Llista dinàmica (List)  FET
-- 1 Pila (Stack)
-- 1 Cua (Queue)
+- 1 Llista dinàmica (List)  (USUARIS)
+- 1 Pila (Stack)            (PARAULES DE LES PUBLICACIONS)
+- 1 Cua (Queue)             (NO FET)
 
 ALGORITMES DE BÚSQUEDA:
-- 1 LinearSearch o 1 BinarySearch
-- 1 InsertionSort o 1 BubbleSort o 1 QuickSort
-- 1 Diccionari o 1 Taula Hash
+- 1 LinearSearch o 1 BinarySearch               (FET)
+- 1 InsertionSort o 1 BubbleSort o 1 QuickSort  (QUICKSORT)
+- 1 Diccionari o 1 Taula Hash                   (DICCIONARI)
 
 REQUISITS APART:
-- Comentar totes les funcions
-- Comentar totes les seccions de codi
+- Comentar totes les funcions                   (NO FET)
+- Comentar totes les seccions de codi           (NO FET)
 
 OPCIONAL:
-- Tenir un algoritme que llegeixi d'un FILE                                                         (0.5 punt)
-- La red social sigui temàtica amb una capa de personalització a nivell conceptual                  (1 punt)
-- Implementar grafs per consola o arbres que relacioni contactes, missatges, interessos, etc...     (1 punt)
+- Tenir un algoritme que llegeixi d'un FILE                                                         (0.5 punt) FET
+- La red social sigui temàtica amb una capa de personalització a nivell conceptual                  (1 punt) NOSESABE
+- Implementar grafs per consola o arbres que relacioni contactes, missatges, interessos, etc...     (1 punt) NO FER
 - Mesurar el temps d'execució per com a mínim tres funcions diferents del codi                      (1 punt)
 
 LLIURE:
 - Afegir una capa estètica                                                                          (2 punts)
-- Implementar les funcionalitat de lectura i guardat de dades des d'un arxiu extern (.txt o csv)    (1 punt)
+- Implementar les funcionalitat de lectura i guardat de dades des d'un arxiu extern (.txt o csv)    (1 punt) (FET)
         p.e. -> Una vegada cream un usuari nou, totes les dades proporcionades van a un arxiu extern
              -> Poder modificar les dades personals després d'haver creat l'usuari
 - Realitzar propostes de funcionalitats extres que seran negociades en classe amb el professor      (punts a negociar amb el professor)
