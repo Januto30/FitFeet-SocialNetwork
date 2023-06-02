@@ -18,7 +18,7 @@ typedef struct{
     Paraula* paraules[MAX_PARAULES];
     int num_paraules;
 }Diccionari;
-
+//xd
 typedef struct Publicacio {
     char text[MAX_CHARACTERS + 1];
     struct Publicacio* seguent;
