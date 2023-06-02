@@ -83,71 +83,77 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
 
     return 0;
 }
+
 int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
     if (receptor->num_solicituds == 0) {
         printf("No tens sol.icituds pendents.\n");
         return -1;
     }
 
-    printf("Sol.licituds pendents:\n");
+    printf("\nSol.licituds pendents:\n");
     for (int i = 0; i < receptor->num_solicituds; i++) {
         printf("%d. %s\n", i + 1, receptor->solicituds[i]->nom);
     }
 
     int opcion;
-    printf("Nombre de solicitud que vulgui gestionar (0 per sortir): ");
-    scanf("%d", &opcion);
+    while(1) {
+        printf("\nNombre de solicitud que vulgui gestionar (0 per sortir): ");
+        scanf("%d", &opcion);
 
-    if (opcion == 0) {
-        return 0;  // Salir sin gestionar solicitudes
-    } else if (opcion >= 1 && opcion <= receptor->num_solicituds) {
-        // Gestionar solicitud específica
-        User *solicitant = receptor->solicituds[opcion - 1];
+        if (opcion == 0) {
+            return 0;  // Salir sin gestionar solicitudes
 
-        printf("1. Aceptar solicitud\n");
-        printf("2. Denegar solicitud\n");
-        int opcio2;
-        printf("Posa el numero que vulguis accionar: ");
-        scanf("%d", &opcio2);
+        } else if (opcion >= 1 && opcion <= receptor->num_solicituds) {
+            // Gestionar solicitud específica
+            User *solicitant = receptor->solicituds[opcion - 1];
 
-        if (opcio2 == 1) {
-            if (receptor->num_amics < MAX_AMICS) {
-                // Afegir el amic
-                receptor->amics[receptor->num_amics] = solicitant;
-                receptor->num_amics++;
-                solicitant->num_amics++;
-                printf("Sol.licitud aceptada. Ara ets amic de %s.\n", solicitant->nom);
+            int opcio2;
+            printf("\n1. Aceptar solicitud\n");
+            printf("2. Denegar solicitud\n");
 
-                // Eliminar solicitud aceptada de la lista de solicitudes
-                for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
-                    receptor->solicituds[i] = receptor->solicituds[i + 1];
+            while(1) {
+                printf("Posa el numero que vulguis accionar: ");
+                scanf("%d", &opcio2);
+
+                if (opcio2 == 1) {
+                    if (receptor->num_amics < MAX_AMICS) {
+                        // Afegir el amic
+                        receptor->amics[receptor->num_amics] = solicitant;
+                        receptor->num_amics++;
+                        solicitant->num_amics++;
+                        printf("\nSol.licitud aceptada. Ara ets amic de %s.\n", solicitant->nom);
+
+                        // Eliminar solicitud aceptada de la lista de solicitudes
+                        for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
+                            receptor->solicituds[i] = receptor->solicituds[i + 1];
+                        }
+                        receptor->num_solicituds--;
+
+                        return 0;
+                    } else {
+                        printf("No s'ha pogut acceptar la sol.licitud. La llista d'amics esta plena.\n");
+                        return -1;  // Error: Lista de amigos llena
+                    }
+                } else if (opcio2 == 2) {
+                    printf("Sol.licitud denegada. No ets amic de %s.\n", solicitant->nom);
+
+                    // Eliminar solicitud denegada de la lista de solicitudes
+                    for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
+                        receptor->solicituds[i] = receptor->solicituds[i + 1];
+                    }
+                    receptor->num_solicituds--;
+
+                    return 0;
+                } else {
+                    printf("Opcio invalida. Torna a intentar-ho\n");
                 }
-                receptor->num_solicituds--;
-
-                return 0;
-            } else {
-                printf("No s'ha pogut acceptar la sol.licitud. La llista d'amics esta plena.\n");
-                return -1;  // Error: Lista de amigos llena
             }
-        } else if (opcio2 == 2) {
-            printf("Sol.licitud denegada. No ets amic de %s.\n", solicitant->nom);
-
-            // Eliminar solicitud denegada de la lista de solicitudes
-            for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
-                receptor->solicituds[i] = receptor->solicituds[i + 1];
-            }
-            receptor->num_solicituds--;
-
-            return 0;
         } else {
-            printf("Opcio invalida.\n");
-            return -1;
+            printf("Opcio invalida. Torna a intentar-ho\n");
         }
-    } else {
-        printf("Opcio invalida.\n");
-        return -1;
     }
 }
+
 void listar_amigos_aceptados(User* usuario) {
     printf("Amigos aceptados de %s:\n", usuario->nom);
 
