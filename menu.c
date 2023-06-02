@@ -7,6 +7,7 @@
 #include <ctype.h>
 
 void menu() {
+    printf("\n");
     printf("=========================================\n");
     printf("|           Benvingut a Feetfit         |\n");
     printf("=========================================\n");
@@ -57,7 +58,7 @@ int print_option(int option, user_list *Llista, TaulaHash* TaulaHash) {
 void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ordre de preguntes
 
     while(1) {
-        printf("Introdueix el teu nom: \n");            /// No podem tenir usuaris amb so mateeix nom :/?
+        printf("Introdueix el teu nom: \n");
         scanf("%s", usuari -> nom);
 
         if (comprovar_usuari(Llista, usuari -> nom)) {
@@ -215,7 +216,6 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
         }
         iterar_llista = iterar_llista -> next;
     }
-    //ASDADS
     User* receptor_user = iterar_llista;
 
     // Mirem que els paràmetres no estiguin buits
@@ -225,12 +225,14 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
 
     // Comprovam que l'emissor i el receptor no siguin els mateixos
     if (current == receptor_user) {
+        printf("No et pots enviar una sol.licitud a tu mateix\n");
         return -1;
     }
 
     // Mirem si l'emissor ja té al receptor com amic
     for (int i = 0; i < current -> num_amics; i++) {
         if (current -> amics[i] == receptor_user) {
+            printf("Ja sou amics\n");
             return -1;
         }
     }
@@ -238,6 +240,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Mirem si el receptor ja té a l'emissor com amic
     for (int i = 0; i < receptor_user -> num_amics; i++) {
         if (receptor_user -> amics[i] == current) {
+            printf("Ja sou amics\n");
             return -1;
         }
     }
@@ -245,6 +248,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Comprovam que l'emissor no hagi enviat ja una sol.licitud d'amistat al receptor
     for (int i = 0; i < current -> num_solicituds; i++) {
         if (current -> solicituds[i] == receptor_user) {
+            printf("Ja has enviat una sol.licitud a aquest usuari\n");
             return -1;
         }
     }
@@ -252,6 +256,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Mirem que el receptor no hagi rebut ja una sol.licitud de l'emissor
     for (int i = 0; i < receptor_user -> num_solicituds; i++) {
         if (receptor_user -> solicituds[i] == current) {
+            printf("Ja has enviat una sol.licitud a aquest usuari\n");
             return -1;
         }
     }
@@ -262,11 +267,94 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     }
 
     // Si no hi ha errors, afegim la sol.licitud a la llista del receptor
-    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;    receptor_user -> num_solicituds++;
+    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;
+    receptor_user -> num_solicituds++;
     printf("Sol.licitud enviada amb exit.\n");
 
     return 0;
 }
+
+int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
+    if (receptor->num_solicituds == 0) {
+        printf("No tens sol.icituds pendents.\n");
+        return -1;
+    }
+
+    printf("Sol.licituds pendents:\n");
+    for (int i = 0; i < receptor->num_solicituds; i++) {
+        printf("%d. %s\n", i + 1, receptor->solicituds[i]->nom);
+    }
+
+    int opcion;
+    printf("Nombre de solicitud que vulgui gestionar (0 per sortir): ");
+    scanf("%d", &opcion);
+
+    if (opcion == 0) {
+        return 0;  // Salir sin gestionar solicitudes
+    } else if (opcion >= 1 && opcion <= receptor->num_solicituds) {
+        // Gestionar solicitud específica
+        User *solicitant = receptor->solicituds[opcion - 1];
+
+        printf("1. Aceptar solicitud\n");
+        printf("2. Denegar solicitud\n");
+        int opcio2;
+        printf("Posa el numero que vulguis accionar: ");
+        scanf("%d", &opcio2);
+
+        if (opcio2 == 1) {
+            if (receptor->num_amics < MAX_AMICS) {
+                // Afegir el amic
+                receptor->amics[receptor->num_amics] = solicitant;
+                receptor->num_amics++;
+                solicitant->num_amics++;
+                printf("Sol.licitud aceptada. Ara ets amic de %s.\n", solicitant->nom);
+
+                // Eliminar solicitud aceptada de la lista de solicitudes
+                for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
+                    receptor->solicituds[i] = receptor->solicituds[i + 1];
+                }
+                receptor->num_solicituds--;
+
+                return 0;
+            } else {
+                printf("No s'ha pogut acceptar la sol.licitud. La llista d'amics esta plena.\n");
+                return -1;  // Error: Lista de amigos llena
+            }
+        } else if (opcio2 == 2) {
+            printf("Sol.licitud denegada. No ets amic de %s.\n", solicitant->nom);
+
+            // Eliminar solicitud denegada de la lista de solicitudes
+            for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
+                receptor->solicituds[i] = receptor->solicituds[i + 1];
+            }
+            receptor->num_solicituds--;
+
+            return 0;
+        } else {
+            printf("Opcio invalida.\n");
+            return -1;
+        }
+    } else {
+        printf("Opcio invalida.\n");
+        return -1;
+    }
+}
+
+void listar_amigos_aceptados(User* usuario) {
+    printf("Amigos aceptados de %s:\n", usuario->nom);
+
+    if (usuario->num_amics == 0) {
+        printf("No tienes amigos aceptados.\n");
+        return;
+    }
+
+    for (int i = 0; i < usuario->num_amics; i++) {
+        printf("%d. %s\n", i + 1, usuario->amics[i]->nom);
+    }
+}
+
+
+
 
 void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
@@ -418,22 +506,19 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
                     printf("No tens sol.licituds d'amistat pendents.\n");
                 }
                 else{
-                    printf("\n|--Sol.licituds Pendents--|\n");
-                    for(int i = 0; i < current -> num_solicituds; i++) {
-                        printf("%d", i);
-                        printf(". %s\n", current -> solicituds[i]);
-                    }
+                    aceptar_denegar_solicitudes(Llista, current);
                 }
 
             } else if (opcio3 == 4) {
-                fer_publicacio(current, TaulaHash);
-
+                //Aqui hem de llistar els nostres amics
+                listar_amigos_aceptados(current);
             } else if (opcio3 == 5) {
-                Timeline(current);
-
+                fer_publicacio(current, TaulaHash);
             } else if (opcio3 == 6){
-                trending(TaulaHash);
+                Timeline(current);
             } else if (opcio3 == 7){
+                trending(TaulaHash);
+            }else if(opcio3 == 8){
                 break;
             }
         }
@@ -448,13 +533,18 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
         return;
     }
 
-    User* current = Llista -> head;
+    User* current = Llista->head;
     while (current != NULL) {
-        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
-        current = current -> next;
+        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5, current->num_solicituds, current->num_amics);
+        current = current->next;
     }
+
     fclose(arxiu);
 }
+
+
+
+
 
 void llegir_usuaris_desde_arxiu(user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "r");
@@ -464,8 +554,8 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         return;
     }
     char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH];
-    int edat;
-    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5) == 12) {
+    int edat, num_solicituds, num_amics;
+    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5, &num_solicituds, &num_amics) == 14) {
         User* user = (User*)malloc(sizeof(User));
         strcpy(user -> nom, nom);
         strcpy(user -> password, password);
@@ -481,8 +571,8 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         strcpy(user -> gust5, gust5);
         user -> next = NULL;
         Llista -> num_persones++;
-        user -> num_solicituds = 0;
-        user -> num_amics = 0;
+        user -> num_solicituds = num_solicituds;
+        user -> num_amics = num_amics;
 
         if (Llista -> head == NULL) {
             Llista -> head = user;
@@ -502,11 +592,12 @@ void printf_menu(){
     printf("\n");
     printf("---| 1. Perfil                          |---\n");
     printf("---| 2. Enviar sol.licituds d'amistat   |---\n");
-    printf("---| 3. Gestionar sol.licituds pendents |---\n");
-    printf("---| 4. Realitzar una publicacio        |---\n");
-    printf("---| 5. Llistar les publicacions        |---\n");
-    printf("---| 6. Llistar paraules TOP            |---\n");
-    printf("---| 7. Sortir                          |---\n");
+    printf("---| 3. Acceptar/denegar sol.licituds   |---\n");
+    printf("---| 4. Llista d'amics                    |---\n");
+    printf("---| 5. Realitzar una publicacio        |---\n");
+    printf("---| 6. Llistar les publicacions        |---\n");
+    printf("---| 7. Llistar paraules TOP            |---\n");
+    printf("---| 8. Sortir                          |---\n");
 }
 
 int resp_bol() {
@@ -537,7 +628,7 @@ int resp_bol() {
 
 void fer_publicacio(User* usuari, TaulaHash* Taula) {
     char text[MAX_CHARACTERS + 1];
-    printf("Introdueix el text de la publicacio (maxim %d caracters): ", MAX_CHARACTERS);
+    printf("Introdueix el text de la publicacio (maxim %d caracters) ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
 
     Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
