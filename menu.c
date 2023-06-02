@@ -628,7 +628,7 @@ int resp_bol() {
     return 0;
 }
 
-void fer_publicacio(User* usuari, TaulaHash* Taula) {
+void fer_publicacio(User* usuari, Diccionari* Taula) {
     char text[MAX_CHARACTERS + 1];
     printf("Introdueix el text de la publicacio (maxim %d caracters) ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
