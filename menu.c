@@ -351,6 +351,7 @@ void listar_amigos_aceptados(User* usuario) {
     for (int i = 0; i < usuario->num_amics; i++) {
         printf("%d. %s\n", i + 1, usuario->amics[i]->nom);
     }
+    sleep(1.5);
 }
 
 
@@ -512,6 +513,7 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
             } else if (opcio3 == 4) {
                 //Aqui hem de llistar els nostres amics
                 listar_amigos_aceptados(current);
+                sleep(1.5);
             } else if (opcio3 == 5) {
                 fer_publicacio(current, TaulaHash);
             } else if (opcio3 == 6){
