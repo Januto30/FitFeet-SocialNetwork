@@ -215,7 +215,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
         }
         iterar_llista = iterar_llista -> next;
     }
-
+    //ASDADS
     User* receptor_user = iterar_llista;
 
     // Mirem que els paràmetres no estiguin buits

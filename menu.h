@@ -42,6 +42,7 @@ typedef struct User{
     char gust4[MAX_LENGTH];
     char gust5[MAX_LENGTH];
     struct User* next;              // Com que volem que la llista tingui més d'un usuari, connectem els nodes entre ells
+    //ASDADS
 
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds
     struct User* amics[MAX_AMICS];
