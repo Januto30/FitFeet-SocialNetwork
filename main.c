@@ -1,4 +1,6 @@
- #include "menu.h"
+#include "menu.h"
+#include "USUARI.h"
+#include "SOCIAL.h"
 #include <stdio.h>
 #include <stdlib.h>
 

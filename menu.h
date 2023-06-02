@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #define MAX_LENGTH 50
-#define MAX_PUBLICACIONES 100
 #define MAX_AMICS 100
 #define MAX_SOLICITUDS 100
 #define MAX_PARAULES 1000
@@ -77,8 +76,6 @@ int select_option();
 
 int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash);
 
-void emmagatzema_dades(User *usuari, user_list *Llista);
-
 bool comprovar_correu(User *usuari, char *correu);
 
 bool comprovar_usuari(user_list *llista, char *nom);
@@ -89,24 +86,11 @@ void afegir_usuari(user_list* llista, User* usuari);
 
 int checkPassword(User *usuari);
 
-int enviar_solicitud(user_list *Llista, User *usuari);
-
-int aceptar_denegar_solicitudes(user_list *Llista, User *receptor);
-
-void listar_amigos_aceptados(User* usuario);
-
-void llegir_usuaris_desde_arxiu(user_list* Llista);
-
-void guardar_usuaris_en_arxiu(user_list* Llista);
-
 void opcio3(user_list *Llista, st_Diccionari* TaulaHash);
 
 void printf_menu();
 
 int resp_bol();
 
-void fer_publicacio(User* usuari, st_Diccionari* TaulaHash);
-//dsfsd
 
-void Timeline(User* usuari);
 #endif //FITFEET_MENU_H
