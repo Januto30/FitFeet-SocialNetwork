@@ -57,15 +57,17 @@ typedef struct {                    // Linked list
     int num_persones;               // nombre de persones a la llista
 } user_list;
 
-void swap(Paraula* a, Paraula* b);
+void swap(Paraula** a, Paraula** b);
 
-int particio (Paraula* a[], int bot, int top);
+int particio (Paraula** a, int bot, int top);
 
-void quicksort (Paraula* a[], int bot, int top);
+void quicksort (Paraula** a, int bot, int top);
 
 void trending (TaulaHash* diccionari);
 
-void afegir_paraula(TaulaHash* Taula, char* word);
+void afegir_paraula_nova(TaulaHash* Taula, char* word);
+
+void afegir_paraula_repe(TaulaHash* Taula, char* word, Paraula* exsistent);
 
 Paraula* buscar_paraula(TaulaHash* diccionari, char* word);
 

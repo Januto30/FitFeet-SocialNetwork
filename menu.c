@@ -542,22 +542,28 @@ void fer_publicacio(User* usuari, TaulaHash* Taula) {
 
     Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
     strcpy(nova_publicacio->text, text);
-
     nova_publicacio->seguent = usuari->publicacio.top;
     usuari->publicacio.top = nova_publicacio;
 
-    // Dividir el text en paraules i actualitzar la taula hash
-    char* token = strtok(text, " ");
+    // Dividir el texto en palabras y actualizar la tabla hash
+    char copia_text[MAX_CHARACTERS + 1];
+    strcpy(copia_text, text);
+    char* token = strtok(copia_text, " ");
     while (token != NULL) {
-        Paraula *existent = buscar_paraula(Taula, token);
-    if (existent == NULL) {
-        afegir_paraula(Taula, token);
-    }
+        Paraula* existent = buscar_paraula(Taula, token);
+        if (existent == NULL) {
+            if (Taula->num_paraules < MAX_PARAULES) {
+                afegir_paraula_nova(Taula, token);
+            }
+        } if (existent != NULL){
+            if (Taula->num_paraules < MAX_PARAULES) {
+                existent->cont++;
+                Taula->num_paraules++;
+            }
+        }
         token = strtok(NULL, " ");
     }
 }
-
-
 
 void Timeline(User* usuari) {
     printf("Timeline de %s:\n", usuari -> nom);
@@ -574,27 +580,27 @@ void Timeline(User* usuari) {
     printf("Fi del Timeline.\n");
 }
 
-void swap(Paraula* a, Paraula* b){
-    Paraula x = *a;
+void swap(Paraula** a, Paraula** b){
+    Paraula* x = *a;
     *a = *b;
     *b = x;
 }
 
-int particio (Paraula* a[], int bot, int top){
+int particio (Paraula** a, int bot, int top){
     int i = bot - 1;
     int pivot = a[top]->cont;
 
     for(int j=bot; j<top; j++){
         if (a[j]->cont>pivot){
             i++;
-            swap(a[i], a[j]);
+            swap(&a[i], &a[j]);
         }
     }
-    swap(a[i+1], a[top]);
+    swap(&a[i+1], &a[top]);
     return i+1;
 }
 
-void quicksort (Paraula* a[], int bot, int top){
+void quicksort (Paraula** a, int bot, int top){
     if (bot<top){
         int pivot = particio(a, bot, top);
         quicksort(a, bot, pivot-1);
@@ -615,20 +621,22 @@ void trending (TaulaHash* diccionari){
     }
 }
 
-Paraula* buscar_paraula(TaulaHash* diccionari, char* word){
-    for(int i = 0; i<diccionari->num_paraules; i++){
-        if (strcmp(diccionari->paraules[i]->paraula, word)==0){
-            diccionari->paraules[i]->cont++;
-            return diccionari->paraules[i];
+Paraula* buscar_paraula(TaulaHash* Taula, char* word) {
+    for (int i = 0; i < Taula->num_paraules; i++) {
+        if (strcmp(Taula->paraules[i]->paraula, word) == 0) {
+            return Taula->paraules[i];
         }
-        return NULL;
     }
+    return NULL;
 }
 
-void afegir_paraula(TaulaHash* Taula, char* word) {
-    Paraula *new_paraula = (Paraula *) malloc(sizeof(Paraula));
+void afegir_paraula_nova(TaulaHash* Taula, char* word) {
+    Paraula* new_paraula = (Paraula*) malloc(sizeof(Paraula));
     strcpy(new_paraula->paraula, word);
     new_paraula->cont = 1;
     Taula->paraules[Taula->num_paraules] = new_paraula;
+    strcpy(Taula->paraules[Taula->num_paraules]->paraula, word);
     Taula->num_paraules++;
+
 }
+
