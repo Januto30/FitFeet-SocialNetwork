@@ -215,7 +215,6 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
         }
         iterar_llista = iterar_llista -> next;
     }
-    //ASDADS
     User* receptor_user = iterar_llista;
 
     // Mirem que els paràmetres no estiguin buits
@@ -225,12 +224,14 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
 
     // Comprovam que l'emissor i el receptor no siguin els mateixos
     if (current == receptor_user) {
+        printf("No et pots enviar una sol.licitud a tu mateix\n");
         return -1;
     }
 
     // Mirem si l'emissor ja té al receptor com amic
     for (int i = 0; i < current -> num_amics; i++) {
         if (current -> amics[i] == receptor_user) {
+            printf("Ja sou amics\n");
             return -1;
         }
     }
@@ -238,6 +239,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Mirem si el receptor ja té a l'emissor com amic
     for (int i = 0; i < receptor_user -> num_amics; i++) {
         if (receptor_user -> amics[i] == current) {
+            printf("Ja sou amics\n");
             return -1;
         }
     }
@@ -245,6 +247,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Comprovam que l'emissor no hagi enviat ja una sol.licitud d'amistat al receptor
     for (int i = 0; i < current -> num_solicituds; i++) {
         if (current -> solicituds[i] == receptor_user) {
+            printf("Ja has enviat una sol.licitud a aquest usuari\n");
             return -1;
         }
     }
@@ -252,6 +255,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Mirem que el receptor no hagi rebut ja una sol.licitud de l'emissor
     for (int i = 0; i < receptor_user -> num_solicituds; i++) {
         if (receptor_user -> solicituds[i] == current) {
+            printf("Ja has enviat una sol.licitud a aquest usuari\n");
             return -1;
         }
     }
@@ -420,7 +424,7 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
                 else{
                     printf("\n|--Sol.licituds Pendents--|\n");
                     for(int i = 0; i < current -> num_solicituds; i++) {
-                        printf("%d", i);
+                        printf("%d", i + 1);
                         printf(". %s\n", current -> solicituds[i]);
                     }
                 }
