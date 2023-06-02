@@ -1,10 +1,10 @@
-#include "menu.h"
-#include "USUARI.h"
+#include  "menu.h"
+#include  "USUARI.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include  <stdio.h>
+#include  <stdlib.h>
 
-int main() {
+int main () {
     int a = 1;
     user_list Llista;
     Llista.head = NULL;

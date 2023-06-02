@@ -1,17 +1,17 @@
-#include "menu.h"
-#include "SOCIAL.h"
-#include "USUARI.h"
+#include  "menu.h"
+#include  "SOCIAL.h"
+#include  "USUARI.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <ctype.h>
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <string.h>
+#include  <unistd.h>
+#include  <stdbool.h>
+#include  <ctype.h>
 
 
-///--------------MENU---------------------
-void menu() {
+///--------------MENU---------------------------------------
+void menu () {
     printf("\n");
     printf("=========================================\n");
     printf("|           Benvingut a Feetfit         |\n");
@@ -23,7 +23,7 @@ void menu() {
     printf("=========================================\n");
     printf("Selecciona una opcio: ");
 }
-int select_option() {
+int  select_option () {
     int option;     // variable per guardar el valor introduït per l'usuari
     while (1) {     // entra en un bucle infinit
         if (scanf("%d", &option) != 1) {      // intenta llegir un enter i comprova si s'ha llegit correctament
@@ -36,7 +36,7 @@ int select_option() {
         printf("Opcio incorrecta. Torna a intentar.\n");
     }
 }
-int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
+int  print_option (int option, user_list *Llista, st_Diccionari* TaulaHash) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
         printf("------INSERTAR NOU USUARI------\n");
@@ -59,8 +59,8 @@ int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
 }
 
 
-///--------------OPCIONS DE MENÚ---------------------
-void afegir_usuari(user_list* llista, User* usuari) {
+///--------------OPCIONS DE MENÚ----------------------------
+void afegir_usuari (user_list* llista, User* usuari) {
     if (llista -> head == NULL) {           // si la llista esta buida...
         llista -> head = usuari;            // el primer element de la llista és el usuari nou
 
@@ -72,7 +72,7 @@ void afegir_usuari(user_list* llista, User* usuari) {
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
     }
 }
-void print_users(user_list *Llista) {
+void print_users (user_list *Llista) {
     User *current = Llista -> head;         // current apunta al primer usuari de la llista
     while (current != NULL) {               // mentre la llista no estigui buida...
         printf("          |    %s    |\n", current -> nom);         // imprimeix el nom d'usuari
@@ -80,7 +80,7 @@ void print_users(user_list *Llista) {
     }
     printf("\n");
 }
-void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
+void opcio3 (user_list *Llista, st_Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
 
@@ -229,7 +229,7 @@ void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
                     printf("No tens sol.licituds d'amistat pendents.\n");
                 }
                 else{
-                    aceptar_denegar_solicitudes(Llista, current);
+                    aceptar_denegar_solicitudes(current);
                 }
 
             } else if (opcio3 == 4) {
@@ -248,12 +248,12 @@ void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
         }
     }
 }
-void printf_menu(){
+void printf_menu () {
     printf("\n");
     printf("---| 1. Perfil                          |---\n");
     printf("---| 2. Enviar sol.licituds d'amistat   |---\n");
     printf("---| 3. Acceptar/denegar sol.licituds   |---\n");
-    printf("---| 4. Llista d'amics                    |---\n");
+    printf("---| 4. Llista d'amics                  |---\n");
     printf("---| 5. Realitzar una publicacio        |---\n");
     printf("---| 6. Llistar les publicacions        |---\n");
     printf("---| 7. Llistar paraules TOP            |---\n");
@@ -261,8 +261,8 @@ void printf_menu(){
 }
 
 
-///--------------AUXILIARS---------------------
-bool comprovar_correu(char *correu) {
+///--------------AUXILIARS----------------------------------
+bool comprovar_correu (char *correu) {
     int longitud = strlen(correu);
     int posArroba = 0;
     bool teArroba = false;
@@ -300,7 +300,7 @@ bool comprovar_correu(char *correu) {
 
     return true;
 }
-bool comprovar_usuari(user_list* llista, char* nom) {
+bool comprovar_usuari (user_list* llista, char* nom) {
     User* temp = llista -> head;
     while (temp != NULL) {
         if (strcmp (temp -> nom, nom) == 0) {
@@ -310,7 +310,7 @@ bool comprovar_usuari(user_list* llista, char* nom) {
     }
     return false;
 }
-int resp_bol() {
+int  resp_bol () {
     char resposta[10];
     bool respostaValida = false;
 
@@ -334,7 +334,7 @@ int resp_bol() {
         }
     }
 }
-int checkPassword(User *usuari) {
+int  checkPassword (User *usuari) {
     char input[20];
     int correct = 0;
 

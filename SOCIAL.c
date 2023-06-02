@@ -1,15 +1,13 @@
-#include "menu.h"
-#include "SOCIAL.h"
-#include "USUARI.h"
+#include  "menu.h"
+#include  "SOCIAL.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-
+#include  <stdio.h>
+#include  <string.h>
+#include  <unistd.h>
 
 
-///--------------SOLICITUDS D'AMISTAT---------------------
-int enviar_solicitud(user_list* Llista, User *usuari) {
+///--------------SOLICITUDS D'AMISTAT-----------------------
+int  enviar_solicitud (user_list* Llista, User *usuari) {
     User* current = usuari;
     User* iterar_llista = Llista -> head;
     char receptor[MAX_LENGTH];
@@ -82,7 +80,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
 
     return 0;
 }
-int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
+int  aceptar_denegar_solicitudes (User *receptor) {
     if (receptor->num_solicituds == 0) {
         printf("No tens sol.icituds pendents.\n");
         return -1;
@@ -151,7 +149,7 @@ int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
         }
     }
 }
-void listar_amigos_aceptados(User* usuario) {
+void listar_amigos_aceptados (User* usuario) {
     printf("Amigos aceptados de %s:\n", usuario->nom);
 
     if (usuario->num_amics == 0) {

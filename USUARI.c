@@ -1,13 +1,12 @@
 #include "menu.h"
 #include "USUARI.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-///--------------FUNCIONS ELEMENTALS---------------------
-void guardar_usuaris_en_arxiu(user_list* Llista) {
+///--------------FUNCIONS ELEMENTALS-------------------------
+void guardar_usuaris_en_arxiu (user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "w");
 
     if (arxiu == NULL) {
@@ -23,7 +22,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
 
     fclose(arxiu);
 }
-void llegir_usuaris_desde_arxiu(user_list* Llista) {
+void llegir_usuaris_desde_arxiu (user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "r");
 
     if (arxiu == NULL) {
@@ -64,7 +63,7 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
 
     fclose(arxiu);
 }
-void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ordre de preguntes
+void emmagatzema_dades (User *usuari, user_list *Llista) {         // canviar ordre de preguntes
 
     while(1) {
         printf("Introdueix el teu nom: \n");
@@ -93,7 +92,7 @@ void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ord
     scanf("%s", usuari -> correu);
 
     while (1) {
-        if (comprovar_correu(usuari) == true) {       // funció per validar que el correu està ben escrit
+        if (comprovar_correu(usuari->correu) == true) {       // funció per validar que el correu està ben escrit
             printf("El correu es valid.\n\n");
             break;
         } else {
@@ -119,8 +118,8 @@ void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ord
 }
 
 
-///--------------PUBLICACIÓ---------------------
-void fer_publicacio(User* usuari, st_Diccionari* Taula) {
+///--------------PUBLICACIÓ---------------------------------
+void fer_publicacio (User* usuari, st_Diccionari* Taula) {
     char text[MAX_CHARACTERS + 1];
     printf("Introdueix el text de la publicacio (maxim %d caracters) ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
@@ -144,7 +143,7 @@ void fer_publicacio(User* usuari, st_Diccionari* Taula) {
         token = strtok(NULL, " ");
     }
 }
-void Timeline(User* usuari) {
+void Timeline (User* usuari) {
     printf("Timeline de %s:\n", usuari -> nom);
 
     // Comença des del primer element de la pila
@@ -160,13 +159,13 @@ void Timeline(User* usuari) {
 }
 
 
-///--------------DICCIONARI---------------------
-void swap(Paraula** a, Paraula** b){
+///--------------DICCIONARI---------------------------------
+void swap (Paraula** a, Paraula** b) {
     Paraula* x = *a;
     *a = *b;
     *b = x;
 }
-int particio (Paraula** a, int bot, int top){
+int  particio (Paraula** a, int bot, int top) {
     int i = bot - 1;
     Paraula* pivot = a[top];
 
@@ -179,14 +178,14 @@ int particio (Paraula** a, int bot, int top){
     swap(&a[i+1], &a[top]);
     return i+1;
 }
-void quicksort (Paraula** a, int bot, int top){
+void quicksort (Paraula** a, int bot, int top) {
     if (bot<top){
         int pivot = particio(a, bot, top);
         quicksort(a, bot, pivot-1);
         quicksort(a, pivot+1, top);
     }
 }
-void trending (st_Diccionari* diccionari){
+void trending (st_Diccionari* diccionari) {
     if (diccionari->num_paraules==0){
         printf("Encara no s'ha realitzat ninguna publicacio");
         return;
@@ -199,7 +198,7 @@ void trending (st_Diccionari* diccionari){
 
     }
 }
-Paraula* buscar_paraula(st_Diccionari* Taula, char* word) {
+Paraula* buscar_paraula (st_Diccionari* Taula, char* word) {
     for (int i = 0; i < Taula->num_paraules; i++) {
         if (strcmp(Taula->paraules[i]->paraula, word) == 0) {
             Taula->paraules[i]->cont++;
@@ -208,7 +207,7 @@ Paraula* buscar_paraula(st_Diccionari* Taula, char* word) {
     }
     return NULL;
 }
-void afegir_paraula_nova(st_Diccionari* Taula, char* word) {
+void afegir_paraula_nova (st_Diccionari* Taula, char* word) {
     Paraula* new_paraula = (Paraula*) malloc(sizeof(Paraula));
     strcpy(new_paraula->paraula, word);
     new_paraula->cont = 1;
