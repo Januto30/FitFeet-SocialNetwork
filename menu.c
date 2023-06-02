@@ -7,6 +7,7 @@
 #include <ctype.h>
 
 void menu() {
+    printf("\n");
     printf("=========================================\n");
     printf("|           Benvingut a Feetfit         |\n");
     printf("=========================================\n");
@@ -57,7 +58,7 @@ int print_option(int option, user_list *Llista, TaulaHash* TaulaHash) {
 void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ordre de preguntes
 
     while(1) {
-        printf("Introdueix el teu nom: \n");            /// No podem tenir usuaris amb so mateeix nom :/?
+        printf("Introdueix el teu nom: \n");
         scanf("%s", usuari -> nom);
 
         if (comprovar_usuari(Llista, usuari -> nom)) {
@@ -266,7 +267,8 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     }
 
     // Si no hi ha errors, afegim la sol.licitud a la llista del receptor
-    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;    receptor_user -> num_solicituds++;
+    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;
+    receptor_user -> num_solicituds++;
     printf("Sol.licitud enviada amb exit.\n");
 
     return 0;
@@ -304,6 +306,7 @@ int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
                 // Afegir el amic
                 receptor->amics[receptor->num_amics] = solicitant;
                 receptor->num_amics++;
+                solicitant->num_amics++;
                 printf("Sol.licitud aceptada. Ara ets amic de %s.\n", solicitant->nom);
 
                 // Eliminar solicitud aceptada de la lista de solicitudes
@@ -312,7 +315,7 @@ int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
                 }
                 receptor->num_solicituds--;
 
-                return 0;  // Éxito
+                return 0;
             } else {
                 printf("No s'ha pogut acceptar la sol.licitud. La llista d'amics esta plena.\n");
                 return -1;  // Error: Lista de amigos llena
@@ -336,6 +339,29 @@ int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
         return -1;
     }
 }
+
+/*
+void agregar_amigo(User* usuario, User* amigo) {
+    if (usuario->num_amics >= MAX_AMICS) {
+        printf("La lista de amigos está llena.\n");
+        return;
+    }
+
+    // Verificar si el amigo ya está en la lista de amigos
+    for (int i = 0; i < usuario->num_amics; i++) {
+        if (usuario->amics[i] == amigo) {
+            printf("%s ya está en tu lista de amigos.\n", amigo->nom);
+            return;
+        }
+    }
+
+    // Agregar amigo a la lista de amigos
+    usuario->amics[usuario->num_amics] = amigo;
+    usuario->num_amics++;
+
+    printf("Amigo agregado correctamente: %s\n", amigo->nom);
+}
+ */
 
 
 
@@ -494,13 +520,11 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
 
             } else if (opcio3 == 4) {
                 fer_publicacio(current, TaulaHash);
-
             } else if (opcio3 == 5) {
                 Timeline(current);
-
             } else if (opcio3 == 6){
                 trending(TaulaHash);
-            } else if (opcio3 == 7){
+            }else if(opcio3 == 7){
                 break;
             }
         }
@@ -517,7 +541,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
 
     User* current = Llista->head;
     while (current != NULL) {
-        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
+        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5, current->num_solicituds, current->num_amics);
         current = current->next;
     }
 
@@ -536,8 +560,8 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         return;
     }
     char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH];
-    int edat;
-    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5) == 12) {
+    int edat, num_solicituds, num_amics;
+    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5, &num_solicituds, &num_amics) == 14) {
         User* user = (User*)malloc(sizeof(User));
         strcpy(user -> nom, nom);
         strcpy(user -> password, password);
@@ -553,8 +577,8 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         strcpy(user -> gust5, gust5);
         user -> next = NULL;
         Llista -> num_persones++;
-        user -> num_solicituds = 0;
-        user -> num_amics = 0;
+        user -> num_solicituds = num_solicituds;
+        user -> num_amics = num_amics;
 
         if (Llista -> head == NULL) {
             Llista -> head = user;

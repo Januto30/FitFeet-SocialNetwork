@@ -89,7 +89,9 @@ int checkPassword(User *usuari);
 
 int enviar_solicitud(user_list *Llista, User *usuari);
 
-int aceptar_denegar_solicitudes(user_list *lista, User *receptor);
+int aceptar_denegar_solicitudes(user_list *Llista, User *receptor);
+
+void agregar_amigo(User* usuario, User* amigo);
 
 void llegir_usuaris_desde_arxiu(user_list* Llista);
 
