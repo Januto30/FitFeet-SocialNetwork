@@ -611,7 +611,7 @@ int resp_bol() {
 
 void fer_publicacio(User* usuari, TaulaHash* Taula) {
     char text[MAX_CHARACTERS + 1];
-    printf("Introdueix el text de la publicacio (maxim %d caracters): ", MAX_CHARACTERS);
+    printf("Introdueix el text de la publicacio (maxim %d caracters) ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
 
     Publicacio* nova_publicacio = (Publicacio*) malloc(sizeof(Publicacio));
