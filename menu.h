@@ -86,7 +86,7 @@ void afegir_usuari(user_list* llista, User* usuari);
 
 int checkPassword(User *usuari);
 
-int enviar_solicitud(user_list *Llista);
+int enviar_solicitud(user_list *Llista, User *usuari);
 
 void llegir_usuaris_desde_arxiu(user_list* Llista);
 
