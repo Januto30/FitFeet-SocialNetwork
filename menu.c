@@ -448,13 +448,26 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
         return;
     }
 
-    User* current = Llista -> head;
+    User* current = Llista->head;
     while (current != NULL) {
-        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
-        current = current -> next;
+        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
+
+        if (current->num_solicituds > 0) {
+            fprintf(arxiu, " %s", current->solicituds[0]->nom);
+            for (int i = 1; i < current->num_solicituds; i++) {
+                fprintf(arxiu, ", %s", current->solicituds[i]->nom);
+            }
+        }
+
+        fprintf(arxiu, "\n");
+        current = current->next;
     }
+
     fclose(arxiu);
 }
+
+
+
 
 void llegir_usuaris_desde_arxiu(user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "r");
@@ -463,7 +476,7 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         printf("No s'ha pogut obrir l'arxiu.\n");
         return;
     }
-    char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH];
+    char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH], solicituds[MAX_SOLICITUDS];
     int edat;
     while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5) == 12) {
         User* user = (User*)malloc(sizeof(User));
