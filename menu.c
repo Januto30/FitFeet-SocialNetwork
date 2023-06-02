@@ -340,28 +340,19 @@ int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
     }
 }
 
-/*
-void agregar_amigo(User* usuario, User* amigo) {
-    if (usuario->num_amics >= MAX_AMICS) {
-        printf("La lista de amigos está llena.\n");
+void listar_amigos_aceptados(User* usuario) {
+    printf("Amigos aceptados de %s:\n", usuario->nom);
+
+    if (usuario->num_amics == 0) {
+        printf("No tienes amigos aceptados.\n");
         return;
     }
 
-    // Verificar si el amigo ya está en la lista de amigos
     for (int i = 0; i < usuario->num_amics; i++) {
-        if (usuario->amics[i] == amigo) {
-            printf("%s ya está en tu lista de amigos.\n", amigo->nom);
-            return;
-        }
+        printf("%d. %s\n", i + 1, usuario->amics[i]->nom);
     }
-
-    // Agregar amigo a la lista de amigos
-    usuario->amics[usuario->num_amics] = amigo;
-    usuario->num_amics++;
-
-    printf("Amigo agregado correctamente: %s\n", amigo->nom);
 }
- */
+
 
 
 
@@ -519,12 +510,15 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
                 }
 
             } else if (opcio3 == 4) {
-                fer_publicacio(current, TaulaHash);
+                //Aqui hem de llistar els nostres amics
+                listar_amigos_aceptados(current);
             } else if (opcio3 == 5) {
-                Timeline(current);
+                fer_publicacio(current, TaulaHash);
             } else if (opcio3 == 6){
+                Timeline(current);
+            } else if (opcio3 == 7){
                 trending(TaulaHash);
-            }else if(opcio3 == 7){
+            }else if(opcio3 == 8){
                 break;
             }
         }
