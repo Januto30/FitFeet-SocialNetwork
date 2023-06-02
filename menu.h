@@ -42,8 +42,6 @@ typedef struct User{
     char gust4[MAX_LENGTH];
     char gust5[MAX_LENGTH];
     struct User* next;              // Com que volem que la llista tingui més d'un usuari, connectem els nodes entre ells
-    //ASDADS
-
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds
     struct User* amics[MAX_AMICS];
     int num_solicituds;
@@ -56,6 +54,8 @@ typedef struct {                    // Linked list
     User* head;                     // apunta al primer element de la llista
     int num_persones;               // nombre de persones a la llista
 } user_list;
+
+
 
 void swap(Paraula* a, Paraula* b);
 
@@ -88,6 +88,8 @@ void afegir_usuari(user_list* llista, User* usuari);
 int checkPassword(User *usuari);
 
 int enviar_solicitud(user_list *Llista, User *usuari);
+
+int aceptar_denegar_solicitudes(user_list *lista, User *receptor);
 
 void llegir_usuaris_desde_arxiu(user_list* Llista);
 
