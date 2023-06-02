@@ -2,17 +2,18 @@
 #define FITFEET_USUARI_H
 #include <stdio.h>
 #include <stdbool.h>
+
 #define MAX_LENGTH 50
 #define MAX_AMICS 100
 #define MAX_SOLICITUDS 100
 #define MAX_PARAULES 1000
 #define MAX_CHARACTERS 100
 
+
 ///--------------FUNCIONS ELEMENTALS---------------------
 void guardar_usuaris_en_arxiu(user_list* Llista);
 void llegir_usuaris_desde_arxiu(user_list* Llista);
 void emmagatzema_dades(User *usuari, user_list *Llista);
-
 
 
 ///--------------PUBLICACIO---------------------

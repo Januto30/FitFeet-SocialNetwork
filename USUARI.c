@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 ///--------------FUNCIONS ELEMENTALS---------------------
 void guardar_usuaris_en_arxiu(user_list* Llista) {
     FILE* arxiu = fopen("../PERFIL.txt", "w");
@@ -92,7 +93,7 @@ void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ord
     scanf("%s", usuari -> correu);
 
     while (1) {
-        if (comprovar_correu(usuari, usuari -> correu) == true) {       // funció per validar que el correu està ben escrit
+        if (comprovar_correu(usuari) == true) {       // funció per validar que el correu està ben escrit
             printf("El correu es valid.\n\n");
             break;
         } else {
@@ -116,7 +117,6 @@ void emmagatzema_dades(User *usuari, user_list *Llista) {         // canviar ord
 
     usuari -> next = NULL;                  // així sabem quan s'ha arribat al final de la llista en recórrer-la
 }
-
 
 
 ///--------------PUBLICACIÓ---------------------
@@ -158,7 +158,6 @@ void Timeline(User* usuari) {
 
     printf("Fi del Timeline.\n");
 }
-
 
 
 ///--------------DICCIONARI---------------------

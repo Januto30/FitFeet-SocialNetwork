@@ -3,11 +3,10 @@
 #include "USUARI.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdbool.h>
-#include <ctype.h>
+
+
 
 ///--------------SOLICITUDS D'AMISTAT---------------------
 int enviar_solicitud(user_list* Llista, User *usuari) {
@@ -83,7 +82,6 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
 
     return 0;
 }
-
 int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
     if (receptor->num_solicituds == 0) {
         printf("No tens sol.icituds pendents.\n");
@@ -153,7 +151,6 @@ int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
         }
     }
 }
-
 void listar_amigos_aceptados(User* usuario) {
     printf("Amigos aceptados de %s:\n", usuario->nom);
 

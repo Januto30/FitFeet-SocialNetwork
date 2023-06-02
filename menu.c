@@ -124,7 +124,6 @@ void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
             scanf("%d", &opcio3);
             if (opcio3 == 1) {
                 while (opcio3 == 1){
-                    char option_3[10];
                     printf("\n");
                     printf("==========================\n");
                     printf("|     Dades personals    |\n");
@@ -263,7 +262,7 @@ void printf_menu(){
 
 
 ///--------------AUXILIARS---------------------
-bool comprovar_correu(User *usuari, char *correu) {
+bool comprovar_correu(char *correu) {
     int longitud = strlen(correu);
     int posArroba = 0;
     bool teArroba = false;
@@ -334,7 +333,6 @@ int resp_bol() {
             printf("Resposta invalida. Introdueix una resposta correcta ('si', 'no').\n");
         }
     }
-    return 0;
 }
 int checkPassword(User *usuari) {
     char input[20];
@@ -346,7 +344,6 @@ int checkPassword(User *usuari) {
 
         if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
             printf("Benvingut %s!,\n", usuari -> nom);
-            correct = 1;
             return 1;
         } else {
             printf("Contrasenya incorrecta. Intenta-ho de nou.\n");

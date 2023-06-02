@@ -2,11 +2,13 @@
 #define FITFEET_MENU_H
 #include <stdio.h>
 #include <stdbool.h>
+
 #define MAX_LENGTH 50
 #define MAX_AMICS 100
 #define MAX_SOLICITUDS 100
 #define MAX_PARAULES 1000
 #define MAX_CHARACTERS 100
+
 
 ///--------------STRUCT---------------------
 typedef struct{
@@ -44,7 +46,6 @@ typedef struct User{
     struct User* amics[MAX_AMICS];
     int num_solicituds;
     struct User* solicituds[MAX_SOLICITUDS];
-    struct Publicacio* publicacions;
     PilaPublicacions publicacio;  // Pila de publicacions de l'usuari
 } User;
 typedef struct {                    // Linked list
@@ -67,11 +68,10 @@ void printf_menu();
 
 
 ///--------------AUXILIARS---------------------
-bool comprovar_correu(User *usuari, char *correu);
+bool comprovar_correu(char *correu);
 bool comprovar_usuari(user_list* llista, char* nom);
 int resp_bol();
 int checkPassword(User *usuari);
-int resp_bol();
 
 
 #endif //FITFEET_MENU_H
