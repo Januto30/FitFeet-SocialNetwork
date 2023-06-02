@@ -7,11 +7,12 @@ int main() {
     Llista.head = NULL;
     Llista.num_persones = 0;
     llegir_usuaris_desde_arxiu(&Llista);
+    TaulaHash * Diccionari;
     while (a != 0) {
         int option1;
         menu();
         option1 = select_option();
-        if (print_option(option1, &Llista)==1){
+        if (print_option(option1, &Llista, Diccionari)==1){
             guardar_usuaris_en_arxiu(&Llista);
             break;
         }

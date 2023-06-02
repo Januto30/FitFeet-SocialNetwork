@@ -19,7 +19,7 @@ typedef struct{
     int num_paraules;
 }TaulaHash;
 
-typedef struct {
+typedef struct Publicacio {
     char text[MAX_CHARACTERS + 1];
     struct Publicacio* seguent;
 } Publicacio;
@@ -28,7 +28,7 @@ typedef struct {
     Publicacio* top;  // Apunta a l'element superior de la pila
 } PilaPublicacions;
 
-typedef struct {
+typedef struct User{
     char nom[MAX_LENGTH];
     char password[MAX_LENGTH];
     char cognom1[MAX_LENGTH];
@@ -46,7 +46,7 @@ typedef struct {
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds
     struct User* amics[MAX_AMICS];
     int num_solicituds;
-    char* solicituds[MAX_SOLICITUDS];
+    struct User* solicituds[MAX_SOLICITUDS];
     struct Publicacio* publicacions;
     PilaPublicacions publicacio;  // Pila de publicacions de l'usuari
 } User;
@@ -56,23 +56,23 @@ typedef struct {                    // Linked list
     int num_persones;               // nombre de persones a la llista
 } user_list;
 
-struct HashNode{
-    int key;
-    int value;
-    struct HashNode* next;
-};
-
 void swap(Paraula* a, Paraula* b);
 
 int particio (Paraula* a[], int bot, int top);
 
-void quicksort (Paraula** a, int bot, int top);
+void quicksort (Paraula* a[], int bot, int top);
+
+void trending (TaulaHash* diccionari);
+
+void afegir_paraula(TaulaHash* Taula, char* word);
+
+Paraula* buscar_paraula(TaulaHash* diccionari, char* word);
 
 void menu();
 
 int select_option();
 
-int print_option(int option, user_list *Llista);
+int print_option(int option, user_list *Llista, TaulaHash* TaulaHash);
 
 void emmagatzema_dades(User *usuari, user_list *Llista);
 
@@ -86,19 +86,19 @@ void afegir_usuari(user_list* llista, User* usuari);
 
 int checkPassword(User *usuari);
 
-int enviar_solicitud(user_list *Llista);
+int enviar_solicitud(user_list *Llista, User *usuari);
 
 void llegir_usuaris_desde_arxiu(user_list* Llista);
 
 void guardar_usuaris_en_arxiu(user_list* Llista);
 
-void opcio3(user_list *Llista);
+void opcio3(user_list *Llista, TaulaHash* TaulaHash);
 
 void printf_menu();
 
 int resp_bol();
 
-void fer_publicacio(User* usuari);
+void fer_publicacio(User* usuari, TaulaHash* TaulaHash);
 //dsfsd
 
 void Timeline(User* usuari);

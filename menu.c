@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <ctype.h>
-#define MAX_USERS 100
 
 void menu() {
     printf("=========================================\n");
@@ -33,7 +32,7 @@ int select_option() {
     }
 }
 
-int print_option(int option, user_list *Llista) {
+int print_option(int option, user_list *Llista, TaulaHash* TaulaHash) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
         printf("------INSERTAR NOU USUARI------\n");
@@ -47,7 +46,7 @@ int print_option(int option, user_list *Llista) {
         return 0;
 
     } else if (option == 3) {
-        opcio3(Llista);
+        opcio3(Llista, TaulaHash);
         return 0;
 
     } else if (option == 4) {
@@ -200,8 +199,8 @@ int checkPassword(User *usuari) {
     }
 }
 
-int enviar_solicitud(user_list* Llista) {
-    User* current = Llista -> head;
+int enviar_solicitud(user_list* Llista, User *usuari) {
+    User* current = usuari;
     User* iterar_llista = Llista -> head;
     char receptor[MAX_LENGTH];
     printf("A qui vols enviar una sol.licitud?");
@@ -218,13 +217,6 @@ int enviar_solicitud(user_list* Llista) {
     }
 
     User* receptor_user = iterar_llista;
-
-/*
-    // Movem el punter al usuari receptor
-    for (int i = 0; i < index; i++) {
-        receptor_user = receptor_user->next;
-    }
-*/
 
     // Mirem que els paràmetres no estiguin buits
     if (current == NULL || receptor_user == NULL) {
@@ -270,42 +262,13 @@ int enviar_solicitud(user_list* Llista) {
     }
 
     // Si no hi ha errors, afegim la sol.licitud a la llista del receptor
-    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;
-    receptor_user -> num_solicituds++;
+    receptor_user -> solicituds[receptor_user -> num_solicituds] = current;    receptor_user -> num_solicituds++;
     printf("Sol.licitud enviada amb exit.\n");
 
     return 0;
 }
 
-
-
-
-/*
-void enviar_solicituds(User *usuari1) {
-    User usuari2;
-    = scanf("Introdueix el nom del usuari a qui vols enviar la solicitud d'amistat: \n");
-    solicituds solicitud;
-    strcpy(solicitud.sender, usuari1 -> nom);
-    strcpy(solicitud.receptor, &usuari2);
-    solicitud.status = 0;           // sol·licitud en pendent
-
-    usuari2 -> solicituds_amistat = solicitud;
-
-    printf("Has enviat una solicitud d'amistat a %s", usuari2 -> nom);
-}
-*/
-/*
-void mostrar_solicituds(User *usuari) {
-    int num_solicituds_pendents = 0;
-    solicituds *solicituds_pendents[MAX_SOLICITUDS];
-
-    for (int i = 0; usuari -> num_amics; i++) {
-        if (usuari -> )
-    }
-}
- */
-
-void opcio3(user_list *Llista) {
+void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
 
@@ -447,7 +410,7 @@ void opcio3(user_list *Llista) {
                 }
 
             } else if (opcio3 == 2) {
-                enviar_solicitud(Llista);
+                enviar_solicitud(Llista, current);
                 current = Llista -> head;
 
             } else if (opcio3 == 3) {
@@ -463,12 +426,14 @@ void opcio3(user_list *Llista) {
                 }
 
             } else if (opcio3 == 4) {
-                fer_publicacio(usuari);
+                fer_publicacio(current, TaulaHash);
 
             } else if (opcio3 == 5) {
-                Timeline(usuari);
+                Timeline(current);
 
             } else if (opcio3 == 6){
+                trending(TaulaHash);
+            } else if (opcio3 == 7){
                 break;
             }
         }
@@ -488,7 +453,6 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
         fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
         current = current -> next;
     }
-
     fclose(arxiu);
 }
 
@@ -507,7 +471,7 @@ void llegir_usuaris_desde_arxiu(user_list* Llista) {
         strcpy(user -> password, password);
         strcpy(user -> cognom1, cognom1);
         strcpy(user -> cognom2, cognom2);
-        user -> edat = edat;                            /// Això està bé ????
+        user -> edat = edat;
         strcpy(user -> correu, correu);
         strcpy(user -> ubi, ubi);
         strcpy(user -> gust1, gust1);
@@ -541,7 +505,8 @@ void printf_menu(){
     printf("---| 3. Gestionar sol.licituds pendents |---\n");
     printf("---| 4. Realitzar una publicacio        |---\n");
     printf("---| 5. Llistar les publicacions        |---\n");
-    printf("---| 6. Sortir                          |---\n");
+    printf("---| 6. Llistar paraules TOP            |---\n");
+    printf("---| 7. Sortir                          |---\n");
 }
 
 int resp_bol() {
@@ -570,7 +535,7 @@ int resp_bol() {
     return 0;
 }
 
-void fer_publicacio(User* usuari) {
+void fer_publicacio(User* usuari, TaulaHash* Taula) {
     char text[MAX_CHARACTERS + 1];
     printf("Introdueix el text de la publicacio (maxim %d caracters): ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
@@ -580,7 +545,18 @@ void fer_publicacio(User* usuari) {
 
     nova_publicacio->seguent = usuari->publicacio.top;
     usuari->publicacio.top = nova_publicacio;
+
+    // Dividir el text en paraules i actualitzar la taula hash
+    char* token = strtok(text, " ");
+    while (token != NULL) {
+        Paraula *existent = buscar_paraula(Taula, token);
+    if (existent == NULL) {
+        afegir_paraula(Taula, token);
+    }
+        token = strtok(NULL, " ");
+    }
 }
+
 
 
 void Timeline(User* usuari) {
@@ -611,10 +587,10 @@ int particio (Paraula* a[], int bot, int top){
     for(int j=bot; j<top; j++){
         if (a[j]->cont>pivot){
             i++;
-            swap(&a[i], &a[j]);
+            swap(a[i], a[j]);
         }
     }
-    swap(&a[i+1], &a[top]);
+    swap(a[i+1], a[top]);
     return i+1;
 }
 
@@ -624,4 +600,35 @@ void quicksort (Paraula* a[], int bot, int top){
         quicksort(a, bot, pivot-1);
         quicksort(a, pivot+1, top);
     }
+}
+
+void trending (TaulaHash* diccionari){
+    if (diccionari->num_paraules==0){
+        printf("Encara no s'ha realitzat ninguna publicacio");
+        return;
+    }
+
+    printf("Top paraules:\n");
+    for(int i=0; i<diccionari->num_paraules && i<10; i++){
+        printf("%s, s'ha utilitzat %d\n", diccionari->paraules[i]->paraula, diccionari->paraules[i]->cont);
+
+    }
+}
+
+Paraula* buscar_paraula(TaulaHash* diccionari, char* word){
+    for(int i = 0; i<diccionari->num_paraules; i++){
+        if (strcmp(diccionari->paraules[i]->paraula, word)==0){
+            diccionari->paraules[i]->cont++;
+            return diccionari->paraules[i];
+        }
+        return NULL;
+    }
+}
+
+void afegir_paraula(TaulaHash* Taula, char* word) {
+    Paraula *new_paraula = (Paraula *) malloc(sizeof(Paraula));
+    strcpy(new_paraula->paraula, word);
+    new_paraula->cont = 1;
+    Taula->paraules[Taula->num_paraules] = new_paraula;
+    Taula->num_paraules++;
 }
