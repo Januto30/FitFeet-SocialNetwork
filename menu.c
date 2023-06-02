@@ -9,6 +9,8 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+
+///--------------MENU---------------------
 void menu() {
     printf("\n");
     printf("=========================================\n");
@@ -21,7 +23,6 @@ void menu() {
     printf("=========================================\n");
     printf("Selecciona una opcio: ");
 }
-
 int select_option() {
     int option;     // variable per guardar el valor introduït per l'usuari
     while (1) {     // entra en un bucle infinit
@@ -35,7 +36,6 @@ int select_option() {
         printf("Opcio incorrecta. Torna a intentar.\n");
     }
 }
-
 int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
@@ -58,56 +58,8 @@ int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
     }
 }
 
-bool comprovar_correu(User *usuari, char *correu) {
-    int longitud = strlen(correu);
-    int posArroba = 0;
-    bool teArroba = false;
-    bool tePunt = false;
 
-    if (longitud < 5) {     // Almenys 5 caràcters
-        return false;
-    }
-
-    for (int i = 0; i < longitud; i++) {        // Comprovar que només té un '@'
-        if (correu[i] == '@') {
-            if (teArroba) {
-                return false;
-            } else {
-                teArroba = true;
-                posArroba = i;
-            }
-        }
-    }
-
-    if (!teArroba) {
-        return false;
-    }
-
-    for (int i = posArroba + 1; i < longitud; i++) {       // Comprovar que només té un '.'
-        if (correu[i] == '.') {
-            tePunt = true;
-            break;
-        }
-    }
-
-    if (!tePunt) {
-        return false;
-    }
-
-    return true;
-}
-
-bool comprovar_usuari(user_list* llista, char* nom) {
-    User* temp = llista -> head;
-    while (temp != NULL) {
-        if (strcmp (temp -> nom, nom) == 0) {
-            return true;
-        }
-        temp = temp -> next;
-    }
-    return false;
-}
-
+///--------------OPCIONS DE MENÚ---------------------
 void afegir_usuari(user_list* llista, User* usuari) {
     if (llista -> head == NULL) {           // si la llista esta buida...
         llista -> head = usuari;            // el primer element de la llista és el usuari nou
@@ -120,7 +72,6 @@ void afegir_usuari(user_list* llista, User* usuari) {
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
     }
 }
-
 void print_users(user_list *Llista) {
     User *current = Llista -> head;         // current apunta al primer usuari de la llista
     while (current != NULL) {               // mentre la llista no estigui buida...
@@ -129,26 +80,6 @@ void print_users(user_list *Llista) {
     }
     printf("\n");
 }
-
-int checkPassword(User *usuari) {
-    char input[20];
-    int correct = 0;
-
-    while (!correct) {
-        printf("Introdueix la contrasenya: ");
-        scanf("%s", input);                           // guarda la contrasenya introduïda per l'usuari
-
-        if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
-            printf("Benvingut %s!,\n", usuari -> nom);
-            correct = 1;
-            return 1;
-        } else {
-            printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
-            return 0;
-        }
-    }
-}
-
 void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
@@ -318,7 +249,6 @@ void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
         }
     }
 }
-
 void printf_menu(){
     printf("\n");
     printf("---| 1. Perfil                          |---\n");
@@ -331,6 +261,56 @@ void printf_menu(){
     printf("---| 8. Sortir                          |---\n");
 }
 
+
+///--------------AUXILIARS---------------------
+bool comprovar_correu(User *usuari, char *correu) {
+    int longitud = strlen(correu);
+    int posArroba = 0;
+    bool teArroba = false;
+    bool tePunt = false;
+
+    if (longitud < 5) {     // Almenys 5 caràcters
+        return false;
+    }
+
+    for (int i = 0; i < longitud; i++) {        // Comprovar que només té un '@'
+        if (correu[i] == '@') {
+            if (teArroba) {
+                return false;
+            } else {
+                teArroba = true;
+                posArroba = i;
+            }
+        }
+    }
+
+    if (!teArroba) {
+        return false;
+    }
+
+    for (int i = posArroba + 1; i < longitud; i++) {       // Comprovar que només té un '.'
+        if (correu[i] == '.') {
+            tePunt = true;
+            break;
+        }
+    }
+
+    if (!tePunt) {
+        return false;
+    }
+
+    return true;
+}
+bool comprovar_usuari(user_list* llista, char* nom) {
+    User* temp = llista -> head;
+    while (temp != NULL) {
+        if (strcmp (temp -> nom, nom) == 0) {
+            return true;
+        }
+        temp = temp -> next;
+    }
+    return false;
+}
 int resp_bol() {
     char resposta[10];
     bool respostaValida = false;
@@ -355,4 +335,22 @@ int resp_bol() {
         }
     }
     return 0;
+}
+int checkPassword(User *usuari) {
+    char input[20];
+    int correct = 0;
+
+    while (!correct) {
+        printf("Introdueix la contrasenya: ");
+        scanf("%s", input);                           // guarda la contrasenya introduïda per l'usuari
+
+        if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
+            printf("Benvingut %s!,\n", usuari -> nom);
+            correct = 1;
+            return 1;
+        } else {
+            printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
+            return 0;
+        }
+    }
 }
