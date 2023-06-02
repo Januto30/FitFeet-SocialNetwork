@@ -424,7 +424,7 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
                 else{
                     printf("\n|--Sol.licituds Pendents--|\n");
                     for(int i = 0; i < current -> num_solicituds; i++) {
-                        printf("%d", i);
+                        printf("%d", i + 1);
                         printf(". %s\n", current -> solicituds[i]);
                     }
                 }
