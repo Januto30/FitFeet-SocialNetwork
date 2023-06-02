@@ -272,7 +272,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     return 0;
 }
 
-int aceptar_denegar_solicitudes(user_list *lista, User *receptor) {
+int aceptar_denegar_solicitudes(user_list *Llista, User *receptor) {
     if (receptor->num_solicituds == 0) {
         printf("No tens sol.icituds pendents.\n");
         return -1;
@@ -508,7 +508,7 @@ void opcio3(user_list *Llista, TaulaHash* TaulaHash) {
 }
 
 void guardar_usuaris_en_arxiu(user_list* Llista) {
-    FILE* arxiu = fopen("../PERFIL.txt", "a");
+    FILE* arxiu = fopen("../PERFIL.txt", "w");
 
     if (arxiu == NULL) {
         printf("No s'ha pogut obrir el fitxer.\n");
@@ -517,9 +517,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {
 
     User* current = Llista->head;
     while (current != NULL) {
-        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
-
-        fprintf(arxiu, "\n");
+        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5);
         current = current->next;
     }
 
@@ -577,10 +575,11 @@ void printf_menu(){
     printf("---| 1. Perfil                          |---\n");
     printf("---| 2. Enviar sol.licituds d'amistat   |---\n");
     printf("---| 3. Acceptar/denegar sol.licituds   |---\n");
-    printf("---| 4. Realitzar una publicacio        |---\n");
-    printf("---| 5. Llistar les publicacions        |---\n");
-    printf("---| 6. Llistar paraules TOP            |---\n");
-    printf("---| 7. Sortir                          |---\n");
+    printf("---| 4. Llista d'amics                    |---\n");
+    printf("---| 5. Realitzar una publicacio        |---\n");
+    printf("---| 6. Llistar les publicacions        |---\n");
+    printf("---| 7. Llistar paraules TOP            |---\n");
+    printf("---| 8. Sortir                          |---\n");
 }
 
 int resp_bol() {
