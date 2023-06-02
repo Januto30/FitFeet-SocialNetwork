@@ -17,8 +17,8 @@ typedef struct{
 typedef struct{
     Paraula* paraules[MAX_PARAULES];
     int num_paraules;
-}Diccionari;
-//xd
+}st_Diccionari;
+//Asd
 typedef struct Publicacio {
     char text[MAX_CHARACTERS + 1];
     struct Publicacio* seguent;
@@ -63,17 +63,19 @@ int particio (Paraula** a, int bot, int top);
 
 void quicksort (Paraula** a, int bot, int top);
 
-void trending (Diccionari* diccionari);
+void trending (st_Diccionari* diccionari);
 
-void afegir_paraula_nova(Diccionari* Taula, char* word);
+void afegir_paraula_nova(st_Diccionari* Taula, char* word);
 
-Paraula* buscar_paraula(Diccionari* diccionari, char* word);
+void afegir_paraula_repe(st_Diccionari* Taula, char* word, Paraula* exsistent);
+
+Paraula* buscar_paraula(st_Diccionari* diccionari, char* word);
 
 void menu();
 
 int select_option();
 
-int print_option(int option, user_list *Llista, Diccionari* TaulaHash);
+int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash);
 
 void emmagatzema_dades(User *usuari, user_list *Llista);
 
@@ -97,13 +99,14 @@ void llegir_usuaris_desde_arxiu(user_list* Llista);
 
 void guardar_usuaris_en_arxiu(user_list* Llista);
 
-void opcio3(user_list *Llista, Diccionari* TaulaHash);
+void opcio3(user_list *Llista, st_Diccionari* TaulaHash);
 
 void printf_menu();
 
 int resp_bol();
 
-void fer_publicacio(User* usuari, Diccionari* TaulaHash);
+void fer_publicacio(User* usuari, st_Diccionari* TaulaHash);
+//dsfsd
 
 void Timeline(User* usuari);
 #endif //FITFEET_MENU_H

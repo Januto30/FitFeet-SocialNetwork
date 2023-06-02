@@ -8,7 +8,7 @@ int main() {
     Llista.head = NULL;
     Llista.num_persones = 0;
     llegir_usuaris_desde_arxiu(&Llista);
-    Diccionari* Diccionari = (Diccionari*) malloc(sizeof(Diccionari));
+    st_Diccionari* Diccionari = (st_Diccionari*) malloc(sizeof(st_Diccionari));
     Diccionari->num_paraules = 0;
 
     while (a != 0) {

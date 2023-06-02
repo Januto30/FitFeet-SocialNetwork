@@ -33,7 +33,7 @@ int select_option() {
     }
 }
 
-int print_option(int option, user_list *Llista, Diccionari* TaulaHash) {
+int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
         printf("------INSERTAR NOU USUARI------\n");
@@ -357,7 +357,7 @@ void listar_amigos_aceptados(User* usuario) {
 
 
 
-void opcio3(user_list *Llista, Diccionari* TaulaHash) {
+void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
 
@@ -628,7 +628,7 @@ int resp_bol() {
     return 0;
 }
 
-void fer_publicacio(User* usuari, Diccionari* Taula) {
+void fer_publicacio(User* usuari, st_Diccionari* Taula) {
     char text[MAX_CHARACTERS + 1];
     printf("Introdueix el text de la publicacio (maxim %d caracters) ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
@@ -696,7 +696,7 @@ void quicksort (Paraula** a, int bot, int top){
     }
 }
 
-void trending (Diccionari* diccionari){
+void trending (st_Diccionari* diccionari){
     if (diccionari->num_paraules==0){
         printf("Encara no s'ha realitzat ninguna publicacio");
         return;
@@ -710,7 +710,7 @@ void trending (Diccionari* diccionari){
     }
 }
 
-Paraula* buscar_paraula(Diccionari* Taula, char* word) {
+Paraula* buscar_paraula(st_Diccionari* Taula, char* word) {
     for (int i = 0; i < Taula->num_paraules; i++) {
         if (strcmp(Taula->paraules[i]->paraula, word) == 0) {
             Taula->paraules[i]->cont++;
@@ -720,7 +720,7 @@ Paraula* buscar_paraula(Diccionari* Taula, char* word) {
     return NULL;
 }
 
-void afegir_paraula_nova(Diccionari* Taula, char* word) {
+void afegir_paraula_nova(st_Diccionari* Taula, char* word) {
     Paraula* new_paraula = (Paraula*) malloc(sizeof(Paraula));
     strcpy(new_paraula->paraula, word);
     new_paraula->cont = 1;
