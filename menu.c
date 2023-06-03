@@ -10,8 +10,8 @@
 #include  <ctype.h>
 
 
-///--------------MENU---------------------------------------
-void menu () {
+/// ---------------- MENÚ ----------------
+void menu() {
     printf("\n");
     printf("=========================================\n");
     printf("|           Benvingut a Feetfit         |\n");
@@ -23,7 +23,7 @@ void menu () {
     printf("=========================================\n");
     printf("Selecciona una opcio: ");
 }
-int  select_option () {
+int select_option() {
     int option;     // variable per guardar el valor introduït per l'usuari
     while (1) {     // entra en un bucle infinit
         if (scanf("%d", &option) != 1) {      // intenta llegir un enter i comprova si s'ha llegit correctament
@@ -36,13 +36,15 @@ int  select_option () {
         printf("Opcio incorrecta. Torna a intentar.\n");
     }
 }
-int  print_option (int option, user_list *Llista, st_Diccionari* TaulaHash) {
+
+int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
     if (option == 1) {
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
         printf("------INSERTAR NOU USUARI------\n");
         emmagatzema_dades(usuari, Llista);
         afegir_usuari(Llista, usuari);
         return 0;
+
     } else if (option == 2) {
         printf("------LLISTAR TOTS ELS USUARIS EXISTENTS------\n");
         print_users(Llista);
@@ -59,8 +61,8 @@ int  print_option (int option, user_list *Llista, st_Diccionari* TaulaHash) {
 }
 
 
-///--------------OPCIONS DE MENÚ----------------------------
-void afegir_usuari (user_list* llista, User* usuari) {
+/// ---------------- OPCIONS DE MENÚ ----------------
+void afegir_usuari(user_list* llista, User* usuari) {
     if (llista -> head == NULL) {           // si la llista esta buida...
         llista -> head = usuari;            // el primer element de la llista és el usuari nou
 
@@ -72,7 +74,7 @@ void afegir_usuari (user_list* llista, User* usuari) {
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
     }
 }
-void print_users (user_list *Llista) {
+void print_users(user_list *Llista) {
     User *current = Llista -> head;         // current apunta al primer usuari de la llista
     while (current != NULL) {               // mentre la llista no estigui buida...
         printf("          |    %s    |\n", current -> nom);         // imprimeix el nom d'usuari
@@ -80,7 +82,8 @@ void print_users (user_list *Llista) {
     }
     printf("\n");
 }
-void opcio3 (user_list *Llista, st_Diccionari* TaulaHash) {
+
+void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
 
@@ -118,10 +121,12 @@ void opcio3 (user_list *Llista, st_Diccionari* TaulaHash) {
                 verif = 0;
             }
         }
+
         if (permis == 0) {
             printf_menu();
             printf("Tria l'opcio desitjada: ");
             scanf("%d", &opcio3);
+
             if (opcio3 == 1) {
                 while (opcio3 == 1){
                     printf("\n");
@@ -225,30 +230,35 @@ void opcio3 (user_list *Llista, st_Diccionari* TaulaHash) {
                 current = Llista -> head;
 
             } else if (opcio3 == 3) {
-                if (current -> num_solicituds == 0){
+                if (current -> num_solicituds == 0) {
                     printf("No tens sol.licituds d'amistat pendents.\n");
                 }
-                else{
-                    aceptar_denegar_solicitudes(current);
+                else {
+                    acceptar_denegar_solicituds(current);
                 }
 
             } else if (opcio3 == 4) {
                 //Aqui hem de llistar els nostres amics
-                listar_amigos_aceptados(current);
+                llistar_amics_acceptats(current);
                 sleep(1.5);
+
             } else if (opcio3 == 5) {
                 fer_publicacio(current, TaulaHash);
-            } else if (opcio3 == 6){
+
+            } else if (opcio3 == 6) {
                 Timeline(current);
-            } else if (opcio3 == 7){
+
+            } else if (opcio3 == 7) {
                 trending(TaulaHash);
-            }else if(opcio3 == 8){
+
+            } else if(opcio3 == 8) {
                 break;
             }
         }
     }
 }
-void printf_menu () {
+
+void printf_menu() {
     printf("\n");
     printf("---| 1. Perfil                          |---\n");
     printf("---| 2. Enviar sol.licituds d'amistat   |---\n");
@@ -261,8 +271,8 @@ void printf_menu () {
 }
 
 
-///--------------AUXILIARS----------------------------------
-bool comprovar_correu (char *correu) {
+/// ---------------- AUXILIARS ----------------
+bool comprovar_correu(char *correu) {
     int longitud = strlen(correu);
     int posArroba = 0;
     bool teArroba = false;
@@ -276,6 +286,7 @@ bool comprovar_correu (char *correu) {
         if (correu[i] == '@') {
             if (teArroba) {
                 return false;
+
             } else {
                 teArroba = true;
                 posArroba = i;
@@ -300,7 +311,8 @@ bool comprovar_correu (char *correu) {
 
     return true;
 }
-bool comprovar_usuari (user_list* llista, char* nom) {
+
+bool comprovar_usuari(user_list* llista, char* nom) {
     User* temp = llista -> head;
     while (temp != NULL) {
         if (strcmp (temp -> nom, nom) == 0) {
@@ -310,7 +322,8 @@ bool comprovar_usuari (user_list* llista, char* nom) {
     }
     return false;
 }
-int  resp_bol () {
+
+int resp_bol() {
     char resposta[10];
     bool respostaValida = false;
 
@@ -326,15 +339,18 @@ int  resp_bol () {
         if (strcmp(resposta, "si") == 0) {
             respostaValida = true;
             return 1;
+
         } else if (strcmp(resposta, "no") == 0) {
             respostaValida = true;
             return 0;
+
         } else {
             printf("Resposta invalida. Introdueix una resposta correcta ('si', 'no').\n");
         }
     }
 }
-int  checkPassword (User *usuari) {
+
+int checkPassword(User *usuari) {
     char input[20];
     int correct = 0;
 
@@ -344,7 +360,9 @@ int  checkPassword (User *usuari) {
 
         if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
             printf("Benvingut %s!,\n", usuari -> nom);
+            correct = 1;
             return 1;
+
         } else {
             printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
             return 0;

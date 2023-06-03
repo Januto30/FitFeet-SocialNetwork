@@ -4,10 +4,10 @@
 #include  <stdbool.h>
 
 
-///--------------SOLICITUDS D'AMISTAT-----------------------
-int  enviar_solicitud (user_list *Llista, User *usuari);
-int  aceptar_denegar_solicitudes (User *receptor);
-void listar_amigos_aceptados (User* usuario);
+/// ---------------- SOL.LICITUDS D'AMISTAT ----------------
+int enviar_solicitud(user_list *Llista, User *usuari);
+int acceptar_denegar_solicituds(User *receptor);
+void llistar_amics_acceptats(User* usuario);
 
 
 #endif //FITFEET_SOCIAL_H

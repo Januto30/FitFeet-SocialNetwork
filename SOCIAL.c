@@ -5,14 +5,22 @@
 #include  <string.h>
 #include  <unistd.h>
 
-
-///--------------SOLICITUDS D'AMISTAT-----------------------
-int  enviar_solicitud (user_list* Llista, User *usuari) {
+/// ---------------- SOL.LICITUDS D'AMISTAT ----------------
+int enviar_solicitud(user_list* Llista, User *usuari) {
     User* current = usuari;
     User* iterar_llista = Llista -> head;
     char receptor[MAX_LENGTH];
-    printf("A qui vols enviar una sol.licitud?");
-    scanf("%s", receptor);
+
+    while(1) {
+        printf("A qui vols enviar una sol.licitud?");
+        scanf("%s", receptor);
+
+        if (comprovar_usuari(Llista, receptor)) {
+            break;
+        } else {
+            printf("\nUsuari incorrecte, escriu un usuari existent\n");
+        }
+    }
 
     // Cerquem al receptor en la llista
     int index = -1;
@@ -69,7 +77,7 @@ int  enviar_solicitud (user_list* Llista, User *usuari) {
     }
 
     if (index == -1) {
-        printf("El receptor no existeix a la llista.\n");
+        printf("Aquest usuari no existeix a la llista.\n");
         return -1;
     }
 
@@ -80,15 +88,16 @@ int  enviar_solicitud (user_list* Llista, User *usuari) {
 
     return 0;
 }
-int  aceptar_denegar_solicitudes (User *receptor) {
-    if (receptor->num_solicituds == 0) {
+
+int acceptar_denegar_solicituds(User *receptor) {
+    if (receptor -> num_solicituds == 0) {
         printf("No tens sol.icituds pendents.\n");
         return -1;
     }
 
     printf("\nSol.licituds pendents:\n");
-    for (int i = 0; i < receptor->num_solicituds; i++) {
-        printf("%d. %s\n", i + 1, receptor->solicituds[i]->nom);
+    for (int i = 0; i < receptor -> num_solicituds; i++) {
+        printf("%d. %s\n", i + 1, receptor -> solicituds[i] -> nom);
     }
 
     int opcion;
@@ -99,47 +108,48 @@ int  aceptar_denegar_solicitudes (User *receptor) {
         if (opcion == 0) {
             return 0;  // Salir sin gestionar solicitudes
 
-        } else if (opcion >= 1 && opcion <= receptor->num_solicituds) {
+        } else if (opcion >= 1 && opcion <= receptor -> num_solicituds) {
             // Gestionar solicitud específica
-            User *solicitant = receptor->solicituds[opcion - 1];
+            User *solicitant = receptor -> solicituds[opcion - 1];
 
             int opcio2;
-            printf("\n1. Aceptar solicitud\n");
-            printf("2. Denegar solicitud\n");
+            printf("\n1. Acceptar sol.licitud\n");
+            printf("2. Denegar sol.licitud\n");
 
             while(1) {
                 printf("Posa el numero que vulguis accionar: ");
                 scanf("%d", &opcio2);
 
                 if (opcio2 == 1) {
-                    if (receptor->num_amics < MAX_AMICS) {
+                    if (receptor -> num_amics < MAX_AMICS) {
                         // Afegir el amic
-                        receptor->amics[receptor->num_amics] = solicitant;
-                        receptor->num_amics++;
-                        solicitant->num_amics++;
-                        printf("\nSol.licitud aceptada. Ara ets amic de %s.\n", solicitant->nom);
+                        receptor -> amics[receptor -> num_amics] = solicitant;
+                        receptor -> num_amics++;
+                        solicitant -> num_amics++;
+                        printf("\nSol.licitud aceptada. Ara ets amic de %s.\n", solicitant -> nom);
 
                         // Eliminar solicitud aceptada de la lista de solicitudes
-                        for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
-                            receptor->solicituds[i] = receptor->solicituds[i + 1];
+                        for (int i = opcion - 1; i < receptor -> num_solicituds - 1; i++) {
+                            receptor -> solicituds[i] = receptor -> solicituds[i + 1];
                         }
-                        receptor->num_solicituds--;
-
+                        receptor -> num_solicituds--;
                         return 0;
+
                     } else {
                         printf("No s'ha pogut acceptar la sol.licitud. La llista d'amics esta plena.\n");
                         return -1;  // Error: Lista de amigos llena
                     }
+
                 } else if (opcio2 == 2) {
-                    printf("Sol.licitud denegada. No ets amic de %s.\n", solicitant->nom);
+                    printf("Sol.licitud denegada. No ets amic de %s.\n", solicitant -> nom);
 
                     // Eliminar solicitud denegada de la lista de solicitudes
-                    for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
-                        receptor->solicituds[i] = receptor->solicituds[i + 1];
+                    for (int i = opcion - 1; i < receptor -> num_solicituds - 1; i++) {
+                        receptor -> solicituds[i] = receptor -> solicituds[i + 1];
                     }
-                    receptor->num_solicituds--;
-
+                    receptor -> num_solicituds--;
                     return 0;
+
                 } else {
                     printf("Opcio invalida. Torna a intentar-ho\n");
                 }
@@ -149,16 +159,17 @@ int  aceptar_denegar_solicitudes (User *receptor) {
         }
     }
 }
-void listar_amigos_aceptados (User* usuario) {
-    printf("Amigos aceptados de %s:\n", usuario->nom);
 
-    if (usuario->num_amics == 0) {
-        printf("No tienes amigos aceptados.\n");
+void llistar_amics_acceptats(User* usuario) {
+    printf("Amics acceptats de %s:\n", usuario -> nom);
+
+    if (usuario -> num_amics == 0) {
+        printf("No tens amics acceptats.\n");
         return;
     }
 
-    for (int i = 0; i < usuario->num_amics; i++) {
-        printf("%d. %s\n", i + 1, usuario->amics[i]->nom);
+    for (int i = 0; i < usuario -> num_amics; i++) {
+        printf("%d. %s\n", i + 1, usuario -> amics[i] -> nom);
     }
     sleep(1.5);
 }
