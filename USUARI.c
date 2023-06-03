@@ -6,31 +6,34 @@
 
 
 ///--------------FUNCIONS ELEMENTALS-------------------------
-void guardar_usuaris_en_arxiu (user_list* Llista) {
-    FILE* arxiu = fopen("../PERFIL.txt", "w");
+void guardar_usuaris_en_arxiu (user_list* Llista) {             //Imprimeix els perfils dels usuaris registrats en un FILE un cop finalitza el programa.
+    FILE* arxiu = fopen("../PERFIL.txt", "w");    //Obre un FILE.
 
-    if (arxiu == NULL) {
+    if (arxiu == NULL) {                                        //Si el FILE no exsisteix, imprimeix l'error.
         printf("No s'ha pogut obrir el fitxer.\n");
         return;
     }
 
-    User* current = Llista->head;
-    while (current != NULL) {
+    User* current = Llista->head;                               //Determina com a current el head de la llista d'usuaris.
+    while (current != NULL) {                                   //Imprimeix tota les dades de l'usuari en una sola línia en el FILE.
         fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5, current->num_solicituds, current->num_amics);
-        current = current->next;
+        current = current->next;                                //Itera d'usuari fins a arribar al final de la llsita.
     }
 
-    fclose(arxiu);
+    fclose(arxiu);                                          //Tanca l'arxiu per evitar conflictes en l'emmagatzematge de l'espai.
 }
-void llegir_usuaris_desde_arxiu (user_list* Llista) {
-    FILE* arxiu = fopen("../PERFIL.txt", "r");
+void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema els perfils dels usuaris ja registrats un cop s'inicialitza el programa.
+    FILE* arxiu = fopen("../PERFIL.txt", "r");    //Obre un FILE.
 
-    if (arxiu == NULL) {
+    if (arxiu == NULL) {                                        //Si el FILE no exsisteix, imprimeix l'error.
         printf("No s'ha pogut obrir l'arxiu.\n");
         return;
     }
+
+    //Es crean les mateixes variables de la struct user per tal de llegirles del FILE per després emmagatzemar-ho a la llista d'usuaris.
     char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH];
     int edat, num_solicituds, num_amics;
+
     while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5, &num_solicituds, &num_amics) == 14) {
         User* user = (User*)malloc(sizeof(User));
         strcpy(user -> nom, nom);
@@ -50,10 +53,14 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {
         user -> num_solicituds = num_solicituds;
         user -> num_amics = num_amics;
 
+        //Aquest fragment s'encarrega d'anar buscant a quina casella de la llista d'usuaris
+        //es pot introduir el nou usuari llegit del FILE.
         if (Llista -> head == NULL) {
             Llista -> head = user;
+
         } else {
             User* current = Llista -> head;
+
             while (current -> next != NULL) {
                 current = current -> next;
             }
@@ -63,9 +70,9 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {
 
     fclose(arxiu);
 }
-void emmagatzema_dades (User *usuari, user_list *Llista) {         // canviar ordre de preguntes
+void emmagatzema_dades (User *usuari, user_list *Llista) {        //Crea els usuaris.
 
-    while(1) {
+    while(1) {                                                    //Bucle infinit.
         printf("Introdueix el teu nom: \n");
         scanf("%s", usuari -> nom);
 
@@ -142,7 +149,7 @@ void fer_publicacio (User* usuari, st_Diccionari* Taula) {
         }
         token = strtok(NULL, " ");
     }
-}
+}   //Emmagatzema les publicacions de cada usuari així com cada paraula en una pila.
 void Timeline (User* usuari) {
     printf("Timeline de %s:\n", usuari -> nom);
 
@@ -156,7 +163,7 @@ void Timeline (User* usuari) {
     }
 
     printf("Fi del Timeline.\n");
-}
+}                               //Imprimeix tot el registre de publicacions de l'usuari
 
 
 ///--------------DICCIONARI---------------------------------
@@ -164,7 +171,7 @@ void swap (Paraula** a, Paraula** b) {
     Paraula* x = *a;
     *a = *b;
     *b = x;
-}
+}                       //Intercanvia el primer paràmetre pel segon paràmetre.
 int  particio (Paraula** a, int bot, int top) {
     int i = bot - 1;
     Paraula* pivot = a[top];
@@ -177,14 +184,14 @@ int  particio (Paraula** a, int bot, int top) {
     }
     swap(&a[i+1], &a[top]);
     return i+1;
-}
+}              //Intercanvia els elements de la pila de més petit a més gran.
 void quicksort (Paraula** a, int bot, int top) {
     if (bot<top){
         int pivot = particio(a, bot, top);
         quicksort(a, bot, pivot-1);
         quicksort(a, pivot+1, top);
     }
-}
+}             //Funció recursiva que organitza una pila.
 void trending (st_Diccionari* diccionari) {
     if (diccionari->num_paraules==0){
         printf("Encara no s'ha realitzat ninguna publicacio");
@@ -197,7 +204,7 @@ void trending (st_Diccionari* diccionari) {
         printf("%s, s'ha utilitzat %d\n", diccionari->paraules[i]->paraula, diccionari->paraules[i]->cont);
 
     }
-}
+}                  //Imprimeix les 10 paraules més usades per tots els usuaris exsistents.
 Paraula* buscar_paraula (st_Diccionari* Taula, char* word) {
     for (int i = 0; i < Taula->num_paraules; i++) {
         if (strcmp(Taula->paraules[i]->paraula, word) == 0) {
@@ -206,7 +213,7 @@ Paraula* buscar_paraula (st_Diccionari* Taula, char* word) {
         }
     }
     return NULL;
-}
+} //Busca si una paraula ja està emmagatzemada en la pila.
 void afegir_paraula_nova (st_Diccionari* Taula, char* word) {
     Paraula* new_paraula = (Paraula*) malloc(sizeof(Paraula));
     strcpy(new_paraula->paraula, word);
@@ -214,4 +221,4 @@ void afegir_paraula_nova (st_Diccionari* Taula, char* word) {
     Taula->paraules[Taula->num_paraules] = new_paraula;
     strcpy(Taula->paraules[Taula->num_paraules]->paraula, word);
     Taula->num_paraules++;
-}
+}//Afegeix una paraula a la pila.
