@@ -23,6 +23,7 @@ void menu() {
     printf("=========================================\n");
     printf("Selecciona una opcio: ");
 }
+
 int select_option() {
     int option;     // variable per guardar el valor introduït per l'usuari
     while (1) {     // entra en un bucle infinit
@@ -74,6 +75,8 @@ void afegir_usuari(user_list* llista, User* usuari) {
         temp -> next = usuari;              // afegeix un usuari nou al final de la llista
     }
 }
+
+/*
 void print_users(user_list *Llista) {
     User *current = Llista -> head;         // current apunta al primer usuari de la llista
     while (current != NULL) {               // mentre la llista no estigui buida...
@@ -82,6 +85,23 @@ void print_users(user_list *Llista) {
     }
     printf("\n");
 }
+*/
+
+void print_users(user_list* Llista) {
+    Queue queue;
+    inicialitzarQueue(&queue);
+
+    User* current = Llista -> head;         // el current és el primer de la llista
+    while (current != NULL) {               // si la llista no està buida, entrem al bucle
+        enqueue(&queue, current -> nom);    // fica el usuari current dins la cua
+        current = current -> next;          // el current és el següent de la llista
+    }
+
+    while(!isQueueEmpty(&queue)) {                                      // mentres la cua no estigui buida, entrem al bucle, per escriure cada nom dels usuaris
+        printf("          |    %s    |\n", queue.head -> nom);
+        dequeue(&queue);
+    }
+}
 
 void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
@@ -89,6 +109,7 @@ void opcio3(user_list *Llista, st_Diccionari* TaulaHash) {
 
     printf("\n---Quin usuari ets?---\n");
     print_users(Llista);
+    sleep(1.5);
 
     while (1) {                                     // bucle infinit per verificar que l'usuari s'introdueix correctament
         scanf("%s", usuari);
@@ -369,3 +390,39 @@ int checkPassword(User *usuari) {
         }
     }
 }
+
+void inicialitzarQueue(Queue* queue) {      // funció per inicialitzar la cua
+    queue -> head = NULL;
+    queue -> last = NULL;
+}
+
+int isQueueEmpty(Queue* queue) {            // funció per comprovar que la cua està buida o no
+    return (queue -> head == NULL);
+}
+
+void enqueue(Queue* queue, char* nom) {                     // funció per afegir usuaris dins la cua
+    User* usuari_nou = (User*) malloc(sizeof(User));   // reservem memòria pel nou usuari
+    strcpy(usuari_nou -> nom, nom);             // copiem el nom
+    usuari_nou -> next = NULL;                              // el nou usuari és el darrer
+
+    if (isQueueEmpty(queue)) {          // si la cua està buida, el nou usuari és el primer i darrer de la cua
+        queue -> head = usuari_nou;
+        queue -> last = usuari_nou;
+
+    } else {                                // si no, el nou usuari és el darrer de la cua
+        queue -> last -> next = usuari_nou;
+        queue -> last = usuari_nou;
+    }
+}
+
+void dequeue(Queue* queue) {                    // funció per eliminar el primer usuari de la cua
+    if (isQueueEmpty(queue)) {                  // si la cua està buida
+        printf("La cua esta buida.\n");
+        return;
+    }
+
+    User* temporal = queue -> head;             // es guarda el primer usuari a una variable temporal
+    queue -> head = queue -> head -> next;      // ara el primer és el següent de la llista
+    free(temporal);                     // s'elimina el primer
+}
+

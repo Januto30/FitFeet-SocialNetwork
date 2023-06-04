@@ -56,6 +56,11 @@ typedef struct {                    // Linked list
     int num_persones;               // nombre de persones a la llista
 } user_list;
 
+typedef struct {
+    User* head;
+    User* last;
+} Queue;
+
 
 /// ---------------- MENÚ ----------------
 void menu();
@@ -75,6 +80,10 @@ bool comprovar_correu(char *correu);
 bool comprovar_usuari(user_list* llista, char* nom);
 int resp_bol();
 int checkPassword(User *usuari);
+void inicialitzarQueue(Queue* queue);
+int isQueueEmpty(Queue* queue);
+void enqueue(Queue* queue, char* nom);
+void dequeue(Queue* queue);
 
 
 #endif //FITFEET_MENU_H
