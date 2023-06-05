@@ -9,26 +9,23 @@
 #define   MAX_PARAULES    1000
 #define   MAX_CHARACTERS  100
 
+
 /// ---------------- STRUCT ----------------
 typedef struct {
     char paraula[MAX_CHARACTERS];
     int cont;
 } Paraula;
-
 typedef struct {
     Paraula* paraules[MAX_PARAULES];
     int num_paraules;
 } st_Diccionari;
-
 typedef struct Publicacio {
     char text[MAX_CHARACTERS + 1];
     struct Publicacio* seguent;
 } Publicacio;
-
 typedef struct {
     Publicacio* top;  // Apunta a l'element superior de la pila
 } PilaPublicacions;
-
 typedef struct User {
     char nom[MAX_LENGTH];
     char password[MAX_LENGTH];
@@ -52,12 +49,10 @@ typedef struct User {
 
     int quilometres;
 } User;
-
 typedef struct {                    // Linked list
     User* head;                     // apunta al primer element de la llista
     int num_persones;               // nombre de persones a la llista
 } user_list;
-
 typedef struct {
     User* head;
     User* last;

@@ -77,6 +77,8 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
 void emmagatzema_dades(User *usuari, user_list *Llista) {         //L'suari insertarà totes les dades necessaries per crear el seu usuari
 /// canviar ordre de preguntes?
 
+    printf("------INSERTAR NOU USUARI------\n");
+
     while(1) {                                                    //Bucle infinit.
         printf("Introdueix el teu nom: \n");
         scanf("%s", usuari -> nom);
@@ -154,7 +156,9 @@ void print_user_info(User *current) {
     printf("==========================\n");
 }
 
-void canvi_de_dades(char* option_3_1, User *current){
+void canvi_de_dades(User *current){
+    char option_3_1[MAX_LENGTH];
+    printf("Quina? ");
     while (1) {
         scanf("%s", option_3_1);
 

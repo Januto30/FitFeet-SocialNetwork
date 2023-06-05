@@ -6,7 +6,7 @@
 #include  <unistd.h>
 
 
-/// ---------------- SOL.LICITUDS D'AMISTAT ----------------
+/// ---------------- SOL·LICITUDS D'AMISTAT ----------------
 int enviar_solicitud(user_list* Llista, User *usuari) {
     User* current = usuari;
     User* iterar_llista = Llista -> head;

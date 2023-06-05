@@ -39,24 +39,22 @@ int select_option() {
 }
 
 int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash) {
-    if (option == 1) {
+    if (option == 1) {                                           //opció inserir nou usuari.
         User *usuari = (User *) malloc(sizeof(User));       // crea un nou usuari amb memòria dinàmica
-        printf("------INSERTAR NOU USUARI------\n");
         emmagatzema_dades(usuari, Llista);
         afegir_usuari(Llista, usuari);
         return 0;
 
-    } else if (option == 2) {
-        printf("------LLISTAR TOTS ELS USUARIS EXISTENTS------\n");
+    } else if (option == 2) {                                   //opció imprimir llista d'usuaris.
         print_users(Llista);
         sleep(1.5);
         return 0;
 
-    } else if (option == 3) {
+    } else if (option == 3) {                                   //opció per interactuar amb les opcions d'un usuari.
         menu_usuari(Llista, TaulaHash);
         return 0;
 
-    } else if (option == 4) {
+    } else if (option == 4) {                                   //Finalitzar amb el programa.
         return 1;
     }
 }
@@ -88,6 +86,8 @@ void print_users(user_list *Llista) {
 */
 
 void print_users(user_list* Llista) {
+    printf("------ LLISTA DE TOTS ELS USUARIS ------\n");
+
     Queue queue;
     inicialitzarQueue(&queue);
 
@@ -107,7 +107,7 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
     char usuari[MAX_LENGTH];                        // guarda el nom del usuari
     int opcio3, permis;
 
-    printf("\n---Quin usuari ets?---\n");
+    printf("\n--- Quin usuari ets? ---\n");
     print_users(Llista);
     sleep(1.5);
 
@@ -149,23 +149,21 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
             scanf("%d", &opcio3);
 
             if (opcio3 == 1) {
-                while (opcio3 == 1){
+                while (opcio3 == 1){                                   //opció imprimir les dades de l'usuari.
                     print_user_info(current);
 
                     if (resp_bol() == 1) {
-                        char option_3_1[MAX_LENGTH];
-                        printf("Quina? ");
-                        canvi_de_dades(option_3_1, current);
+                        canvi_de_dades(current); //Permet canviar qualsevol dada de l'usuari.
                     } else {
                         break;
                     }
                 }
 
-            } else if (opcio3 == 2) {
+            } else if (opcio3 == 2) {                                   //opció per enviar solicituts d'amistat.
                 enviar_solicitud(Llista, current);
                 current = Llista -> head;
 
-            } else if (opcio3 == 3) {
+            } else if (opcio3 == 3) {                                   //opció per gestionar les solicituts d'amistat.
                 if (current -> num_solicituds == 0) {
                     printf("No tens sol.licituds d'amistat pendents.\n");
                 }
@@ -173,21 +171,21 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
                     acceptar_denegar_solicituds(current);
                 }
 
-            } else if (opcio3 == 4) {
+            } else if (opcio3 == 4) {                                   //opció per imprimir la llista d'amics.
                 //Aqui hem de llistar els nostres amics
                 llistar_amics_acceptats(current);
                 sleep(1.5);
 
-            } else if (opcio3 == 5) {
+            } else if (opcio3 == 5) {                                   //opció per fer una nova publicació.
                 fer_publicacio(current, TaulaHash);
 
-            } else if (opcio3 == 6) {
+            } else if (opcio3 == 6) {                                   //opció per imprimir totes les publicacions realitzades per un usuari.
                 Timeline(current);
 
-            } else if (opcio3 == 7) {
+            } else if (opcio3 == 7) {                                   //opció per imprimir les 10 paraules més utlitzades.
                 trending(TaulaHash);
 
-            } else if(opcio3 == 8) {
+            } else if(opcio3 == 8) {                                    //opció per imprimir tots els quilòmetres fets per un usuari.
                 print_quilometres((User*)usuari);
 
             } else if(opcio3 == 9) {

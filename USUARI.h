@@ -3,6 +3,7 @@
 #include  <stdio.h>
 #include  <stdbool.h>
 
+
 /// ---------------- FUNCIONS ELEMENTALS ----------------
 void guardar_usuaris_en_arxiu(user_list* Llista);
 void llegir_usuaris_desde_arxiu(user_list* Llista);
@@ -11,7 +12,7 @@ void emmagatzema_dades(User *usuari, user_list *Llista);
 
 /// ---------------- FUNCIONS ELEMENTALS ----------------
 void print_user_info(User *current);
-void canvi_de_dades(char* option_3_1, User *current);
+void canvi_de_dades(User *current);
 
 /// ---------------- PUBLICACIÓ ----------------
 void fer_publicacio(User* usuari, st_Diccionari* Taula);

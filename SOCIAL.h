@@ -4,7 +4,7 @@
 #include  <stdbool.h>
 
 
-/// ---------------- SOL.LICITUDS D'AMISTAT ----------------
+/// ---------------- SOL·LICITUDS D'AMISTAT ----------------
 int enviar_solicitud(user_list *Llista, User *usuari);
 int acceptar_denegar_solicituds(User *receptor);
 void llistar_amics_acceptats(User* usuario);
