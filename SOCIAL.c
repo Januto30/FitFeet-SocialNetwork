@@ -5,6 +5,7 @@
 #include  <string.h>
 #include  <unistd.h>
 
+
 /// ---------------- SOL.LICITUDS D'AMISTAT ----------------
 int enviar_solicitud(user_list* Llista, User *usuari) {
     User* current = usuari;

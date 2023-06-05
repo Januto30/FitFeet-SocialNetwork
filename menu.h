@@ -49,6 +49,8 @@ typedef struct User {
     int num_solicituds;
     struct User* solicituds[MAX_SOLICITUDS];
     PilaPublicacions publicacio;  // Pila de publicacions de l'usuari
+
+    int quilometres;
 } User;
 
 typedef struct {                    // Linked list
@@ -71,8 +73,8 @@ int print_option(int option, user_list *Llista, st_Diccionari* TaulaHash);
 /// ---------------- OPCIONS DE MENÚ ----------------
 void afegir_usuari(user_list* llista, User* usuari);
 void print_users(user_list *Llista);
-void opcio3(user_list *Llista, st_Diccionari* TaulaHash);
-void printf_menu();
+void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash);
+void printf_menu_usuari();
 
 
 /// ---------------- AUXILIARS ----------------

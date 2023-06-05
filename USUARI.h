@@ -9,9 +9,15 @@ void llegir_usuaris_desde_arxiu(user_list* Llista);
 void emmagatzema_dades(User *usuari, user_list *Llista);
 
 
+/// ---------------- FUNCIONS ELEMENTALS ----------------
+void print_user_info(User *current);
+void canvi_de_dades(char* option_3_1, User *current);
+
 /// ---------------- PUBLICACIÓ ----------------
 void fer_publicacio(User* usuari, st_Diccionari* Taula);
 void Timeline(User* usuari);
+void quilometres(User* usuari);
+void print_quilometres(User* usuari);
 
 
 /// ---------------- DICCIONARI ----------------
