@@ -23,12 +23,58 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {             //Imprimeix els p
     }
 
     fclose(arxiu);                                          //Tanca l'arxiu per evitar conflictes en l'emmagatzematge de l'espai.
+
+
+
+
+    FILE* arxiu_solicituds = fopen("../SOLICITUDS_AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre als fitxers de solicituds i d'amics.
+
+        current = Llista->head;
+
+        const char* solicituds;
+        for (int i = 0; i < current->num_solicituds; i++) {
+            strcat(current->solicituds[i]->nom, solicituds);
+        }
+
+        while (current != NULL) {
+            fprintf(arxiu_solicituds, "%s ", current->nom);
+            for (int i = 0; i < current->num_solicituds; i++) {
+                fprintf(arxiu_solicituds, "%s ", current->solicituds[i]->nom);
+            }
+            fprintf(arxiu_solicituds, "\n");
+            current = current->next;
+        }
+        fclose(arxiu_solicituds);
+
+
+
+
+    FILE* arxiu_amics = fopen("../AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre als fitxers de solicituds i d'amics.
+
+    current = Llista->head;
+
+    const char* amics;
+    for (int i = 0; i < current->num_amics; i++) {
+        strcat(current->amics[i]->nom, amics);
+    }
+
+    while (current != NULL) {
+        fprintf(arxiu_amics, "%s ", current->nom);
+        for (int i = 0; i < current->num_amics; i++) {
+            fprintf(arxiu_amics, "%s ", current->amics[i]->nom);
+        }
+        fprintf(arxiu_amics, "\n");
+        current = current->next;
+    }
+    fclose(arxiu_amics);
 }
 
 void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema els perfils dels usuaris ja registrats un cop s'inicialitza el programa.
     FILE* arxiu = fopen("../PERFIL.txt", "r");    //Obre un FILE.
+    FILE* arxiu_solicituds = fopen("../SOLICITUDS_AMICS.txt", "r");
+    FILE* arxiu_amics = fopen("../AMICS.txt", "r");
 
-    if (arxiu == NULL) {
+    if (arxiu == NULL || arxiu_amics == NULL || arxiu_solicituds == NULL) {
         printf("No s'ha pogut obrir l'arxiu.\n");
         return;
     }
@@ -71,7 +117,90 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
         }
     }
 
+    User *user = Llista->head;
+    User* iterar_llista = Llista->head;
+    for(int p = 0; p < Llista->num_persones; p++) {
+
+        // Read values from SOLICITUDS_AMICS.txt
+        char linia_solicituds[500];
+        if (fgets(linia_solicituds, sizeof(linia_solicituds), arxiu_solicituds) != NULL) {
+            // Remove the trailing newline character
+            linia_solicituds[strcspn(linia_solicituds, "\n")] = '\0';
+
+            // Tokenize the line and store the tokens in an array of strings
+            char *tokens_solicituds[MAX_SOLICITUDS];
+            int contadorTokensSolicituds = 0;
+
+            char *token_solicituds = strtok(linia_solicituds, " ");
+            while (token_solicituds != NULL && contadorTokensSolicituds < MAX_SOLICITUDS) {
+                tokens_solicituds[contadorTokensSolicituds] = token_solicituds;
+                contadorTokensSolicituds++;
+                token_solicituds = strtok(NULL, " ");
+            }
+
+            // Store the tokens in user->solicituds
+            int c = 0;
+            for(int i = 1; i < contadorTokensSolicituds; i++){
+                iterar_llista = Llista->head;
+                 for(int j = 0; j < Llista->num_persones; j++) {
+                     if (strcmp(iterar_llista->nom, tokens_solicituds[i]) == 0) {
+                         user->solicituds[c] = iterar_llista;
+                         c++;
+                     }
+                     iterar_llista = iterar_llista->next;
+                 }
+            }
+        }
+        user = user->next;
+        iterar_llista = Llista->head;
+    }
+
+
+
+
+    user = Llista->head;
+    iterar_llista = Llista->head;
+    for(int p = 0; p < Llista->num_persones; p++) {
+
+        // Read values from AMICS.txt
+        char linia_amics[500];
+        if (fgets(linia_amics, sizeof(linia_amics), arxiu_amics) != NULL) {
+            // Remove the trailing newline character
+            linia_amics[strcspn(linia_amics, "\n")] = '\0';
+
+            // Tokenize the line and store the tokens in an array of strings
+            char *tokens_amics[MAX_AMICS];
+            int contadorTokensAmics = 0;
+
+            char *token_amics = strtok(linia_amics, " ");
+            while (token_amics != NULL && contadorTokensAmics < MAX_SOLICITUDS) {
+                tokens_amics[contadorTokensAmics] = token_amics;
+                contadorTokensAmics++;
+                token_amics = strtok(NULL, " ");
+            }
+
+            // Store the tokens in user->amics
+            int c = 0;
+            for(int i = 1; i < contadorTokensAmics; i++){
+                iterar_llista = Llista->head;
+                for(int j = 0; j < Llista->num_persones; j++) {
+                    if (strcmp(iterar_llista->nom, tokens_amics[i]) == 0) {
+                        user->amics[c] = iterar_llista;
+
+                        c++;
+                    }
+                    iterar_llista = iterar_llista->next;
+                }
+            }
+        }
+        user = user->next;
+        iterar_llista = Llista->head;
+    }
+
+
     fclose(arxiu);
+    fclose(arxiu_solicituds);
+    fclose(arxiu_amics);
 }
 
 void emmagatzema_dades(User *usuari, user_list *Llista) {         //L'suari insertarà totes les dades necessaries per crear el seu usuari

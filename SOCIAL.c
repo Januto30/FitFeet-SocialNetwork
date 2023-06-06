@@ -64,7 +64,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Comprovam que l'emissor no hagi enviat ja una sol·licitud d'amistat al receptor
     for (int i = 0; i < current -> num_solicituds; i++) {
         if (current -> solicituds[i] == receptor_user) {
-            printf("Ja has enviat una sol.licitud a aquest usuari\n");
+            printf("Ja has rebut una sol.licitud d'aquest usuari\n");
             return -1;
         }
     }
