@@ -121,7 +121,7 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
     User *current = Llista -> head;                 // es declara una variable local del tipus punter a User (current), que comença apuntant al head de la llista
     while (current != NULL) {                       // mentre no s'hagi arribat al final de la llista...
         while (verif == 0) {
-            if (strcmp(usuari, current -> nom) == 0) {  // compara el nom guardat a usuari amb el node actual de la llista
+            if (strcmp(usuari, current -> nom) == 0) {      // compara el nom guardat a usuari amb el node actual de la llista
                 if (checkPassword(current) == 1) {
                     permis = 0;
                     verif = 1;
@@ -142,7 +142,7 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
                     print_user_info(current);
 
                     if (resp_bol() == 1) {
-                        canvi_de_dades(current); //Permet canviar qualsevol dada de l'usuari.
+                        canvi_de_dades(current);                        //Permet canviar qualsevol dada de l'usuari.
                     } else {
                         break;
                     }
@@ -243,12 +243,16 @@ bool comprovar_correu(char *correu) {
 }
 
 bool comprovar_usuari(user_list* llista, char* nom) {
-    User* temp = llista -> head;                        // variable temporal per recórrer la llista d'usuaris
-    while (temp != NULL) {                              // mentres no estigui buida la llista, entra
-        if (strcmp (temp -> nom, nom) == 0) {           // si troba l'usuari retorna vertader
+    if (llista -> head == NULL) {                   // comprovem que la llista no està buida
+        return false;
+    }
+
+    User* temp = llista -> head;                    // variable temporal per recórrer la llista d'usuaris
+    while (temp != NULL) {                          // mentres no estigui buida la llista, entra
+        if (strcmp (temp -> nom, nom) == 0) {       // si troba l'usuari retorna vertader
             return true;
         }
-        temp = temp -> next;                            // s'avança al següent usuari
+        temp = temp -> next;                        // s'avança al següent usuari
     }
     return false;
 }
@@ -282,13 +286,13 @@ int resp_bol() {
 
 int checkPassword(User *usuari) {
     char input[20];
-    int correct = false;
+    bool correct = false;
 
-    while (!correct) {                                      // bucle infinit
+    while (!correct) {                                                      // bucle infinit
         printf("Introdueix la contrasenya: ");
-        scanf("%s", input);                           // guarda la contrasenya introduïda per l'usuari
+        scanf("%s", input);                                             // guarda la contrasenya introduïda per l'usuari
 
-        if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
+        if (strcmp(input, usuari -> password) == 0) {                        // comparem la contrasenya introduïda amb l'actual
             printf("Benvingut %s!,\n", usuari -> nom);
             return 1;           // entrem al perfil
 
