@@ -27,7 +27,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {             //Imprimeix els p
 
 
 
-    FILE* arxiu_solicituds = fopen("../SOLICITUDS_AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre als fitxers de solicituds i d'amics.
+    FILE* arxiu_solicituds = fopen("../SOLICITUDS_AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre al fitxer de solicituds.
 
         current = Llista->head;
 
@@ -49,7 +49,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {             //Imprimeix els p
 
 
 
-    FILE* arxiu_amics = fopen("../AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre als fitxers de solicituds i d'amics.
+    FILE* arxiu_amics = fopen("../AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre al fitxers d'amics.
 
     current = Llista->head;
 
@@ -122,13 +122,12 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
     User* iterar_llista = Llista->head;
     for(int p = 0; p < Llista->num_persones; p++) {
 
-        // Read values from SOLICITUDS_AMICS.txt
+        // Llegir el fitxer SOLICITUDS_AMICS.txt per línies
         char linia_solicituds[500];
         if (fgets(linia_solicituds, sizeof(linia_solicituds), arxiu_solicituds) != NULL) {
-            // Remove the trailing newline character
             linia_solicituds[strcspn(linia_solicituds, "\n")] = '\0';
 
-            // Tokenize the line and store the tokens in an array of strings
+            // Hem de dividir les línies de l'arxiu en tokens, 1 token per a cada nom (el primer no es té en compte perquè és el nom de l'usuari)
             char *tokens_solicituds[MAX_SOLICITUDS];
             int contadorTokensSolicituds = 0;
 
@@ -139,7 +138,7 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
                 token_solicituds = strtok(NULL, " ");
             }
 
-            // Store the tokens in user->solicituds
+            // Es guarden els valors dels tokens a user->solicituds
             int c = 0;
             for(int i = 1; i < contadorTokensSolicituds; i++){
                 iterar_llista = Llista->head;
@@ -163,13 +162,12 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
     iterar_llista = Llista->head;
     for(int p = 0; p < Llista->num_persones; p++) {
 
-        // Read values from AMICS.txt
+        // Llegir el fitxer AMICS.txt per línies
         char linia_amics[500];
         if (fgets(linia_amics, sizeof(linia_amics), arxiu_amics) != NULL) {
-            // Remove the trailing newline character
             linia_amics[strcspn(linia_amics, "\n")] = '\0';
 
-            // Tokenize the line and store the tokens in an array of strings
+            // Dividir les línies del fitxer AMICS.txt en tokens (usant la funció strtok i usant " " com a separador, d'aquesta forma cada nom es converteix en un token)
             char *tokens_amics[MAX_AMICS];
             int contadorTokensAmics = 0;
 
@@ -180,7 +178,7 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
                 token_amics = strtok(NULL, " ");
             }
 
-            // Store the tokens in user->amics
+            // Guardar els tokens a user->amics
             int c = 0;
             for(int i = 1; i < contadorTokensAmics; i++){
                 iterar_llista = Llista->head;
