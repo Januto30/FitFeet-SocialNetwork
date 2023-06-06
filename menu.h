@@ -44,6 +44,8 @@ typedef struct User {
     char gust3[MAX_LENGTH];
     char gust4[MAX_LENGTH];
     char gust5[MAX_LENGTH];
+    int quilometres;
+
     struct User* next;              // Com que volem que la llista tingui més d'un usuari, connectem els nodes entre ells
 
     int num_amics;                  //Així cada usuari té una pròpia llista d'amics i una llista de solicituds
@@ -52,7 +54,6 @@ typedef struct User {
     struct User* solicituds[MAX_SOLICITUDS];
     PilaPublicacions publicacio;  // Pila de publicacions de l'usuari
 
-    int quilometres;
 } User;
 
 typedef struct {                    // Linked list

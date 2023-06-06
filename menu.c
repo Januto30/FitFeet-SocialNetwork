@@ -154,7 +154,7 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
 
             } else if (opcio3 == 3) {                                   //opció per gestionar les solicituts d'amistat.
                 if (current -> num_solicituds == 0) {
-                    printf("No tens sol.licituds d'amistat pendents.\n");
+                    printf("\nNo tens sol.licituds d'amistat pendents.\n");
                 }
                 else {
                     acceptar_denegar_solicituds(current);
@@ -174,7 +174,7 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
             } else if (opcio3 == 7) {                                   //opció per imprimir les 10 paraules més utlitzades.
                 trending(TaulaHash);
 
-            } else if(opcio3 == 8) {                                    //opció per imprimir tots els quilòmetres fets per un usuari.ç
+            } else if(opcio3 == 8) {                                    //opció per imprimir el rànking dels usuaris segons el kiilòmetres recorreguts
                 printf("\nRanking km recorreguts:\n");
                 print_rankingKM(Llista, current);
 
@@ -201,39 +201,41 @@ void printf_menu_usuari() {
 
 /// ---------------- AUXILIARS ----------------
 bool comprovar_correu(char *correu) {
-    int longitud = strlen(correu);
-    int posArroba = 0;
+    int longitud = strlen(correu);      // longitud del correu
+    int posArroba = 0;                      // variable per la posició del '@'
     bool teArroba = false;
     bool tePunt = false;
 
-    if (longitud < 5) {     // Almenys 5 caràcters
+    if (longitud < 5) {     // el correu almenys té 5 caràcters
         return false;
     }
 
-    for (int i = 0; i < longitud; i++) {        // Comprovar que només té un '@'
-        if (correu[i] == '@') {
-            if (teArroba) {
+    // Comprovar que només té un '@'
+    for (int i = 0; i < longitud; i++) {
+        if (correu[i] == '@') {             // si el caràcter és '@', entra
+            if (teArroba) {                 // si ja s'ha trobat un '@', retorna fals
                 return false;
 
             } else {
-                teArroba = true;
-                posArroba = i;
+                teArroba = true;            // Sinó, estableix teArroba com a vertader
+                posArroba = i;              // i guarda la posició del '@'
             }
         }
     }
 
-    if (!teArroba) {
+    if (!teArroba) {        // Si no s'ha trobat '@', retorna fals
         return false;
     }
 
-    for (int i = posArroba + 1; i < longitud; i++) {       // Comprovar que només té un '.'
-        if (correu[i] == '.') {
-            tePunt = true;
+    // Comprovar que només té un '.' després del '@'
+    for (int i = posArroba + 1; i < longitud; i++) {
+        if (correu[i] == '.') {         // si el caràcter és '.', entra
+            tePunt = true;              // i estableix que té punt
             break;
         }
     }
 
-    if (!tePunt) {
+    if (!tePunt) {          // Si no s'ha trobat '.', retorna fals
         return false;
     }
 
@@ -241,12 +243,12 @@ bool comprovar_correu(char *correu) {
 }
 
 bool comprovar_usuari(user_list* llista, char* nom) {
-    User* temp = llista -> head;
-    while (temp != NULL) {
-        if (strcmp (temp -> nom, nom) == 0) {
+    User* temp = llista -> head;                    // variable temporal per recórrer la llista d'usuaris
+    while (temp != NULL) {                          // mentres no estigui buida la llista, entra
+        if (strcmp (temp -> nom, nom) == 0) {       // si troba l'usuari retorna vertader
             return true;
         }
-        temp = temp -> next;
+        temp = temp -> next;                        // s'avança al següent usuari
     }
     return false;
 }
@@ -255,45 +257,44 @@ int resp_bol() {
     char resposta[10];
     bool respostaValida = false;
 
-    printf("Vols modificar alguna opcio? (si/no): ");
+    printf("\nVols modificar alguna opcio? (si/no): ");
 
-    while (!respostaValida) {
+    while (!respostaValida) {                  // bucle infinit
         scanf("%s", resposta);
 
-        for (size_t i = 0; i < strlen(resposta); i++) {
+        for (size_t i = 0; i < strlen(resposta); i++) {     // converteix la resposta a minúscules
             resposta[i] = tolower(resposta[i]);
         }
 
-        if (strcmp(resposta, "si") == 0) {
-            respostaValida = true;
-            return 1;
+        if (strcmp(resposta, "si") == 0) {      // si la resposta és 'si'
+            respostaValida = true;              // la resposta es vàlida
+            return 1;                           // i retornem 1 (per modificar alguna opció)
 
-        } else if (strcmp(resposta, "no") == 0) {
-            respostaValida = true;
-            return 0;
+        } else if (strcmp(resposta, "no") == 0) {   // si la resposta és 'no'
+            respostaValida = true;                  // la resposta és vàlida
+            return 0;                               // i retornem 0 (per no modificar res)
 
         } else {
-            printf("Resposta invalida. Introdueix una resposta correcta ('si', 'no').\n");
+            printf("Resposta invalida. Introdueix una resposta correcta ('si', 'no').\n");      // resposta invàlida
         }
     }
 }
 
 int checkPassword(User *usuari) {
     char input[20];
-    int correct = 0;
+    int correct = false;
 
-    while (!correct) {
+    while (!correct) {                                      // bucle infinit
         printf("Introdueix la contrasenya: ");
         scanf("%s", input);                           // guarda la contrasenya introduïda per l'usuari
 
         if (strcmp(input, usuari -> password) == 0) {       // comparem la contrasenya introduïda amb l'actual
             printf("Benvingut %s!,\n", usuari -> nom);
-            correct = 1;
-            return 1;
+            return 1;           // entrem al perfil
 
         } else {
             printf("Contrasenya incorrecta. Intenta-ho de nou.\n");
-            return 0;
+            return 0;           // no entrem al perfil
         }
     }
 }
