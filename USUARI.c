@@ -202,8 +202,7 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
     fclose(arxiu_amics);
 }
 
-void emmagatzema_dades(User *usuari, user_list *Llista) {         //L'suari insertarà totes les dades necessaries per crear el seu usuari
-/// canviar ordre de preguntes?
+void emmagatzema_dades(User *usuari, user_list *Llista) {         //L'usuari insertarà totes les dades necessaries per crear el seu usuari
 
     printf("------INSERTAR NOU USUARI------\n");
 

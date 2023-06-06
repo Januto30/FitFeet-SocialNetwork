@@ -243,12 +243,12 @@ bool comprovar_correu(char *correu) {
 }
 
 bool comprovar_usuari(user_list* llista, char* nom) {
-    User* temp = llista -> head;                    // variable temporal per recórrer la llista d'usuaris
-    while (temp != NULL) {                          // mentres no estigui buida la llista, entra
-        if (strcmp (temp -> nom, nom) == 0) {       // si troba l'usuari retorna vertader
+    User* temp = llista -> head;                        // variable temporal per recórrer la llista d'usuaris
+    while (temp != NULL) {                              // mentres no estigui buida la llista, entra
+        if (strcmp (temp -> nom, nom) == 0) {           // si troba l'usuari retorna vertader
             return true;
         }
-        temp = temp -> next;                        // s'avança al següent usuari
+        temp = temp -> next;                            // s'avança al següent usuari
     }
     return false;
 }
