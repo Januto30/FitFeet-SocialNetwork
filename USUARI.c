@@ -18,7 +18,7 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {             //Imprimeix els p
 
     User* current = Llista -> head;                               //Determina com a current el head de la llista d'usuaris.
     while (current != NULL) {                                   //Imprimeix tota les dades de l'usuari en una sola línia en el FILE.
-        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5, current->num_solicituds, current->num_amics);
+        fprintf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d %d\n", current->nom, current->password, current->cognom1, current->cognom2, current->edat, current->correu, current->ubi, current->gust1, current->gust2, current->gust3, current->gust4, current->gust5, current->num_solicituds, current->num_amics, current -> quilometres);
         current = current -> next;
     }
 
@@ -81,9 +81,9 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
 
     //Es crean les mateixes variables de la struct user per tal de llegirles del FILE per després emmagatzemar-ho a la llista d'usuaris.
     char nom[MAX_LENGTH], password[MAX_LENGTH], cognom1[MAX_LENGTH], cognom2[MAX_LENGTH], correu[MAX_LENGTH], ubi[MAX_LENGTH], gust1[MAX_LENGTH], gust2[MAX_LENGTH], gust3[MAX_LENGTH], gust4[MAX_LENGTH], gust5[MAX_LENGTH];
-    int edat, num_solicituds, num_amics;
+    int edat, num_solicituds, num_amics, quilometres;
 
-    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5, &num_solicituds, &num_amics) == 14) {
+    while (fscanf(arxiu, "%s %s %s %s %d %s %s %s %s %s %s %s %d %d %d", nom, password, cognom1, cognom2, &edat, correu, ubi, gust1, gust2, gust3, gust4, gust5, &num_solicituds, &num_amics, &quilometres) == 15) {
         User* user = (User*)malloc(sizeof(User));
         strcpy(user -> nom, nom);
         strcpy(user -> password, password);
@@ -101,6 +101,7 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
         Llista -> num_persones++;
         user -> num_solicituds = num_solicituds;
         user -> num_amics = num_amics;
+        user -> quilometres = quilometres;
 
         //Aquest fragment s'encarrega d'anar buscant a quina casella de la llista d'usuaris
         //es pot introduir el nou usuari llegit del FILE.
@@ -282,6 +283,10 @@ void print_user_info(User *current) {
     printf("| Gust 3:   %s\n", current->gust3);
     printf("| Gust 4:   %s\n", current->gust4);
     printf("| Gust 5:   %s\n", current->gust5);
+    printf("|========================|\n");
+    printf("|       Kilometres       |\n");
+    printf("|========================|\n");
+    printf("| Km totals: %d\n", current->quilometres);
     printf("==========================\n");
 }
 
@@ -406,8 +411,30 @@ void quilometres(User* usuari){
     usuari->quilometres += quilometres;
 }
 
-void print_quilometres(User* usuari){
-    printf("En total has recorreut %d quilometres.\n", usuari->quilometres);
+void print_rankingKM(user_list* Llista , User* usuari) {
+    User* usuaris[MAX_USERS];
+    int numUsuaris = 0;
+
+    User* current = Llista -> head;
+    while (current != NULL && numUsuaris < MAX_USERS) {
+        usuaris[numUsuaris] = current;
+        current = current -> next;
+        numUsuaris++;
+    }
+
+    for (int i = 0; i < numUsuaris - 1; i++) {
+        for (int j = 0; j < numUsuaris - i - 1; j++) {
+            if (usuaris[j] -> quilometres < usuaris[j + 1] -> quilometres) {
+                User* temp = usuaris[j];
+                usuaris[j] = usuaris[j + 1];
+                usuaris[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < numUsuaris; i++){
+        printf("%d. %s amb %d kilometres\n", i + 1, usuaris[i] -> nom, usuaris[i] -> quilometres);
+    }
 }
 
 

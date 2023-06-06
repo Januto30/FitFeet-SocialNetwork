@@ -18,7 +18,7 @@ void canvi_de_dades(User *current);
 void fer_publicacio(User* usuari, st_Diccionari* Taula);
 void Timeline(User* usuari);
 void quilometres(User* usuari);
-void print_quilometres(User* usuari);
+void print_rankingKM(user_list* Llista, User* usuari);
 
 
 /// ---------------- DICCIONARI ----------------

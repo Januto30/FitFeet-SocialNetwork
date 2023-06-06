@@ -74,17 +74,6 @@ void afegir_usuari(user_list* llista, User* usuari) {
     }
 }
 
-/*
-void print_users(user_list *Llista) {
-    User *current = Llista -> head;         // current apunta al primer usuari de la llista
-    while (current != NULL) {               // mentre la llista no estigui buida...
-        printf("          |    %s    |\n", current -> nom);         // imprimeix el nom d'usuari
-        current = current -> next;          // ara current avança fins al següent element de la llista, i els va imprimint
-    }
-    printf("\n");
-}
-*/
-
 void print_users(user_list* Llista) {
     printf("------ LLISTA DE TOTS ELS USUARIS ------\n");
 
@@ -149,7 +138,7 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
             scanf("%d", &opcio3);
 
             if (opcio3 == 1) {
-                while (opcio3 == 1){                                   //opció imprimir les dades de l'usuari.
+                while (opcio3 == 1) {                                   //opció imprimir les dades de l'usuari.
                     print_user_info(current);
 
                     if (resp_bol() == 1) {
@@ -185,8 +174,9 @@ void menu_usuari(user_list *Llista, st_Diccionari* TaulaHash) {
             } else if (opcio3 == 7) {                                   //opció per imprimir les 10 paraules més utlitzades.
                 trending(TaulaHash);
 
-            } else if(opcio3 == 8) {                                    //opció per imprimir tots els quilòmetres fets per un usuari.
-                print_quilometres((User*)usuari);
+            } else if(opcio3 == 8) {                                    //opció per imprimir tots els quilòmetres fets per un usuari.ç
+                printf("\nRanking km recorreguts:\n");
+                print_rankingKM(Llista, current);
 
             } else if(opcio3 == 9) {
                 break;
@@ -204,7 +194,7 @@ void printf_menu_usuari() {
     printf("---| 5. Realitzar una publicacio        |---\n");
     printf("---| 6. Llistar les publicacions        |---\n");
     printf("---| 7. Llistar paraules TOP            |---\n");
-    printf("---| 8. Total de quilòmetres recorreguts|---\n");
+    printf("---| 8. Ranking km recorreguts          |---\n");
     printf("---| 9. Sortir                          |---\n");
 }
 

@@ -14,7 +14,6 @@ int main () {
     st_Diccionari* Diccionari = (st_Diccionari*) malloc(sizeof(st_Diccionari)); //Inicialitzem el Diccionari que emmagatzemarà les paraules de cada publicació.
     Diccionari->num_paraules = 0;           //Declarem el número de paraules del diccionari com a 0.
 
-
     while (a != 0) {
         int option1;
         menu();
