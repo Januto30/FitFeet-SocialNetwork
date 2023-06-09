@@ -29,35 +29,23 @@ void guardar_usuaris_en_arxiu(user_list* Llista) {             //Imprimeix els p
 
     FILE* arxiu_solicituds = fopen("../SOLICITUDS_AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre al fitxer de solicituds.
 
-        current = Llista->head;
-
-        const char* solicituds;
+    current = Llista->head;
+    while (current != NULL) {
+        fprintf(arxiu_solicituds, "%s ", current->nom);
         for (int i = 0; i < current->num_solicituds; i++) {
-            strcat(current->solicituds[i]->nom, solicituds);
+            fprintf(arxiu_solicituds, "%s ", current->solicituds[i]->nom);
         }
-
-        while (current != NULL) {
-            fprintf(arxiu_solicituds, "%s ", current->nom);
-            for (int i = 0; i < current->num_solicituds; i++) {
-                fprintf(arxiu_solicituds, "%s ", current->solicituds[i]->nom);
-            }
-            fprintf(arxiu_solicituds, "\n");
-            current = current->next;
-        }
-        fclose(arxiu_solicituds);
+        fprintf(arxiu_solicituds, "\n");
+        current = current->next;
+    }
+    fclose(arxiu_solicituds);
 
 
 
 
-    FILE* arxiu_amics = fopen("../AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre al fitxers d'amics.
+    FILE* arxiu_amics = fopen("../AMICS.txt","w");    //Mateix codi per afegir el nom dels usuaris que s'afageixen en el mateix ordre al fitxer de solicituds.
 
     current = Llista->head;
-
-    const char* amics;
-    for (int i = 0; i < current->num_amics; i++) {
-        strcat(current->amics[i]->nom, amics);
-    }
-
     while (current != NULL) {
         fprintf(arxiu_amics, "%s ", current->nom);
         for (int i = 0; i < current->num_amics; i++) {
