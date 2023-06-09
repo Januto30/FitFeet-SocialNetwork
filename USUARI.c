@@ -266,20 +266,20 @@ void print_user_info(User *current) {
     printf("==========================\n");
     printf("|     Dades personals    |\n");
     printf("|========================|\n");
-    printf("| Nom:      %s\n", current->nom);
-    printf("| Cognom:   %s\n", current->cognom1);
+    printf("| Nom: %s\n", current->nom);
+    printf("| Cognom: %s\n", current->cognom1);
     printf("| 2n Cognom: %s\n", current->cognom2);
-    printf("| Edat:     %d\n", current->edat);
-    printf("| Correu:   %s\n", current->correu);
+    printf("| Edat: %d\n", current->edat);
+    printf("| Correu: %s\n", current->correu);
     printf("| Ubicacio: %s\n", current->ubi);
     printf("|========================|\n");
-    printf("|         Gustos         |\n");
+    printf("|         Esports        |\n");
     printf("|========================|\n");
-    printf("| Gust 1:   %s\n", current->gust1);
-    printf("| Gust 2:   %s\n", current->gust2);
-    printf("| Gust 3:   %s\n", current->gust3);
-    printf("| Gust 4:   %s\n", current->gust4);
-    printf("| Gust 5:   %s\n", current->gust5);
+    printf("| 1. %s\n", current->gust1);
+    printf("| 2. %s\n", current->gust2);
+    printf("| 3. %s\n", current->gust3);
+    printf("| 4. %s\n", current->gust4);
+    printf("| 5. %s\n", current->gust5);
     printf("|========================|\n");
     printf("|       Kilometres       |\n");
     printf("|========================|\n");
@@ -287,7 +287,7 @@ void print_user_info(User *current) {
     printf("==========================\n");
 }
 
-void canvi_de_dades(User *current){
+void canvi_de_dades(User *current) {
     char option_3_1[MAX_LENGTH];
     printf("Quina? ");
     while (1) {
@@ -315,12 +315,35 @@ void canvi_de_dades(User *current){
 
         } else if (strcmp(option_3_1, "edat") == 0) {
             printf("Ja pots introduir el canvi: ");
-            scanf("%d", &current -> edat);
+            int nova_edat;
+
+            while (1) {                 // comprovar que introduïm un enter per a la edat
+                if (scanf("%d", &nova_edat) != 1 || nova_edat < 0 || nova_edat > 120) {
+                    printf("Valor d'edat no valid. Introdueix un enter: \n");
+                    while (getchar() != '\n');
+
+                } else {
+                    current -> edat = nova_edat;
+                    break;
+                }
+            }
             break;
 
         } else if (strcmp(option_3_1, "correu") == 0) {
             printf("Ja pots introduir el canvi: ");
-            scanf("%s", current -> correu);
+            char nou_correu;
+            scanf("%s", &nou_correu);
+
+            while (1) {
+                if (comprovar_correu(&nou_correu) == true) {          // funció per validar que el correu està ben escrit
+                    printf("El correu es valid.\n");
+                    strcpy(current -> correu, &nou_correu);     // copiem el que hem escrit a les dades de l'usuari
+                    break;
+                } else {
+                    printf("El correu es invalid. Torna a introduir el teu correu: \n");
+                    scanf("%s", &nou_correu);
+                }
+            }
             break;
 
         } else if (strcmp(option_3_1, "ubicacio") == 0) {
