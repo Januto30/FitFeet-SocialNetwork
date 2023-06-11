@@ -2,11 +2,16 @@
 ESTRUCTURAS DE DATOS Y ALGORITMOS II, 2022-2023
 Memòria projecte: FitFeet
 
+Grup 2 (302)
 
 Pau Noguera Mulet U213916
+
 Jan Prats Soler U213927
+
 Xavier Riera U214387
+
 Adriana Salinas U215119
+
 
 11/06/2023
 
