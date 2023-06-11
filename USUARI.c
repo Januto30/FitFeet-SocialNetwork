@@ -254,20 +254,20 @@ void print_user_info(User *current) {
     printf("==========================\n");
     printf("|     Dades personals    |\n");
     printf("|========================|\n");
-    printf("| Nom:      %s\n", current->nom);
-    printf("| Cognom:   %s\n", current->cognom1);
+    printf("| Nom: %s\n", current->nom);
+    printf("| Cognom: %s\n", current->cognom1);
     printf("| 2n Cognom: %s\n", current->cognom2);
-    printf("| Edat:     %d\n", current->edat);
-    printf("| Correu:   %s\n", current->correu);
+    printf("| Edat: %d\n", current->edat);
+    printf("| Correu: %s\n", current->correu);
     printf("| Ubicacio: %s\n", current->ubi);
     printf("|========================|\n");
-    printf("|         Gustos         |\n");
+    printf("|         Esports        |\n");
     printf("|========================|\n");
-    printf("| Gust 1:   %s\n", current->gust1);
-    printf("| Gust 2:   %s\n", current->gust2);
-    printf("| Gust 3:   %s\n", current->gust3);
-    printf("| Gust 4:   %s\n", current->gust4);
-    printf("| Gust 5:   %s\n", current->gust5);
+    printf("| Esport 1: %s\n", current->gust1);
+    printf("| Esport 2: %s\n", current->gust2);
+    printf("| Esport 3: %s\n", current->gust3);
+    printf("| Esport 4: %s\n", current->gust4);
+    printf("| Esport 5: %s\n", current->gust5);
     printf("|========================|\n");
     printf("|       Kilometres       |\n");
     printf("|========================|\n");
@@ -275,7 +275,7 @@ void print_user_info(User *current) {
     printf("==========================\n");
 }
 
-void canvi_de_dades(User *current){
+void canvi_de_dades(User *current) {
     char option_3_1[MAX_LENGTH];
     printf("Quina? ");
     while (1) {
@@ -303,12 +303,35 @@ void canvi_de_dades(User *current){
 
         } else if (strcmp(option_3_1, "edat") == 0) {
             printf("Ja pots introduir el canvi: ");
-            scanf("%d", &current -> edat);
+            int nova_edat;
+
+            while (1) {                 // comprovar que introduïm un enter per a la edat
+                if (scanf("%d", &nova_edat) != 1 || nova_edat < 0 || nova_edat > 120) {
+                    printf("Valor d'edat no valid. Introdueix un enter: \n");
+                    while (getchar() != '\n');
+
+                } else {
+                    current -> edat = nova_edat;
+                    break;
+                }
+            }
             break;
 
         } else if (strcmp(option_3_1, "correu") == 0) {
             printf("Ja pots introduir el canvi: ");
-            scanf("%s", current -> correu);
+            char nou_correu;
+            scanf("%s", &nou_correu);
+
+            while (1) {
+                if (comprovar_correu(&nou_correu) == true) {          // funció per validar que el correu està ben escrit
+                    printf("El correu es valid.\n");
+                    strcpy(current -> correu, &nou_correu);     // copiem el que hem escrit a les dades de l'usuari
+                    break;
+                } else {
+                    printf("El correu es invalid. Torna a introduir el teu correu: \n");
+                    scanf("%s", &nou_correu);
+                }
+            }
             break;
 
         } else if (strcmp(option_3_1, "ubicacio") == 0) {
@@ -316,33 +339,33 @@ void canvi_de_dades(User *current){
             scanf("%s", current -> ubi);
             break;
 
-        } else if (strcmp(option_3_1, "gust1") == 0) {
+        } else if (strcmp(option_3_1, "esport1") == 0) {
             printf("Ja pots introduir el canvi: ");
             scanf("%s", current -> gust1);
             break;
 
-        } else if (strcmp(option_3_1, "gust2") == 0) {
+        } else if (strcmp(option_3_1, "esport2") == 0) {
             printf("Ja pots introduir el canvi: ");
             scanf("%s", current -> gust2);
             break;
 
-        } else if (strcmp(option_3_1, "gust3") == 0) {
+        } else if (strcmp(option_3_1, "esport3") == 0) {
             printf("Ja pots introduir el canvi: ");
             scanf("%s", current -> gust3);
             break;
 
-        } else if (strcmp(option_3_1, "gust4") == 0) {
+        } else if (strcmp(option_3_1, "esport4") == 0) {
             printf("Ja pots introduir el canvi: ");
             scanf("%s", current -> gust4);
             break;
 
-        } else if (strcmp(option_3_1, "gust5") == 0) {
+        } else if (strcmp(option_3_1, "esport5") == 0) {
             printf("Ja pots introduir el canvi: ");
             scanf("%s", current -> gust5);
             break;
 
         } else {
-            printf("Opcio incorrecta, introdueix una valida: ");
+            printf("Opcio incorrecta, introdueix una valida (sense espais): \n");
         }
     }
 }
@@ -351,7 +374,7 @@ void canvi_de_dades(User *current){
 /// ---------------- PUBLICACIÓ ----------------
 void fer_publicacio(User* usuari, st_Diccionari* Taula) {                           //Emmagatzema les publicacions de cada usuari així com cada paraula en una pila.
     char text[MAX_CHARACTERS + 1];
-    printf("Introdueix el text de la publicacio (maxim %d caracters) ", MAX_CHARACTERS);
+    printf("\nIntrodueix el text de la publicacio (maxim %d caracters): ", MAX_CHARACTERS);
     scanf(" %[^\n]", text);
     quilometres(usuari);
 
@@ -376,7 +399,7 @@ void fer_publicacio(User* usuari, st_Diccionari* Taula) {                       
 }
 
 void Timeline (User* usuari) {                                  //Imprimeix tot el registre de publicacions de l'usuari
-    printf("Timeline de %s:\n", usuari -> nom);
+    printf("\nTimeline de %s:\n", usuari -> nom);
 
     Publicacio* publicacio_actual = usuari -> publicacio.top;   // Comença des del primer element de la pila
 
@@ -386,14 +409,23 @@ void Timeline (User* usuari) {                                  //Imprimeix tot 
         publicacio_actual = publicacio_actual -> seguent;
     }
 
-    printf("Fi del Timeline.\n");
+    printf("\nFi del Timeline.\n");
 }
 
-void quilometres(User* usuari){
+void quilometres(User* usuari) {
     int quilometres;
     printf("Quants quilometres has recorregut avui? ");
-    scanf("%d", &quilometres);
-    usuari->quilometres += quilometres;
+
+    while (1) {                 // comprovar que introduïm un enter per als quilòmetres
+        if (scanf("%d", &quilometres) != 1 || quilometres < 0 || quilometres > 500) {
+            printf("Valor de quilometres no valid. Introdueix un enter: \n");
+            while (getchar() != '\n');
+
+        } else {
+            usuari -> quilometres += quilometres;
+            break;
+        }
+    }
 }
 
 void print_rankingKM(user_list* Llista , User* usuari) {
@@ -454,7 +486,7 @@ void quicksort (Paraula** a, int bot, int top) {        //Funció recursiva que 
 
 void trending (st_Diccionari* diccionari) {                                 //Imprimeix les 10 paraules més usades per tots els usuaris exsistents.
     if (diccionari -> num_paraules == 0){                                   //En cas que la pila no contingui paraules s'imprimirà l'error.
-        printf("Encara no s'ha realitzat ninguna publicacio");
+        printf("\nEncara no s'ha realitzat ninguna publicacio");
         return;
     }
     quicksort(diccionari -> paraules,0,diccionari -> num_paraules - 1); //Ordenem la pila de les paraules més freqüents a les menys.

@@ -319,11 +319,11 @@ void enqueue(Queue* queue, char* nom) {                     // funció per afegi
     strcpy(usuari_nou -> nom, nom);             // copiem el nom
     usuari_nou -> next = NULL;                              // el nou usuari és el darrer
 
-    if (isQueueEmpty(queue)) {          // si la cua està buida, el nou usuari és el primer i darrer de la cua
+    if (isQueueEmpty(queue)) {                              // si la cua està buida, el nou usuari és el primer i darrer de la cua
         queue -> head = usuari_nou;
         queue -> last = usuari_nou;
 
-    } else {                                // si no, el nou usuari és el darrer de la cua
+    } else {                                                // si no, el nou usuari és el darrer de la cua
         queue -> last -> next = usuari_nou;
         queue -> last = usuari_nou;
     }
