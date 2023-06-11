@@ -13,10 +13,10 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     User* receptor;
 
     while(1) {
-        printf("A qui vols enviar una sol.licitud?");
-        scanf("%s", receptor->nom);
+        printf("\nA qui vols enviar una sol.licitud?");
+        scanf("%s", receptor -> nom);
 
-        if (comprovar_usuari(Llista, receptor->nom)) {
+        if (comprovar_usuari(Llista, receptor -> nom)) {
             break;
         } else {
             printf("\nUsuari incorrecte, escriu un usuari existent\n");
@@ -39,7 +39,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
         return -1;
     }
 
-    // Comprovam que l'emissor i el receptor no siguin els mateixos
+    // Comprovem que l'emissor i el receptor no siguin els mateixos
     if (current == receptor_user) {
         printf("No et pots enviar una sol.licitud a tu mateix.\n");
         return -1;
@@ -61,10 +61,10 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
         }
     }
 
-    // Comprovam que l'emissor no hagi enviat ja una sol·licitud d'amistat al receptor
+    // Comprovem que l'emissor no hagi enviat ja una sol·licitud d'amistat al receptor
     for (int i = 0; i < current -> num_solicituds; i++) {
         if (current -> solicituds[i] == receptor_user) {
-            printf("Ja has enviat una sol.licitud a aquest usuari.\n");
+            printf("Ja vos heu enviat una sol.licitud d'amistat.\n");
             return -1;
         }
     }
@@ -72,7 +72,7 @@ int enviar_solicitud(user_list* Llista, User *usuari) {
     // Mirem que l'emissor no hagi rebut ja una sol·licitud del receptor
     for (int i = 0; i < receptor_user -> num_solicituds; i++) {
         if (receptor_user -> solicituds[i] == current) {
-            printf("Ja has rebut una sol.licitud d'aquest usuari.\n");
+            printf("Ja vos heu enviat una sol.licitud d'amistat.\n");
             return -1;
         }
     }
@@ -103,7 +103,7 @@ int acceptar_denegar_solicituds(User *receptor) { //Funció per poder acceptar/d
     //Hem de fer un "submenú" per tal de poder triar quina sol·licitud volem gestionar
     int opcion;
     while(1) {
-        printf("\nNombre de solicitud que vulgui gestionar (0 per sortir): ");
+        printf("\nNombre de sol.licitud que vulgui gestionar (0 per sortir): ");
         scanf("%d", &opcion);
 
         if (opcion == 0) {
@@ -127,7 +127,7 @@ int acceptar_denegar_solicituds(User *receptor) { //Funció per poder acceptar/d
                         receptor->num_amics++;
                         solicitant->amics[solicitant->num_amics] = receptor;
                         solicitant->num_amics++;
-                        printf("\nSol·licitud acceptada. Ara ets amic de %s.\n", solicitant->nom);
+                        printf("\nSol.licitud acceptada. Ara ets amic de %s.\n", solicitant->nom);
 
                         // Llevam la sol·licitud de la llista de sol·licituds d'amistat
                         for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {

@@ -1,2 +1,6 @@
-A 1 Q Q 18 A@.COM Maresme a a a a a 0 0
-Jan 1 Q Q 18 A@.COM Maresme a a a a a 0 0
+Pau 123 Noguera Mulet 21 del@gmail.com qaui basquet futbol formula1 ciclisme pingpong 0 1 185
+Adriana 123 Salinas ld 43 fel@gmail.com Tiana Voleibol Rugbi Ciclisme Gimnastica Esgrima 0 1 156
+Jan 123 Prats Pons 4 jdf@gmail.com Maresme Handbol Golf Patinatge Taekwondo Badminton 0 0 612
+Xavi 123 Riera Pons 23 gkm@gmail.com Montuiri rugby futbol castallers natacio basquet 0 0 0
+Maria 123 Noguera Mulet 34 fekmd@gmail.com Llucmajor Natacio Badminton ioga running basquet 0 0 48
+Tomeu 123 Gelabert Mates 23 grkmf@gm.com aqui basquet futbol e e e 0 2 0
