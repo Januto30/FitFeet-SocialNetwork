@@ -129,7 +129,7 @@ int acceptar_denegar_solicituds(User *receptor) { //Funció per poder acceptar/d
                         solicitant->num_amics++;
                         printf("\nSol·licitud acceptada. Ara ets amic de %s.\n", solicitant->nom);
 
-                        // Remove the accepted request from the current user's request list
+                        // Llevam la sol·licitud de la llista de sol·licituds d'amistat
                         for (int i = opcion - 1; i < receptor->num_solicituds - 1; i++) {
                             receptor->solicituds[i] = receptor->solicituds[i + 1];
                         }

@@ -126,7 +126,7 @@ void llegir_usuaris_desde_arxiu (user_list* Llista) {           //Emmagatzema el
                 token_solicituds = strtok(NULL, " ");
             }
 
-            // Es guarden els valors dels tokens a user->solicituds
+            // Es guarden els valors dels tokens a user->solicituds.
             int c = 0;
             for(int i = 1; i < contadorTokensSolicituds; i++){
                 iterar_llista = Llista->head;
