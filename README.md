@@ -41,20 +41,26 @@ REFERÈNCIES
 
 
 INTRODUCCIÓ
+
 Per al projecte de pràctiques de l'assignatura, Estructura de dades i algoritmes II, se'ns ha proposat desenvolupar un prototip de Xarxa Social funcional utilitzant els nostres coneixements de programació adquirits durant el curs. Aquesta serà una aplicació local, per consola i en llenguatge C. Per tant, un projecte complicat, però a la mateixa vegada, molt interessant i que ens permet aprendre i posar en pràctica els conceptes adquirits.
 Després d'uns dies parlant i debatent, vam decidir tematitzar la nostra xarxa social com una plataforma dedicada al món del 'running', sorgint així el nom "FitFeet". Amb aquesta decisió presa, vàrem començar a elaborar el nostre projecte i seguir els objectius de cada sessió, tot i que inicialment sempre suposa una certa dificultat, fins i tot quan disposem d'una guia ben estructurada. A poc a poc, vam anar construint la xarxa i sorgiren diversos problemes que no ens permeteren fer totes les funcionalitats que volíem implementar. No obstant això, ens sentim satisfets dels èxits i el resultat obtingut en el desenvolupament d'una xarxa social funcional, gràcies a la dedicació i esforç col·lectiu.
 En aquest informe, documentarem el procés de desenvolupament del projecte FitFeet, des de l'explicació de totes les funcions implementades, l'arquitectura i disseny de la xarxa, les estructura de dades utilitzades, la gestió d'errors i exposar els objectius aconseguits.
 
 
+
 OBJECTIUS DEL PROJECTE
+
 Objectius obligatoris aconseguits:
+
 Els objectius obligatoris del projecte s’han complert satisfactòriament. A continuació es descriurà com s’han implementat cada un d’aquests dins de l’estructura i s’explicaran en més profunditat posteriorment.
 En primer lloc, s’han implementat una llista dinàmica utilitzant l’estructura user_list. Aquesta llista enllaçada d’usuaris permet emmagatzemar i gestionar eficientment la informació dels usuaris. D’altre lloc, hem implementat una cua en l’estructura “Queue”, la qual s’utilitza per gestionar totes aquelles tasques relacionades amb els usuaris de la xarxa social. La cua s’encarregarà del seguiment de l’usuari inicial amb el camp “head” i l’usuari final amb el camp “last”. Finalment, hem implementat una pila amb l’estructura de dades “PilaPublicacions”, aquesta pila s’utilitza per emmagatzemar totes les publicacions d’un usuari, i així aquestes es mostren les més recents primer.
 Cal remarcar que hem aplicat un algoritme de búsqueda com en aquest cas el “Linear Search”. Aquesta s’ha aplicat repetides vegades com per exemple a l’hora de buscar la direcció de memòria d’un usuari en concret en la llista d’usuaris. D’altra banda, hem dissenyat un “Quick Sort” per tal d’ordenar la pila de paraules més utilitzades a menys utilitzades. 
 A més, hem dissenyat una estructura de dades que és un diccionari per tal d’emmagatzemar totes les paraules de totes les publicacions enregistrades pels usuaris.
 Finalment, des del primer dia vàrem començar amb el github. Encara que vàrem tenir molts de problemes a l'hora d'activar-lo per primera cop, però una vegada hi vàrem poder accedir-hi tots, ens ha facilitat molt la feina en grup i la creació del codi. Això sí, a vegades els commits and push no funcionaven i des d'un altre dispositiu quan volies fer un upgrade del codi no l'actualitzava correctament. La solució que nosaltres hem trobat és la de fer un clone del projecte, aleshores, sí que s'actualitzen correctament els canvis.
 
+
 Objectius desitjables aconseguits:
+
 Per tal de provar totes les funcionalitats del codi durant el procés de fer el projecte, és més còmode tenir usuaris ja creats guardats dins un fitxer. Així, els llegim i es creen automàticament els usuaris.
 Per aconseguir-ho, hem creat un arxiu de text (PERFIL.txt) amb la següent informació: (Aqui hi ha una captura de pantalla)
 Cada dada és separada per un espai (‘ ‘).
@@ -63,27 +69,38 @@ Per una altra banda, alhora de fer la nostra xarxa més especial entre les altre
 Aleshores, la nostra Xarxa Social està dirigida a persones que lis agrada anar a córrer, és a dir, per a runners. I el primer dia varem elegir el nom de FitFeet (per votació), on altres propostes eren: RunMate o Km-unity. Una altre modificació seria la dels 5 gustos, en el nostre cas, són 5 esports preferits.
 Llavors, hem afegit una dada personal més, la dels quilòmetres recorreguts per cada usuari (persona). Aquesta dada es demana un cop feta la publicació.  Per tant, està pensat que cada vegada que hagis anat a correr, primer facis una publicació de text i després introduesquis els quilòmetres fets aquell dia. El nombre de quilòmetres també es guarda en l’arxiu de text i cada vegada es suma el nou nombre de quilòmetres fets. I aquest es queda guardat per sempre (fins a modificar-lo). Gràcies a això, podem fer un rànquing dels usuaris amb més quilòmetres recorreguts.
 
-Objectius exploratoris adquirits
+
+Objectius exploratoris adquirits:
+
 Al principi ens vàrem plantejar fer una capa estètica afegint alguna biblioteca i implementar les seves interfícies, però vàrem trobar que seria una feina bastant complicada, per això, ens hem limitat a fer un menús agradables a la vista i comprensibles.
 Addicionalment, com hem comentat abans, hem fet ús d’arxius de text per emmagatzemar informació i facilitar el procés. Però, aquest arxiu també ens dóna la possibilitat de guardar tant les dades personals, com les sol·licituds o amistats que un usuari pot tenir. I així, cada vegada que sortim de la xarxa social, aquesta informació no es perd. 
 La implementació de les funcionalitats de lectura i guardat de dades desde un arxiu extern estàn aplicades en les funcions: guardar_usuaris_en_arxiu, llegir_usuaris_desde_arxiu i emmagatzema_dades.
 
 
+
 SOLUCIÓ 
+
 Arquitectura del sistema:
+
 L’arquitectura de la nostra xarxa social, FitFeet, es basa en una estructura modular composta per diversos components interconnectats. Principalment, tenim els arxius .c (on es defineixen les funcions) i els arxius .h (on es declaren les funcions), a més, estan els arxius de text, on s’hi emmagatzema informació de cada usuari. D’aquesta manera, els blocs principals són: menú, social i usuari.
 
+
 Menú:
+
 El menú està compost per l’arxiu menu.c i menu.h, on tenim totes les funcions relacionades amb el menú, i aquestes estan dividides en tres apartats: menú, opcions de menú i auxiliars.
 - Menú: codi de les definicions de les funcions menu, select_option i print_option.
 - Opcions de menú: les diferents funcionalitats dins el menú com afegir_usuari, print_users, menu_usuari, printf_menu_usuari.
 - Auxiliars: funcions poden reutiltizar en diferents parts del programa com comprovar_correu, comprovar_usuari, resp_bol, checkPassword, inicialitzarQueue, isQueueEmpty, enqueue, dequeue.
 A més, en el menu.h estan les funcions declarades i totes les estructures de dades necessàries per a tot el projecte, aquestes són: Paraula, st_Diccionari, Publicacio, PilaPublicacions, User, user_list, Queue.
 
+
 Social:
+
 En el bloc social hi formen part les funcionalitats dedicades a la interacció entre usuaris (les sol·licituds d’amistat), aquestes funcions són: enviar_solicitud, acceptar_denegar_solicituds i llistar_amics_acceptats, definides en SOCIAL.c i declarades en SOCIAL.h.
 
+
 Usuari:
+
 En el bloc usuari, tenim les funcions dedicades als usuaris (definides en USUARI.c i declarades en SOCIAL.h), dividides en tres apartats: funcions elementals, publicació i diccionari.
 - Funcions elementals: funcionalitats fonamentals que serveixen per ser la base del funcionament de l’usuari dins la nostra xarxa social, com: guardar_usuaris_en_arxiu, llegir_usuaris_desde_arxiu, emmagatzema_dades, print_user_info, canvi_de_dades.
 - Publicació: funcions dirigides a fer possible a l’usuari a la realització de publicacions: fer_publicacio, Timeline, quilometres, print_rankingKM.
@@ -92,7 +109,9 @@ En el bloc usuari, tenim les funcions dedicades als usuaris (definides en USUARI
 Finalment, hem de tenir en compte els arxius externs de text, on es guarda informació necessària dels usuaris per tal de no perdre-la i conservar-la una vegada s’ha sortit de la xarxa. Aquests arxius .txt són: perfil, amics i solicituds_amics:
 En el PERFIL, s’emmagatzema totes les dades personals de cada usuari en una línia de text diferents, així, s’hi pot accedir i tenir sempre els mateixos perfils d’usuaris. En AMICS, a cada línia està escrit el nom de cada usuari, i seguidament, el noms dels seus amics. I en SOLICITUD_AMICS, també com en AMICS, a cada línia després del nom de l’usuari estan el noms de qui els ha enviat una sol·licitud d’amistat, que una vegada s’ha acceptat la sol·licitud, s’elimina i passa a AMICS.
 
+
 Gestió d’errors: 
+
 Durant el nostre procés del projecte hem tingut diferents errors, però al final els hem acabat gestionant correctament per tal que el codi acabes compilant i funcionant amb normalitat. 
 El primer error que vam tenir va ser a l’hora de connectar-mos tots els membres de l’equip al Github. No sabíem que es feia i, d’aquesta manera, vàrem estar tota la primera sessió intentant compartir el projecte. Malgrat això, ho aconseguirem i ens ha facilitat molt la feina en grup.
 Un altre error seria en el tot el tema de sol·licituds, vam definir malament el current i el head, i com a conseqüència no s’enviaven correctament les sol·licituds i feia que no poguessim avançar en el projecte. Dies més tard ens vam adonar que la clau estava en fer una funció amb 2 inputs en comptes de 1. S’havien de definir 2 variables de tipus user: current i iterar_llista, aquesta primera seria l’usuari actual seleccionat a la llista i iterar_llista que s’inicialitza amb el valor del punter head de una estructura prèviament definida “user_list”. “Llista és una linked list i head és un punter al primer element de la llista. 
@@ -100,20 +119,27 @@ Un cop vam poder gestionar aquest problema ja vam poder implementar altres funci
 A més a més, si alguna vegada qualcú dels membres de l’equip no li sortia la funció que estava realitzant, entre tots, intentavem ajudar i solucionar els dubtes que tenia.  Per tant, en feina en equip i solidaritat hem tret endavant la nostra Xarxa Social.
 Addicionalment, hem fet ús del Chat GPT per a la revisió d’algunes funcions que ens han costat més fer,  per veure si algunes funcions es podien millorar o tenir un millor gestionament d’errors. Per exemple, en la funció quilometres, ens ha dit que haviem de comprovar que la resposta introduïda fos un nombre enter i no un char.
 
+
 Disseny del model de dades:
+
 Es pot observar en el diagrama de flux dos bucles infinits principals. El primer faria referència al menú principal de la nostre xarxa social. En aquest l’usuari podrà anar escollit entre quatre opcions diferents, i pel contrari se’l farà torna a escollir entre una d’aquestes quatre de forma perpètua. Evidentment, una de les opcions a escollir és la de finalitzar programa, la qual és la única opció en tot el programa que ens permetrà finalitzar-lo.
 En segon lloc, es pot observar com a partir d’una ramificació en comencen a derivar tot un segon bloc. Aquest fa referència al menú de l’usuari, és a dir, a totes les funcionalitats de l’usuari. També cal destacar que està tancat en un bucle infinit a excepció que l’usuari triï l'opció 9, la qual el farà sortir de la seva sessió d’usuari.
 
+
 Descripció i processament del conjunt de dades:
+
 Nosaltres vam decidir fer servir estructures per tal de poder ser més òptims i més organitzats, les estructures les definiriem i explicarem posteriorment (apartat menu.h) però és important saber que sense les estructures el codi seria una mica “caòtic” ja que les estructures en c ens permeten crear variables noves del tipus que sigui l’estructura per tal de poder treballar amb elles de forma fàcil i òptima. 
 L’exemple més clar d’això és la struct User que conté la nostra xarxa social. Ja que es poden crear moltes variables de tipus User que continguin tot el que té l’estructura interna de User, que ara vindria a ser doncs, el nom d’usuari, l’edat, el correu electrònic, l’ubicació… Tanmateix si ho féssim sense estructures, no podriem crear una variable local de tipus User, ja que cada cop que volguessim fer servir un usuari, hauriem de emmagatzemar les seves dades en variables noves cada vegada fent que augmenti exponencialment la seva complexitat, també tindriem el problema de tenir més probabilitat d’errors, ja que com més tipus diferents de variables fem servir més probabilitat hi ha de confondre o de fer servir alguna variable que no toca.
 Per tant en el nostre codi hem hagut de fer servir moltes estructures, ja que la creació d’una xarxa social és prou complexe i es necessiten estructures per tal de poder organitzar el codi i fer-lo el més òptim possible.
 
 
+
 Primer de tot, per un tema principal d’organització hem dividit el nostre codi en diferents arxius .c i .h, on en els .c definim el codi de les funcions, i en els .h posem les estructures i les declaracions de les funcions.
 En total tenim tres arxius .c (menu, SOCIAL i USUARI) i els seu pertinents arxius .h. A més de tres arxius de text (PERFIL, AMICS i SOLICITUDS_AMICS).
 
+
 Menu.c:
+
 En el fitxer menu.c tenim totes les funcions relacionades amb el menú, aquestes estan dividides en tres apartats: menú, opcions de menú i auxiliars.
 Per començar, abans de fer cap estructura ni res, vam inicialitzar el nostre codi fent una funció que imprimeix per pantalla el menú principal de la nostre xarxa social, d’aquesta manera podem organitzar d’una manera més pràctica com ramificariem el nostre codi.
 De tal manera que quan compilem el codi i l’executem tenim aquest resultat.
@@ -131,7 +157,9 @@ La funció print_menu_usuari és per imprimir per pantalla el submenú de l’in
 En el cas de les funcions auxiliars, són aquelles funcions que serveixen per facilitar tasques específiques del programa, que es poden reutiltizar en diferents parts del programa.
 Aquestes són: comprovar_correu, comproavar_usuari, resp_bol, checkPassword, inicialitzarQueue, isQueueEmpty, enqueue, dequeue. A més, totes estan declarades en el fitxer menu.h.
 
+
 Comprovar_correu:
+
 La funció comprovar_correu, com el seu nom indica, té la tasca de comprovar que el correu introduït per consola quan es crea un nou usuari sigui vàlid. 
 Es crida la funció amb el punter de la variable de caràcters correu bool comprovar_correu(char *correu) com a una funció booleana, és a dir, retorna true o false. Per tant, comprovarà si el correu és correcta (true) o no (false).
 Primer es defineixen i inicialitzen quatre variables: 
@@ -145,7 +173,9 @@ Finalment, comprovem que només té un ‘.’ i aquest està després del ‘@�
 Aquesta funció, està definida en el fitxer menu.c entre les línies 203 i 243 i en el menu.h línia 84. I s’utilitza (declara) en la línia 236 del fitxer USUARI.c per a la funció emmagatzema_dades. On després de demanar per consola el correu de l’usuari que estem creant, entre a un bucle infinit per comprovar que el correu és vàlid, i no surt del bucle fins que s’ha introduït un correu correcta.
 Una de les limitacions de l’algoritme és que suposa que la cadena del correu (introduïda per consola) no té espais. Per tant, una millora seria solucionar-ho. El temps emprat per implementar aquesta funció ha estat de 20 minuts.
 
+
 Comprovar_usuari:
+
 La funció comprovar_usuari té com a finalitat comprova si un determinat usuari es troba en la llista d’usuaris. Es crida la funció amb el punter de la llista d’usuaris llista i un punter al nom introduït bool comprovar_usuari(user_list* llista, char* nom) com a funció booleana, és a dir, retorna true (si l’usuari es troba a la llista) o false (si l’usuari no es troba a la llista). La funció recorre la llista d’usuaris buscant una coincidència amb el nom d’usuari especificat.
 Les variables utilitzades són:
 - llista: punter a la llista d’usuaris
@@ -154,7 +184,9 @@ Les variables utilitzades són:
 Primer, comprovem que la llista no està buida. Després, la variable temporal apunta al primer element (usuari) de la llista (head) i mentres la llista no estigui buida (no arribi al final de la llista), s’entra al bucle per recorrer la llista i comparar (amb strcmp) el nom actual (del temp) amb el nom d’usuari específic. Si coincideix, la funció retorna true. En cas contrari, s’avança al següent de la llista actualitzant temp a next. Finalement, si no s’han trobat cap coincidència, es retorna false (l'usuari no es troba a la llista).
 Aquesta funció està definida en el fitxer menu.c entre les línies 245 i 258 i en el menu.h en la línia 85. I s’utilitza en la línia 19 del fitxer SOCIAL.c per a la funció enviar_solicitud on es comprova mitjançant un bucle while que l’usuari a qui vols enviar la sol·licitud d’amistat és un usuari existent. I també s’usa en la línia 213 del fitxer USUARi.c en la funció emmagatzema_dades per a comprovar per mitjà d'un bucle while que el nom del nou usuari que estem afegint, existent anteriorment en un altre usuari.
 
+
 Resp_bol:
+
 La funció resp_bol demana a l’usuari si vol modificar alguna opció de les dades personals una vegada estas dins el teu perfil d’usuari. Si la resposta és ‘si’, es retorna el valor 1 per realitzar les modificacions, si s’escriu (per consola) ‘no’, es retorna 0 per no modificar res. Per tant, es crida la funció int resp_bol() com a funció que retorna un enter.
 Primer s’inicialitzen les variables:
 - resposta: array de 10 caràcters com a màxim que guarda la resposta escrita per consola de l’usuari.
@@ -163,7 +195,9 @@ Entrem dins el bucle, ja que la resposta és invàlida (respostaValida == false)
 Aquesta funció està definida en el fitxer menu.c entre les línies 260 i 285 i en el menu.h en la línia 86. I s’utilitza en la línia 144 del propi fitxer menu.c per a la funció menu_usuari on una vegada s’ha iniciat sessió de l’usuari correctament, i hem entrat dins el nostre perfil del submenú, ens demana si volem modificar alguna de les nostres dades personals. En el cas de que s’hagi respost que ‘si’ (1) s’inicia la funció canvi_de_dades, però si la resposta és ‘no’ (0) es surt del submenú: perfil.
 Una possible limitació seria l’overflow en l’entrada de la resposta de l’usuari.
 
+
 CheckPassword:
+
 La funció checkPassword comprova si la contrasenya introduïda per l’usuari coincideix amb la contrasenya guardada en l’estructura de l'usuari. Es crida la funció amb el punter de l’estructura d’usuari int checkPassword(User *usuari) que retorna un enter, si la contrasenya és correcta retorna 1, si és incorrecta retorna 0. 
 Les variables utilitzades són:
 - usuari: punter a l’estructura User que conté les dades de l’usuari
@@ -174,7 +208,9 @@ Aquesta funció està definida en el fitxer menu.c entre les línies 287 i 304 i
 Una possible millora seria no permetre que la resposta de la contrasenya per consola sigui buida, ja que així no seria possible comprovar que es correcta.
 Ara entrem dins les funcions destinades a implementar una fila (Queue), però encara seguim dins les funcions auxiliars del menu.c.
 
+
 IncialitzarQueu:
+
 La funció inicialitzarQueue té l’objectiu inicialitzar una cua buida (estructura Queue), només la prepara per ser utilitzada en algoritmes futurs. Es crida la funció així: void inicialitzarQueue(Queue* queue).
 Les variables utilitzades són:
 - queue: punter a l’estructura Queue
@@ -183,7 +219,9 @@ Les variables utilitzades són:
 Simplement inicialitza les variables head i last de l’estructura Queue com a nules, és a dir, indica que no hi ha cap element en la primera i última posició de la cua.
 Aquesta funció està definida entre les línies 308 i 311 en el menu.c i en la línia 88 del menu.h. I s’utilitza en la línia 81 (menu.c) per a la funció print_users, on simplement inicialitza la cua per a poder utilitzar les funcions de la cua i imprimir els usuaris en una llista.
 
+
 IsQueueEmpty:
+
 La funció isQueueEmpty comprova si la cua està buida o no. Es crida amb el punter de l’estructura Queue, int isQueueEmpty(Queue* queue)i retorna un enter, si la cua està buida (1) o no (0). Això és gràcies a verificar si el punter del head apunta a un valor NULL.
 Les variables utilitzades són:
 - queue: punter a l’estructura Queue
@@ -191,7 +229,9 @@ Les variables utilitzades són:
 L’algoritme retorna el resultat de si el punter head apunta a un valor NULL o no, si apunta a un valor NULL retorna 1 i, per tant, la cua està buida.
 Està definida entre les línies 313 i 315 en el menu.c i en la 89 del menu.h. I s’utilitza en la línia 89 (menu.c) en la funció print_user per comprovar que la cua no estigui buida i entrar en el bucle per escriure en una llista els noms dels usuaris. També en la línia 322 (menu.c) en la funció enqueue per comprovar si la cua està buida i afegir el primer element de la cua com el head i last de la cua. Una altre aplicació és en la funció dequeue en la línia 333 per si la cua està buida imprimir per consola que la cua està buida i, per tant, no es poden eliminar elements de la cua.
 
+
 Enqueue:
+
 La funció enqueue afegeix un element (en aquest cas un usuari) a la cua. Es crida amb el punter a la cua i el nom de l’usuari a afegir void enqueue(Queue* queue, char* nom). 
 Les variables utilitzades són:
 - queue: punter a l’estructura Queue
@@ -202,7 +242,9 @@ Les variables utilitzades són:
 Primer es reserva memòria per a un nou usuari utilitzant malloc i s’assigna al punter usuari_nou. I es copia el nom al nom del nou usuari amb strcpy. A més, el següent usuari_nou és NULL (és a dir, l’usuari_nou afegit anteriorment és el darrer de la cua). Després, es comprova si la cua està buida amb la funció isQueueEmpty, en cas que ho sigui, l’usuari_nou és l’únic de la llista. En cas contrari, el nou usuari és el darrer de la cua.
 La funció està definida entre les línies 317 i 330 del menu.c i a la línia 90 del menu.h. I s’utilitza en la línia 85 (menu.c) en la funció print_users, on una vegada inicialitzada la cua afegeix el nom de cada usuari de la Llista, si aquesta no està buida. I al final els imprimeix en forma de llista.
 
+
 Dequeue:
+
 La funció dequeue elimina el primer usuari de la cua. Es crida amb el punter de la cua Queue void dequeue(Queue* queue).
 Les variables utilitzades són:
 - queue: punter a l’estructura Queue
@@ -212,7 +254,9 @@ Primer comprovem si la cua està buida, en aquest cas, imprimeix per pantalla un
 La funció està definida entre les línies 332 i 341 (menu.c) i a la línia 91 (menu.h). I s’utilitza en la línia 91 del menu.c a la funció print_users per anar eliminant els noms dels usuaris de la cua una vegada ja s’han imprimit per pantalla en la llista.
 
 
+
 Menu.h:
+
 Un cop arribat a aquest punt, ara ja si, podem introduir les nostres estructures principals les quals algunes s’hi ressaltaran les seves finalitats més endavant.
 Una de les estructures de dades utilitzades és “Paraula”, que s’ha utilitzat per tal d’emmagatzemar-hi una paraula amb el seu comptador associat. Aquesta estructura té dos camps: “paraula”, el qual és un vector de caràcters que emmagatzema la paraula, i “cont”, que el definim com un enter el qual indica el nombre de vegades que s’ha trobar aquesta paraula en el conjunt de totes les publicacions realitzades pels usuaris.
 Seguidament, trobem la estructura “st_Diccionari”, la qual representa un diccionari de paraules. Aquesta estructura conté un array de punters a l’estructura “Paraula”, anomenat “paraules”, que emmagatzema les paraules del diccionari, i un enter “num_paraules” que indicarà la suma del nombre de paraules emmagatzemades en el diccionari.
@@ -223,11 +267,15 @@ Finalment, utilitzem l’estructura “Queue” per gestionar les tasques relaci
 En resum, hem dissenyat estructures de dades de classe llistes dinàmiques, piles, i cues per tal de gestionar eficientment la informació dels usuaris, així com les seves publicacions i les seves relacions socials.
 
 
+
 SOCIAL.c:
+
 Funcionalitats dedicades a la interacció entre usuaris, aquestes funcions són: enviar_solicitud, acceptar_denegar_solicituds i llistar_amics_acceptats.
 Aquesta part del codi, s’encarrega de gestionar les interaccions entre usuaris de la xarxa social. Les tres funcions de les quals consta ens permeten enviar sol·licituds d’amistat entre usuaris, acceptar i denegar-les i comprovar la nostra llista d’amics (veure la llista d’usuaris presents a l’array amics de cada usuari).
 
+
 Enviar_sol·licitud:
+
 Començarem explicant la funció enviar_sol·licitud. Aquesta funció pren com a paràmetres dos punters: el punter a la llista d’usuaris existents a la xarxa social i el punter a una struct d’usuari (és a dir, un punter a l’struct de l’usuari que actualment té la sessió iniciada).
 Per poder gestionar les sol·licituds, primer necessitem inicialitzar tres variables locals: la variable current (és la mateixa que el paràmetre usuari de la funció), la variable iterar_llista (ens servirà per iterar per tota la llista d’usuaris) i la variable receptor (és a dir, l’usuari a qui volem enviar la sol·licitud).
 La funció comença amb un bucle while en el qual se’ns demana introduir el nom de l’usuari a qui volem enviar la sol·licitud d’amistat. El bucle es repeteix indefinidament fins que introduïm el nom d’un usuari que està present a la llista d’usuaris existents (ho fa mitjançant la funció comprovar usuari prèviament explicada). Posteriorment, mitjançant un bucle for que es repeteix tantes vegades com usuaris hi ha la llista d’usuaris existents, s’itera a través de tota la llista fins trobar un usuari el nom del qual coincideix amb el nom introduït per l’usuari i es guarda a l’usuari trobat a la nova variable receptor_user.
@@ -241,22 +289,30 @@ Seguidament, es duen a terme set comprovacions mitjançant condicions if i bucle
 - es comprova que l’usuari receptor_user existeix a la llista d’usuaris existents.
 Finalment, si s’han passat totes les comprovacions, s’afageix a l’array de sol·licituds d’amistat de l’usuari receptor_user l’struct d’usuari de l’usuari current.
 
+
 Acceptar_denegar_sol·licituds:
+
 Aquesta funció serveix per accedir a la llista de sol·licituds d’amistat de l’usuari que té la sessió iniciada i gestionar les sol·licituds (es poden acceptar o es poden denegar). Pren com a paràmetres l’struct de l’usuari que té la sessió iniciada.
 La funció comença comprovant que la llista de sol·licituds no està buida. Si no ho està, imprimeix un submenú mitjançant un bucle for en el qual apareixen els noms de tots els usuaris present a la llista de sol·licituds. Posteriorment, una vegada s’ha seleccionat quina sol·licitud d’amistat volem gestionar, s’inicialitza una nova variable usuari sol·licitant. Si s’accepta la sol·licitud, el nombre d’amics de la usuari i del sol·licitant augmenten en un, s'afegeixen l’un a l’altre a les respectives llistes d’amics i s’eliminen les sol·licituds d’amistat.
 Per altra banda, si denegam la sol·licitud d’amistat, s’esborra la sol·licitud d’amistat de la llista de sol·licituds de l’usuari i apareix un missatge per consola informant de que s’ha eliminat.
 
+
 Llistar_amics_acceptats:
+
 Aquesta funció és una funció molt simple que pren com a paràmetres l’struct de l’usuari que té la sessió iniciada. 
 La funció simplement entra a dins un bucle for que es repteix tantes vegades com amics hi ha a la llista d’amics de l’usuari i imprimeix per consola els noms dels usuaris presents a la llista. Si la llista està buida, no entra al bucle for i surt de la funció.
 
 
+
 USUARI.c:
+
 A continuació ens explaiarem de quines han sigut les funcions dirigides als usuaris, aquestes estan dividides en tres subapartats: funcions elementals, publicació i diccionari.
 En el cas de les funcions elementals, són aquelles funcions fonamentals que serveixen per ser la base del funcionament de l’usuari dins la nostra xarxa social.
 Primer, les funcions dirigides a emmagatzemar les dades dels usuaris als fitxers, són necessàries perquè, gràcies a elles, les dades dels usuaris (tant el perfil personal de l’usuari com la seva llista d’amics i sol·licituds d’amistat) no es perden una vegada es tanca el codi. 
 
+
 Guardar_usuaris_en_arxiu:
+
 Per començar, la funció guardar_usuaris_en_arxiu serveix per copiar les dades dels usuaris a als fitxers pertinents per tal d’evitar que es perdin una vegada es tanca el codi. Aquesta funció és la darrera en executar-se, ja que tan sols s’executa quan es tria l’opció per sortir del codi.
 La funció pren com a paràmetre el punter a la llista de tots els usuaris registrats a l’aplicació. D’aquesta forma, es pot iterar a través de tota la llista i obtenir les dades de tots els usuaris registrats. A més, cal remarcar que és necessària l’existència de tres fitxers on emmagatzemar les dades: PERFIL.txt, AMICS.txt i SOL·LICITUDS_AMICS.txt. 
 El primer que fa la funció, és obrir el fitxer PERFIL.txt. Si no es troba el fitxer, s’imprimeix un missatge d’error per consola i es surt de la funció. 
@@ -265,7 +321,9 @@ Una vegada la funció ha acabat el fitxer PERFIL, s’obri el fitxer SOL·LICITU
 Finalment, s’obri el fitxer AMICS per guardar el nom dels amics de cada usuari a un fitxer. Aquesta part segueix el mateix procediment que la part de les sol·licituds però mitjançant el fitxer AMICS.txt i guardant la variable current->amics[i]->nom de cada usuari en lloc de la variable current->sol·licituds[i]->nom.
 Sabem, que la funció es podria haver implementat usant un sol bucle while per guardar tota la informació als tres fitxer, però varem decidir escriure d’aquesta forma la funció per poder diferenciar millor a quin arxiu es guarda la informació i perquè la part dels fitxers SOL·LICITUDS_AMICS i AMICS va ser implementada després de la part del fitxer PERFIL.
 
+
 Llegir_usuaris_desde_arxiu:
+
 Aquesta funció serveix per llegir la informació introduïda als fitxers per la funció prèviament definida. Mitjançant aquesta funció, es pot tornar a inicialitzar la llista d’usuaris amb la informació dels arxius una vegada s’ha tancat el programa i la informació s’ha perdut. Aquesta funció, igual que l’anterior,  pren com a paràmetre el punter a la llista de tots els usuaris registrats a l’aplicació, encara que en aquest cas la llista està buida i serà la funció la que l’ompleni amb les dades de cada usuari.
 La funció comença obrint els arxius PERFIL.txt, SOL·LICITUDS_AMICS.txt i AMICS.txt. Si no es troben els fitxer, s’imprimeix un missatge d’error per consola i es surt de la funció. Si s’obrin bé els fitxers, mitjançant un bucle while amb un fscanf, es llegeixen totes les variables de l’usuari presents al fitxer PERFIL i es copien (strcpy) a l’struct del primer usuari de la llsita. Posteriorment, es passa al següent usuari (current = current->next) i es torna a repetir el bucle per emmagatzemar les dades del nou usuari. Això es repeteix tantes vegades com línies té el fitxer PERFIL, ja que cada línia conté la informació d’un usuari.
 Una vegada ja s’ha guardat la informació de cada usuari a la llista, falta omplir els arrays d’amics i sol·licituds de cada usuari. Per aquest motiu, la part de la funció relacionada amb els fitxers SOL·LICITUDS_AMICS i AMICS s’ha d’executar una vegada ja s’han guardat les dades dels usuaris des de l’arxiu. 
@@ -274,19 +332,26 @@ Finalment, mitjançant un altre bucle for amb un for anidat a dins, es recorr la
 Posteriorment, es repeteix aquesta part del codi però amb el fitxer AMICS. Es segueix la mateixa estratègia de llegir el fitxer per línies i guardar els strings com a tokens per després comparar-los. La única diferència és que en lloc de llegir les dades del fitxer SOL·LICITUDS_AMICS, les llegeix del fitxer AMICS.
 Finalment, es tanquen els tres fitxers i finalitza la funció.
 
+
 Emmagatzema_dades:
+
 Aquesta funció serveix per guardar les dades dels usuaris que es registren novament a la xarxa social. La funció pren com a paràmetres: el punter a la llista d’usuaris i el punter a una variable user.
 Aquesta funció consisteix en un conjunt de parells printf i scanf. Es demana a l’usuari quin és la seva contrasenya i l’usuari escriu per consola la seva contrasenya la qual es guarda a la variable usuari->password. 
 Algunes d’aquestes variables presenten estratègies per evitar errors. Per exemple, la variable nom es demana mitjançant un bucle while que es repeteix mentre el nom no sigui el mateix que el d’un usuari ja present a la llista d’usuaris o la variable del correu electrònic. 
 Finalment, ja que és un usuari nou, les variables relacionades amb la part social (num_amics, num_sol·licituds, quilòmetres, etc) s’inicialitzen com a zero.
 
+
 Print_user_info:
+
 La funció print_user_info té com a finalitat imprimir per pantalla tota la informació personal de l'usuari. Es crida la funció amb el paràmetre del punter current a l’estructura d’User, void print_user_info(User *current).
-Les variable utilitzada és: current: punter a l’estructura User que conté les dades de l’usuari a mostrar
+Les variable utilitzada és: 
+- current: punter a l’estructura User que conté les dades de l’usuari a mostrar
 S’imprimeixen totes les dades personal de l'usuari accedint a tots el llocs pertinents de l'usuari current. 
 La funció està definida entre les línies 264 i 288 (USUARI.c) i a la línia 14 (USUARI.h). I s’utilitza en la línia 142 del menu.c a la funció menu_usuari, que una vegada s’ha iniciat sessió amb un usuari i haver elegit l’opció 1 (Perfil)  es mostren per pantalla tota la informació i després et demana si vols modificar aquestes mateixes dades amb la funció canvi_de_dades.
 
+
 Canvi_de_dades:
+
 La funció canvi_de_dades, com el seu nom indica, permet a l’usuari a modificar les seves dades personals. Es crida amb el punter current a l’estructura User void canvi_de_dades(User *current).
 Les variables utilitzades són:
 - option_3_1: array de caràcters que guarda l’opció (submenú) introduïda per l’usuari
@@ -297,26 +362,35 @@ Primer, demana a l’usuari quina és la dada que vol modificar (que es guarda e
 La funció està definida entre les línies 290 i 383 (USUARI.c) i a la línia 15 (USUARI.h). I s’utilitza en la línia 145 del menu.c a la funció menu_usuari, que una vegada s’ha iniciat sessió amb un usuari i haver elegit l’opció 1 (Perfil) es mostren per pantalla totes les dades personal i demana si les vols modificar (si la funció resp_bol és un 1) o no (resp_bol = 0).
 
 
+
 A continuació, explicarem les funcions dedicades a l’organització de publicacions així com la gestió de les mateixes.
 
+
 fer_publicacio:
+
 Aquesta funció està dissenyada per tal de permetre a l’usuari realitzar publicacions, el que en el marc intern del codi consisteix a crear una pila que emmagatzema cadenes de caràcters per tal d’emmagatzemar totes les publicacions de l’usuari.
 Els paràmetres d’entrada emparades són un punter de memòria a una estructura d’usuari i un punter de memòria a una estructura de diccionari. En primer, lloc usem el punter de memòria a l’estructura d’usuari per tal de guardar la publicació en la llista de publicacions de l’usuari en qüestió. D’altre banda, el punter al diccionari ens serveix per anar emmagatzemant totes les paraules que conformen cada publicació de l’usuari.
 En prime lloc demanem a l’usuari que introdueixi en la taula de comandes la publicació que vol realitzar, tot seguit emmagatzem el que l’usuari escriu en una cadena de caràcters. En segon lloc, fem una crida a la funció “quilometres” la qual preguntarà i emmagatzemarà quants quilòmetres ha recorregut l’usuari.
 Més endavant, mitjançat memòria dinàmica, afegirem aquesta publicació a la llista dinàmica de publicacions de l’usuari. Finalment, mitjançant un bucle que ens permet analitzar cada paraula de la publicació, es mirarà mitjançat la crida a la funció “buscar_paraula” si aquella paraula ja rau en la estructura la qual apunta “Taula”. En cas afirmatiu, s’implement s’iterarà en contador d’aquella paraula en l’estructura que apunta “Taula”. En cas contrari, s’afegira aquesta nova paraula al diccionari mitjançant la funció “afegir_paraula_nova”.
 
+
 Timeline:
+
 La funció Timeline és una funció que careix de complexitat. La seva finalitat és imprimir en la consola totes les publicacions realitzades per l’usuari.
 La funció consta únicamente d’un paràmetre d’entrada, un punter de memòria a una estructura “User”. D’aquesta manera s’accedeix a la seva llista de publicacions i amb un bucle while, iterem mentre anem imprimint cada cadena de caràcters emmagatzemada. 
 Per poder realitzar aquesta funció en primer lloc ens hem d’assegurar començar imprimint per la primera publicació de tota la llista, això es fa mitjançant la següent línia:
 
+
 quilometres:
+
 La funció quilometres registra els quilòmetres que ha recorregut un usuari. Es crida amb el punter a l’estructura User, void quilometres(User* usuari). 
 La variable que utilitza és, quilometres, enter per guardar els nombre de quilòmetres ha recorregut l’usuari aquell dia. 
 Primer demana quants de quilòmetres hem fet i entra al bucle infinit per respondre correctament (escriure un enter per consola, no major a 500). En cas de que s’ha introduït una resposta vàlida, guarda el valor dins les dades personals de l’usuari (en sumatori).
 La funció està definida entre les línies 427 i 441 (USUARI.c) i a la línia 18 (USUARI.h). I s’utilitza en la línia 391 del USUARI.c a la funció fer_publicacio, després d’haver escrit la publicació, s’inicia la funció quilometres per registrar els quilòmetres recorreguts.
 
+
 print_rankingKM:
+
 La funció print_rankingKM, imprimeix per pantalla una llista (en forma de rànquing) dels usuaris que han fet més quilòmetres. void print_rankingKM(user_list* Llista , User* usuari).
 Les variables utilitzades són:
 - llista: punter a l'estructura de dades que conté la llista d’usuaris
@@ -325,6 +399,7 @@ Les variables utilitzades són:
 - numUsuaris: nombre enter d’usuaris en la llista
 Primer es crea una array d’usuaris i s’inicialitza la variable numUsuaris a 0. Per després anar recorrent la llista i comptar quants d’usuaris hi ha i guardar el nombre a numUsuaris. S’ordenen els usuaris de la llista de més quilòmetres recorreguts a menys i s’imprimeix el rànquing.
 La funció està definida entre les línies 443 i 467 (USUARI.c) i a la línia 19 (USUARI.h). I s’utilitza en la línia 179 del menu.c a la funció menu_usuari, si s’ha elegit la opció 8. Ranking km recorreguts, s’inicia la funció i imprimeix el rànquing.
+
 
 
 Finalment, tenim les funcions dedicades al diccionari:
@@ -342,12 +417,16 @@ Tot seguit, un cop l’usuari ha fet una publicació es crida la funció “busc
 Finalment, la funció “afegir_paraula_nova” és una funció que serà cridada en cas que la paraula que s’estigui tractant sigui una no existent dintre el diccionari. En aquest cas, es crearà una nova estructura “Paraula” per tal de guardar-hi aquesta nova paraula trobada i es definirà el recompte d’aquella paraula a 1. Podriem millorar aquesta funció comprovant que el paràmetre “Taula” no és NULL abans de processar-lo.
 
 
+
 USUARI.h:
+
 En el fitxer USUARi.h es declaren les funcions definides en el fitxer USUARI.c
 
 
 
+
 REFERÈNCIES
+
 Per fer possible el codi de la xarxa social, hem utilitzat pàgines web com w3Schools o geeksforgeeks per cercar informació de com aplicar algunes funcionalitats. I també hem fet ús del Chat GPT per al gestionament d’errors i possibles millores a fer en les funcions.
 - "OpenAI. (2023). ChatGPT. [Software de inteligencia artificial]. Recuperado de https://openai.com/"
 - GeeksforGeeks. (s. f.). GeeksforGeeks | A computer science portal for geeks. https://www.geeksforgeeks.org/
